@@ -30,6 +30,15 @@ src/
   types/
 ```
 
+## Regla de UI
+
+Antes de implementar o modificar pantallas, componentes visuales, layout o
+estilos, revisar `DESIGN.md` y cualquier captura o referencia visual enlazada
+desde ese documento.
+
+Una tarea frontend no debe quedar lista para revision si contradice `DESIGN.md`
+sin una decision explicita de Juan.
+
 ## Scripts
 
 ```text
