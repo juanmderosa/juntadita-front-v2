@@ -167,5 +167,4 @@ All standard containers and cards use a **16px (rounded-xl)** corner radius. Sma
 
 
 ## CAPTURAS PARA LA APP
-
-![alt text](dashboard_mis_eventos.png) ![alt text](dashboard_mis_eventos_mobile.png) ![alt text](detalle_del_evento_votacion_mobile.png) ![alt text](detalle_evento_votación.png) ![alt text](gestion_gastos.png) ![alt text](gestion_gastos_mobile.png) ![alt text](grupos_y_contactos.png) ![alt text](grupos_y_contactos_mobile.png)
+![alt text](design/dashboard_mis_eventos_mobile.png) ![alt text](design/dashboard_mis_eventos.png) ![alt text](design/detalle_del_evento_votacion_mobile.png) ![alt text](design/detalle_evento_votación.png) ![alt text](design/gestion_gastos_mobile.png) ![alt text](design/gestion_gastos.png) ![alt text](design/grupos_y_contactos_mobile.png) ![alt text](design/grupos_y_contactos.png)
