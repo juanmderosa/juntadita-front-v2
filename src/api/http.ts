@@ -53,4 +53,10 @@ export const http = {
       method: "POST",
       body: body == null ? undefined : JSON.stringify(body),
     }),
+  patch: <T>(path: string, body?: unknown, options?: RequestOptions) =>
+    request<T>(path, {
+      ...options,
+      method: "PATCH",
+      body: body == null ? undefined : JSON.stringify(body),
+    }),
 };
