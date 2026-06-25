@@ -39,9 +39,6 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
     devDependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.3.1
-        version: 4.3.1(vite@8.1.0(jiti@2.7.0))
       '@types/react':
         specifier: ^19.2.14
         version: 19.2.17
@@ -51,9 +48,6 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^6.0.1
         version: 6.0.3(vite@8.1.0(jiti@2.7.0))
-      tailwindcss:
-        specifier: ^4.3.1
-        version: 4.3.1
       typescript:
         specifier: ~6.0.2
         version: 6.0.3
