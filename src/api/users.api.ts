@@ -1,11 +1,13 @@
 import { http } from "./http";
 import type { SuccessResponse } from "../types/api";
 import type { CurrentUser } from "../types/users";
+import { currentUserResponseSchema } from "../schemas/users.schemas";
 
 export const usersApi = {
   async getCurrentUser(accessToken: string) {
     const response = await http.get<SuccessResponse<CurrentUser>>("/api/v1/me", {
       accessToken,
+      responseSchema: currentUserResponseSchema,
     });
 
     return response.data;
@@ -15,7 +17,7 @@ export const usersApi = {
     const response = await http.patch<SuccessResponse<CurrentUser>>(
       "/api/v1/me/profile",
       { displayName },
-      { accessToken },
+      { accessToken, responseSchema: currentUserResponseSchema },
     );
 
     return response.data;
