@@ -1,12 +1,20 @@
 import { http } from "./http";
 import {
   eventResponseSchema,
+  inviteParticipantsResponseSchema,
+  optionResponseSchema,
   paginatedEventsResponseSchema,
+  participantsResponseSchema,
 } from "../features/events/schemas/events.schemas";
 import type {
+  CreateEventOptionInput,
   CreateEventInput,
   EventDetail,
+  EventOption,
+  EventParticipant,
   EventSummary,
+  InviteParticipantsResult,
+  UpdateEventOptionInput,
   UpdateEventInput,
 } from "../types/events";
 import type { PaginatedResponse, SuccessResponse } from "../types/api";
@@ -45,6 +53,61 @@ export const eventsApi = {
       `/api/v1/events/${encodeURIComponent(eventId)}`,
       input,
       { accessToken, responseSchema: eventResponseSchema },
+    );
+    return response.data;
+  },
+
+  async createOption(
+    accessToken: string,
+    eventId: string,
+    input: CreateEventOptionInput,
+  ) {
+    const response = await http.post<SuccessResponse<EventOption>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/options`,
+      input,
+      { accessToken, responseSchema: optionResponseSchema },
+    );
+    return response.data;
+  },
+
+  async updateOption(
+    accessToken: string,
+    eventId: string,
+    optionId: string,
+    input: UpdateEventOptionInput,
+  ) {
+    const response = await http.patch<SuccessResponse<EventOption>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/options/${encodeURIComponent(optionId)}`,
+      input,
+      { accessToken, responseSchema: optionResponseSchema },
+    );
+    return response.data;
+  },
+
+  async deleteOption(accessToken: string, eventId: string, optionId: string) {
+    await http.delete<SuccessResponse<{ deleted: true }>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/options/${encodeURIComponent(optionId)}`,
+      { accessToken },
+    );
+  },
+
+  async listParticipants(accessToken: string, eventId: string) {
+    const response = await http.get<SuccessResponse<EventParticipant[]>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/participants`,
+      { accessToken, responseSchema: participantsResponseSchema },
+    );
+    return response.data;
+  },
+
+  async inviteParticipants(
+    accessToken: string,
+    eventId: string,
+    emails: string[],
+  ) {
+    const response = await http.post<SuccessResponse<InviteParticipantsResult>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/participants/invite`,
+      { emails },
+      { accessToken, responseSchema: inviteParticipantsResponseSchema },
     );
     return response.data;
   },

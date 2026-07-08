@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   editEventFormSchema,
   eventFormSchema,
+  optionFormSchema,
 } from "../src/features/events/schemas/events.schemas";
 
 describe("event form schemas", () => {
@@ -46,6 +47,27 @@ describe("event form schemas", () => {
     ).toBe(false);
     expect(
       editEventFormSchema.safeParse({ title: "", description: "" }).success,
+    ).toBe(false);
+  });
+
+  it("validates option variants", () => {
+    expect(
+      optionFormSchema.safeParse({
+        type: "date",
+        label: "",
+        date: "2026-08-01",
+        startAt: "",
+        endAt: "",
+      }).success,
+    ).toBe(true);
+    expect(
+      optionFormSchema.safeParse({
+        type: "range",
+        label: "",
+        date: "",
+        startAt: "2026-08-01T20:00",
+        endAt: "2026-08-01T19:00",
+      }).success,
     ).toBe(false);
   });
 });
