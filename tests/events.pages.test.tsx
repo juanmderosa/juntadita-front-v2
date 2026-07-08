@@ -34,7 +34,58 @@ const event = {
   finalizedAt: null,
   createdAt: "2026-07-06T15:00:00Z",
   updatedAt: "2026-07-06T15:00:00Z",
+  options: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440010",
+      eventId: "550e8400-e29b-41d4-a716-446655440000",
+      type: "date",
+      label: "Sabado",
+      startAt: "2026-08-02T03:00:00Z",
+      endAt: null,
+      createdAt: "2026-07-06T15:00:00Z",
+      updatedAt: "2026-07-06T15:00:00Z",
+    },
+  ],
+  participants: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440020",
+      eventId: "550e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      email: "juan@example.com",
+      displayName: "Juan",
+      role: "admin",
+      status: "joined",
+      invitedBy: null,
+      createdAt: "2026-07-06T15:00:00Z",
+      updatedAt: "2026-07-06T15:00:00Z",
+    },
+  ],
 } as const;
+
+const detailController = {
+  event: {
+    ...event,
+    type: "poll",
+    votingClosesAt: "2026-08-01T23:00:00Z",
+    fixedStartAt: null,
+  },
+  eventId: event.id,
+  error: null,
+  isLoading: false,
+  createOption: vi.fn(),
+  createOptionError: null,
+  isCreatingOption: false,
+  updateOption: vi.fn(),
+  updateOptionError: null,
+  isUpdatingOption: false,
+  deleteOption: vi.fn(),
+  deleteOptionError: null,
+  isDeletingOption: false,
+  inviteParticipants: vi.fn(),
+  inviteParticipantsResult: undefined,
+  inviteParticipantsError: null,
+  isInvitingParticipants: false,
+};
 
 beforeEach(() => {
   mocks.useEventsPage.mockReturnValue({
@@ -71,24 +122,21 @@ describe("events pages", () => {
   });
 
   it("only exposes editing to an admin", () => {
-    mocks.useEventDetailPage.mockReturnValue({
-      event,
-      eventId: event.id,
-      error: null,
-      isLoading: false,
-    });
+    mocks.useEventDetailPage.mockReturnValue(detailController);
     const { rerender } = render(
       <MemoryRouter><EventDetailPage /></MemoryRouter>,
     );
     expect(screen.getByText("Editar datos")).toBeTruthy();
+    expect(screen.getAllByText("Agregar opcion").length).toBeGreaterThan(0);
+    expect(screen.getByText("Enviar invitaciones")).toBeTruthy();
 
     mocks.useEventDetailPage.mockReturnValue({
+      ...detailController,
       event: { ...event, currentUserRole: "guest" },
-      eventId: event.id,
-      error: null,
-      isLoading: false,
     });
     rerender(<MemoryRouter><EventDetailPage /></MemoryRouter>);
     expect(screen.queryByText("Editar datos")).toBeNull();
+    expect(screen.queryByText("Agregar opcion")).toBeNull();
+    expect(screen.queryByText("Enviar invitaciones")).toBeNull();
   });
 });

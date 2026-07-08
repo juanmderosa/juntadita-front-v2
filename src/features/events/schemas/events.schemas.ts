@@ -8,7 +8,7 @@ import {
 } from "../../../schemas/common.schemas";
 import { localDateTimeToIso } from "../../../lib/dates";
 
-export const eventSchema = z.object({
+export const eventSummarySchema = z.object({
   id: uuidSchema,
   createdBy: uuidSchema,
   title: z.string(),
@@ -25,8 +25,58 @@ export const eventSchema = z.object({
   updatedAt: isoDateTimeSchema,
 });
 
-export const eventResponseSchema = successResponseSchema(eventSchema);
-export const paginatedEventsResponseSchema = paginatedResponseSchema(eventSchema);
+export const eventOptionSchema = z.object({
+  id: uuidSchema,
+  eventId: uuidSchema,
+  type: z.enum(["date", "datetime", "range"]),
+  label: z.string().nullable(),
+  startAt: isoDateTimeSchema,
+  endAt: isoDateTimeSchema.nullable(),
+  createdAt: isoDateTimeSchema,
+  updatedAt: isoDateTimeSchema,
+});
+
+export const eventParticipantSchema = z.object({
+  id: uuidSchema,
+  eventId: uuidSchema,
+  userId: uuidSchema.nullable(),
+  email: z.email(),
+  displayName: z.string().nullable(),
+  role: z.enum(["admin", "guest"]),
+  status: z.enum(["invited", "joined", "removed"]),
+  invitedBy: uuidSchema.nullable(),
+  createdAt: isoDateTimeSchema,
+  updatedAt: isoDateTimeSchema,
+});
+
+export const inviteEmailDeliverySchema = z.object({
+  email: z.email(),
+  status: z.enum(["sent", "failed", "skipped"]),
+  providerMessageId: z.string().nullable(),
+  errorMessage: z.string().nullable(),
+});
+
+export const inviteParticipantsResultSchema = z.object({
+  participants: z.array(eventParticipantSchema),
+  emails: z.array(inviteEmailDeliverySchema),
+});
+
+export const eventDetailSchema = eventSummarySchema.extend({
+  options: z.array(eventOptionSchema),
+  participants: z.array(eventParticipantSchema),
+});
+
+export const eventResponseSchema = successResponseSchema(eventDetailSchema);
+export const optionResponseSchema = successResponseSchema(eventOptionSchema);
+export const optionsResponseSchema = successResponseSchema(z.array(eventOptionSchema));
+export const participantsResponseSchema = successResponseSchema(
+  z.array(eventParticipantSchema),
+);
+export const inviteParticipantsResponseSchema = successResponseSchema(
+  inviteParticipantsResultSchema,
+);
+export const paginatedEventsResponseSchema =
+  paginatedResponseSchema(eventSummarySchema);
 
 const titleSchema = z
   .string()
@@ -96,5 +146,65 @@ export const editEventFormSchema = z.object({
   description: descriptionSchema,
 });
 
+export const optionFormSchema = z
+  .object({
+    type: z.enum(["date", "datetime", "range"]),
+    label: z.string().trim().max(120, "La etiqueta no puede superar 120 caracteres."),
+    date: z.string(),
+    startAt: z.string(),
+    endAt: z.string(),
+  })
+  .superRefine((value, context) => {
+    if (value.type === "date") {
+      if (!value.date) {
+        context.addIssue({
+          code: "custom",
+          path: ["date"],
+          message: "Indica el dia de la opcion.",
+        });
+      }
+      return;
+    }
+
+    if (!value.startAt) {
+      context.addIssue({
+        code: "custom",
+        path: ["startAt"],
+        message: "Indica la fecha y hora de inicio.",
+      });
+      return;
+    }
+
+    if (value.type === "range") {
+      if (!value.endAt) {
+        context.addIssue({
+          code: "custom",
+          path: ["endAt"],
+          message: "Indica la fecha y hora de fin.",
+        });
+        return;
+      }
+
+      if (
+        new Date(localDateTimeToIso(value.endAt)).getTime() <=
+        new Date(localDateTimeToIso(value.startAt)).getTime()
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["endAt"],
+          message: "El fin debe ser posterior al inicio.",
+        });
+      }
+    }
+  });
+
+export const inviteParticipantsFormSchema = z.object({
+  emailsText: z.string().trim().min(1, "Agrega al menos un email."),
+});
+
 export type EventFormInput = z.infer<typeof eventFormSchema>;
 export type EditEventFormInput = z.infer<typeof editEventFormSchema>;
+export type OptionFormInput = z.infer<typeof optionFormSchema>;
+export type InviteParticipantsFormInput = z.infer<
+  typeof inviteParticipantsFormSchema
+>;

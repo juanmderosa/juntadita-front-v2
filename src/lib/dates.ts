@@ -34,6 +34,14 @@ export function localDateTimeToIso(
   return fromZonedTime(value, timeZone).toISOString();
 }
 
+export function localDateToIso(value: string, timeZone = DEFAULT_TIME_ZONE) {
+  return localDateTimeToIso(`${value}T00:00`, timeZone);
+}
+
+export function isoToLocalDate(value: string, timeZone = DEFAULT_TIME_ZONE) {
+  return formatInTimeZone(value, timeZone, "yyyy-MM-dd");
+}
+
 export function isoToLocalDateTime(
   value: string,
   timeZone = DEFAULT_TIME_ZONE,

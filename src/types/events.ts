@@ -1,5 +1,7 @@
 export type EventType = "poll" | "fixed";
 export type EventParticipantRole = "admin" | "guest";
+export type EventParticipantStatus = "invited" | "joined" | "removed";
+export type EventOptionType = "date" | "datetime" | "range";
 
 export type EventSummary = {
   id: string;
@@ -18,7 +20,46 @@ export type EventSummary = {
   updatedAt: string;
 };
 
-export type EventDetail = EventSummary;
+export type EventOption = {
+  id: string;
+  eventId: string;
+  type: EventOptionType;
+  label: string | null;
+  startAt: string;
+  endAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type EventParticipant = {
+  id: string;
+  eventId: string;
+  userId: string | null;
+  email: string;
+  displayName: string | null;
+  role: EventParticipantRole;
+  status: EventParticipantStatus;
+  invitedBy: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type InviteEmailDelivery = {
+  email: string;
+  status: "sent" | "failed" | "skipped";
+  providerMessageId: string | null;
+  errorMessage: string | null;
+};
+
+export type InviteParticipantsResult = {
+  participants: EventParticipant[];
+  emails: InviteEmailDelivery[];
+};
+
+export type EventDetail = EventSummary & {
+  options: EventOption[];
+  participants: EventParticipant[];
+};
 
 export type CreateEventInput =
   | {
@@ -38,4 +79,28 @@ export type CreateEventInput =
 export type UpdateEventInput = {
   title?: string;
   description?: string | null;
+};
+
+export type CreateEventOptionInput =
+  | {
+      type: "date";
+      label?: string | null;
+      startAt: string;
+    }
+  | {
+      type: "datetime";
+      label?: string | null;
+      startAt: string;
+    }
+  | {
+      type: "range";
+      label?: string | null;
+      startAt: string;
+      endAt: string;
+    };
+
+export type UpdateEventOptionInput = {
+  label?: string | null;
+  startAt?: string;
+  endAt?: string | null;
 };
