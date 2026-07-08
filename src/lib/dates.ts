@@ -1,4 +1,5 @@
 import { DEFAULT_LOCALE, DEFAULT_TIME_ZONE } from "./localization";
+import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 type DateFormatOptions = {
   locale?: string;
@@ -24,4 +25,18 @@ export function formatDateTime(
     timeStyle: "short",
     timeZone: options.timeZone ?? DEFAULT_TIME_ZONE,
   }).format(new Date(value));
+}
+
+export function localDateTimeToIso(
+  value: string,
+  timeZone = DEFAULT_TIME_ZONE,
+) {
+  return fromZonedTime(value, timeZone).toISOString();
+}
+
+export function isoToLocalDateTime(
+  value: string,
+  timeZone = DEFAULT_TIME_ZONE,
+) {
+  return formatInTimeZone(value, timeZone, "yyyy-MM-dd'T'HH:mm");
 }

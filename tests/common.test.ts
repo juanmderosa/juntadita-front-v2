@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { formatDate, formatDateTime } from "../src/lib/dates";
+import {
+  formatDate,
+  formatDateTime,
+  isoToLocalDateTime,
+  localDateTimeToIso,
+} from "../src/lib/dates";
 import { formatMoney, parseMoneyToCents } from "../src/lib/money";
 import {
   amountInCentsSchema,
@@ -16,6 +21,15 @@ describe("shared frontend helpers", () => {
     expect(formatDate(value)).toContain("6 jul 2026");
     expect(formatDateTime(value)).toContain("12:30");
     expect(formatDateTime(value, { timeZone: "UTC" })).toMatch(/(?:15|3):30/);
+  });
+
+  it("converts datetime-local using Buenos Aires instead of device timezone", () => {
+    expect(localDateTimeToIso("2026-07-06T12:30")).toBe(
+      "2026-07-06T15:30:00.000Z",
+    );
+    expect(isoToLocalDateTime("2026-07-06T15:30:00Z")).toBe(
+      "2026-07-06T12:30",
+    );
   });
 
   it("parses and formats money in cents", () => {
