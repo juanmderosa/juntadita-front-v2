@@ -57,6 +57,7 @@ export type InviteParticipantsResult = {
 };
 
 export type EventDetail = EventSummary & {
+  optionsLocked: boolean;
   options: EventOption[];
   participants: EventParticipant[];
 };

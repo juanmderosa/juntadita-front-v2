@@ -31,9 +31,10 @@ export function useCreateEventPage() {
 
   const mutation = useMutation({
     mutationFn: (input: CreateEventInput) => eventsApi.create(accessToken!, input),
-    onSuccess: async (event) => {
+    onSuccess: async (event, input) => {
       await queryClient.invalidateQueries({ queryKey: eventsQueryKey });
-      navigate(`/events/${event.id}`, { replace: true });
+      const setupStep = input.type === "poll" ? "options" : "guests";
+      navigate(`/events/${event.id}?setup=${setupStep}`, { replace: true });
     },
   });
 

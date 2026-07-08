@@ -10,6 +10,7 @@ type EventFormProps = {
   isSubmitting: boolean;
   onSubmit: (values: EventFormInput) => Promise<void>;
   rootError?: string;
+  submitLabel?: string;
 };
 
 export function EventForm({
@@ -17,6 +18,7 @@ export function EventForm({
   isSubmitting,
   onSubmit,
   rootError,
+  submitLabel = "Crear evento",
 }: EventFormProps) {
   const type = form.watch("type");
   const descriptionError = form.formState.errors.description?.message;
@@ -103,7 +105,7 @@ export function EventForm({
       ) : null}
 
       <Button className="w-full sm:w-auto" disabled={isSubmitting} type="submit">
-        {isSubmitting ? "Creando..." : "Crear evento"}
+        {isSubmitting ? "Creando..." : submitLabel}
       </Button>
     </RHForm>
   );

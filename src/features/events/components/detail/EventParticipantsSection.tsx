@@ -13,6 +13,7 @@ type EventParticipantsSectionProps = {
   inviteResult?: InviteParticipantsResult;
   isInviting: boolean;
   error: unknown;
+  showPublishWarning?: boolean;
 };
 
 export function EventParticipantsSection({
@@ -22,6 +23,7 @@ export function EventParticipantsSection({
   inviteResult,
   isInviting,
   error,
+  showPublishWarning = false,
 }: EventParticipantsSectionProps) {
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_4px_20px_rgba(15,23,42,0.04)] sm:p-8">
@@ -34,6 +36,7 @@ export function EventParticipantsSection({
           inviteParticipants={inviteParticipants}
           inviteResult={inviteResult}
           isInviting={isInviting}
+          showPublishWarning={showPublishWarning}
         />
       ) : null}
     </article>

@@ -34,6 +34,7 @@ const event = {
   finalizedAt: null,
   createdAt: "2026-07-06T15:00:00Z",
   updatedAt: "2026-07-06T15:00:00Z",
+  optionsLocked: false,
   options: [
     {
       id: "550e8400-e29b-41d4-a716-446655440010",
@@ -73,6 +74,7 @@ const detailController = {
   error: null,
   isLoading: false,
   createOption: vi.fn(),
+  createOptionsBatch: vi.fn(),
   createOptionError: null,
   isCreatingOption: false,
   updateOption: vi.fn(),
@@ -138,5 +140,66 @@ describe("events pages", () => {
     expect(screen.queryByText("Editar datos")).toBeNull();
     expect(screen.queryByText("Agregar opcion")).toBeNull();
     expect(screen.queryByText("Enviar invitaciones")).toBeNull();
+  });
+
+  it("hides option editing after the poll is published", () => {
+    mocks.useEventDetailPage.mockReturnValue({
+      ...detailController,
+      event: {
+        ...detailController.event,
+        optionsLocked: true,
+      },
+    });
+
+    render(<MemoryRouter><EventDetailPage /></MemoryRouter>);
+
+    expect(screen.getByText("Editar datos")).toBeTruthy();
+    expect(screen.getByText("Enviar invitaciones")).toBeTruthy();
+    expect(screen.getByText("Las opciones quedaron bloqueadas porque la encuesta ya fue publicada.")).toBeTruthy();
+    expect(screen.queryByText("Agregar opcion")).toBeNull();
+  });
+
+  it("shows setup steps and publish warning for invited step", () => {
+    mocks.useEventDetailPage.mockReturnValue(detailController);
+
+    render(
+      <MemoryRouter initialEntries={[`/events/${event.id}?setup=guests`]}>
+        <EventDetailPage />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText("Datos")).toBeTruthy();
+    expect(screen.getByText("Opciones")).toBeTruthy();
+    expect(screen.getAllByText("Invitados").length).toBeGreaterThan(0);
+    expect(
+      screen.getByText(/Cuando envies invitaciones, la encuesta quedara publicada/),
+    ).toBeTruthy();
+    expect(screen.queryByText("Agregar opcion")).toBeNull();
+    expect(screen.getByText("Volver a opciones")).toBeTruthy();
+  });
+
+  it("does not continue from options setup without options", () => {
+    mocks.useEventDetailPage.mockReturnValue({
+      ...detailController,
+      event: {
+        ...detailController.event,
+        options: [],
+      },
+    });
+
+    render(
+      <MemoryRouter initialEntries={[`/events/${event.id}?setup=options`]}>
+        <EventDetailPage />
+      </MemoryRouter>,
+    );
+
+    const continueButton = screen.getByRole("button", {
+      name: "Continuar a invitados",
+    });
+
+    expect(continueButton).toHaveProperty("disabled", true);
+    expect(
+      screen.getByText("Agrega al menos una opcion antes de invitar personas."),
+    ).toBeTruthy();
   });
 });

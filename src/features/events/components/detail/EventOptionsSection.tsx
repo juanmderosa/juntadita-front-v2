@@ -12,6 +12,7 @@ type EventOptionsSectionProps = {
   event: EventDetail;
   canManage: boolean;
   createOption: (input: CreateEventOptionInput) => Promise<unknown>;
+  createOptionsBatch: (input: CreateEventOptionInput[]) => Promise<unknown>;
   updateOption: (
     optionId: string,
     input: UpdateEventOptionInput,
@@ -25,14 +26,22 @@ export function EventOptionsSection({
   event,
   canManage,
   createOption,
+  createOptionsBatch,
   updateOption,
   deleteOption,
   isCreating,
   error,
 }: EventOptionsSectionProps) {
+  const canManageOptions = canManage && !event.optionsLocked;
+
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_4px_20px_rgba(15,23,42,0.04)] sm:p-8">
       <EventOptionsHeader optionsCount={event.options.length} />
+      {canManage && event.optionsLocked ? (
+        <p className="mt-5 rounded-xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
+          Las opciones quedaron bloqueadas porque la encuesta ya fue publicada.
+        </p>
+      ) : null}
 
       {event.options.length === 0 ? (
         <EmptyState
@@ -41,7 +50,7 @@ export function EventOptionsSection({
         />
       ) : (
         <EventOptionsList
-          canManage={canManage}
+          canManage={canManageOptions}
           deleteOption={deleteOption}
           options={event.options}
           timeZone={event.timezone}
@@ -49,11 +58,13 @@ export function EventOptionsSection({
         />
       )}
 
-      {canManage && event.type === "poll" ? (
+      {canManageOptions && event.type === "poll" ? (
         <EventOptionAdminPanel
           createOption={createOption}
+          createOptionsBatch={createOptionsBatch}
           error={error}
           isCreating={isCreating}
+          options={event.options}
           timeZone={event.timezone}
         />
       ) : null}
