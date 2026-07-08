@@ -3,6 +3,7 @@ import {
   eventResponseSchema,
   inviteParticipantsResponseSchema,
   optionResponseSchema,
+  optionsResponseSchema,
   paginatedEventsResponseSchema,
   participantsResponseSchema,
 } from "@/features/events/schemas/events.schemas";
@@ -66,6 +67,19 @@ export const eventsApi = {
       `/api/v1/events/${encodeURIComponent(eventId)}/options`,
       input,
       { accessToken, responseSchema: optionResponseSchema },
+    );
+    return response.data;
+  },
+
+  async createOptionsBatch(
+    accessToken: string,
+    eventId: string,
+    options: CreateEventOptionInput[],
+  ) {
+    const response = await http.post<SuccessResponse<EventOption[]>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/options/batch`,
+      { options },
+      { accessToken, responseSchema: optionsResponseSchema },
     );
     return response.data;
   },

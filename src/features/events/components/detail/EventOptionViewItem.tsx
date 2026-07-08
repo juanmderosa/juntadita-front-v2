@@ -39,13 +39,15 @@ export function EventOptionViewItem({
       {canManage ? (
         <div className="flex gap-2">
           <Button
-            className="bg-white px-3 text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100"
-            onClick={startEditing}>
+            className="px-3"
+            onClick={startEditing}
+            variant="secondary">
             <Pencil className="size-4" />
           </Button>
           <Button
-            className="bg-red-600 px-3 hover:bg-red-700"
-            onClick={() => deleteOption(option.id)}>
+            className="px-3"
+            onClick={() => deleteOption(option.id)}
+            variant="danger">
             <Trash2 className="size-4" />
           </Button>
         </div>
