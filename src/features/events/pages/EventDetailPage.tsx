@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ErrorState } from "@/components/feedback/ErrorState";
 import { PageLoader } from "@/components/feedback/PageLoader";
 import { useEventDetailPage } from "@/features/events/hooks/useEventDetailPage";
@@ -8,9 +8,15 @@ import { EventParticipantsSection } from "@/features/events/components/detail/Ev
 import { EventDetailHeader } from "@/features/events/components/detail/EventDetailHeader";
 import { EventDescription } from "@/features/events/components/detail/EventDescription";
 import { EventDetailAside } from "@/features/events/components/detail/EventDetailAside";
+import {
+  EventSetupSteps,
+  type EventSetupStep,
+} from "@/features/events/components/detail/EventSetupSteps";
+import { EventSetupActions } from "@/features/events/components/detail/EventSetupActions";
 
 export function EventDetailPage() {
   const controller = useEventDetailPage();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   if (controller.isLoading) {
     return (
@@ -38,6 +44,18 @@ export function EventDetailPage() {
 
   const event = controller.event;
   const canManage = event.currentUserRole === "admin";
+  const requestedSetupStep = searchParams.get("setup");
+  const setupStep = getSetupStep(requestedSetupStep, event.type);
+  const isSetupMode = canManage && setupStep !== null;
+  const showDescription = !isSetupMode;
+  const showOptions =
+    event.type === "poll" && (!isSetupMode || setupStep === "options");
+  const showParticipants = !isSetupMode || setupStep === "guests";
+  const goToOptions = () => setSearchParams({ setup: "options" }, { replace: true });
+  const goToGuests = () => setSearchParams({ setup: "guests" }, { replace: true });
+  const finishSetup = () => setSearchParams({}, { replace: true });
+  const needsOptionsBeforeInviting =
+    event.type === "poll" && setupStep === "options" && event.options.length === 0;
 
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:py-12">
@@ -53,13 +71,20 @@ export function EventDetailPage() {
         canManage={canManage}
       />
 
+      {isSetupMode ? (
+        <EventSetupSteps currentStep={setupStep} eventType={event.type} />
+      ) : null}
+
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_280px]">
         <div className="space-y-6">
-          <EventDescription description={event.description} />
-          {event.type === "poll" ? (
+          {showDescription ? (
+            <EventDescription description={event.description} />
+          ) : null}
+          {showOptions ? (
             <EventOptionsSection
               canManage={canManage}
               createOption={controller.createOption}
+              createOptionsBatch={controller.createOptionsBatch}
               deleteOption={controller.deleteOption}
               error={
                 controller.createOptionError ?? controller.deleteOptionError
@@ -69,14 +94,37 @@ export function EventDetailPage() {
               updateOption={controller.updateOption}
             />
           ) : null}
-          <EventParticipantsSection
-            canManage={canManage}
-            error={controller.inviteParticipantsError}
-            event={event}
-            inviteParticipants={controller.inviteParticipants}
-            inviteResult={controller.inviteParticipantsResult}
-            isInviting={controller.isInvitingParticipants}
-          />
+          {showParticipants ? (
+            <EventParticipantsSection
+              canManage={canManage}
+              error={controller.inviteParticipantsError}
+              event={event}
+              inviteParticipants={controller.inviteParticipants}
+              inviteResult={controller.inviteParticipantsResult}
+              isInviting={controller.isInvitingParticipants}
+              showPublishWarning={isSetupMode && event.type === "poll"}
+            />
+          ) : null}
+          {isSetupMode ? (
+            <EventSetupActions
+              backLabel="Volver a opciones"
+              finishLabel="Ver evento"
+              helperText={
+                needsOptionsBeforeInviting
+                  ? "Agrega al menos una opcion antes de invitar personas."
+                  : undefined
+              }
+              isNextDisabled={needsOptionsBeforeInviting}
+              nextLabel="Continuar a invitados"
+              onBack={
+                event.type === "poll" && setupStep === "guests"
+                  ? goToOptions
+                  : undefined
+              }
+              onFinish={setupStep === "guests" ? finishSetup : undefined}
+              onNext={setupStep === "options" ? goToGuests : undefined}
+            />
+          ) : null}
         </div>
         <EventDetailAside
           canManage={canManage}
@@ -86,4 +134,13 @@ export function EventDetailPage() {
       </div>
     </section>
   );
+}
+
+function getSetupStep(
+  value: string | null,
+  eventType: "poll" | "fixed",
+): EventSetupStep | null {
+  if (value === "guests") return "guests";
+  if (eventType === "poll" && value === "options") return "options";
+  return null;
 }

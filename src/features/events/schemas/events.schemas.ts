@@ -62,6 +62,7 @@ export const inviteParticipantsResultSchema = z.object({
 });
 
 export const eventDetailSchema = eventSummarySchema.extend({
+  optionsLocked: z.boolean(),
   options: z.array(eventOptionSchema),
   participants: z.array(eventParticipantSchema),
 });

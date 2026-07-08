@@ -47,8 +47,8 @@ export function EventOptionEditForm({
       <div className="flex gap-2 sm:col-span-2">
         <Button type="submit">Guardar</Button>
         <Button
-          className="bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100"
-          onClick={cancelEditing}>
+          onClick={cancelEditing}
+          variant="secondary">
           Cancelar
         </Button>
       </div>

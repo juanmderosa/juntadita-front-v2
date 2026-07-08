@@ -46,7 +46,7 @@ describe("create event page", () => {
     fireEvent.change(screen.getByLabelText("Cierre de la votacion"), {
       target: { value: "2099-01-01T12:00" },
     });
-    await user.click(screen.getByRole("button", { name: "Crear evento" }));
+    await user.click(screen.getByRole("button", { name: "Continuar" }));
 
     await waitFor(() => expect(screen.getByText("Detalle creado")).toBeTruthy());
     expect(mocks.create).toHaveBeenCalledWith(

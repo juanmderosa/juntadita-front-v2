@@ -27,6 +27,11 @@ export function useEventDetailPage() {
       eventsApi.createOption(accessToken!, eventId, input),
     onSuccess: invalidateEvent,
   });
+  const createOptionsBatchMutation = useMutation({
+    mutationFn: (options: CreateEventOptionInput[]) =>
+      eventsApi.createOptionsBatch(accessToken!, eventId, options),
+    onSuccess: invalidateEvent,
+  });
   const updateOptionMutation = useMutation({
     mutationFn: ({
       optionId,
@@ -55,8 +60,12 @@ export function useEventDetailPage() {
     isLoading: query.isLoading,
     createOption: (input: CreateEventOptionInput) =>
       createOptionMutation.mutateAsync(input),
-    createOptionError: createOptionMutation.error,
-    isCreatingOption: createOptionMutation.isPending,
+    createOptionsBatch: (options: CreateEventOptionInput[]) =>
+      createOptionsBatchMutation.mutateAsync(options),
+    createOptionError:
+      createOptionMutation.error ?? createOptionsBatchMutation.error,
+    isCreatingOption:
+      createOptionMutation.isPending || createOptionsBatchMutation.isPending,
     updateOption: (optionId: string, input: UpdateEventOptionInput) =>
       updateOptionMutation.mutateAsync({ optionId, input }),
     updateOptionError: updateOptionMutation.error,
