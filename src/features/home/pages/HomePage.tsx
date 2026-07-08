@@ -1,6 +1,6 @@
-import { useEventsPage } from "../../events/hooks/useEventsPage";
-import { HomePageContainer } from "../components/HomePageContainer";
-import { HomePageHeader } from "../components/HomePageHeader";
+import { useEventsPage } from "@/features/events/hooks/useEventsPage";
+import { HomePageContainer } from "@/features/home/components/HomePageContainer";
+import { HomePageHeader } from "@/features/home/components/HomePageHeader";
 
 export function HomePage() {
   const controller = useEventsPage();

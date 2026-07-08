@@ -3,7 +3,7 @@ import {
   editEventFormSchema,
   eventFormSchema,
   optionFormSchema,
-} from "../src/features/events/schemas/events.schemas";
+} from "@/features/events/schemas/events.schemas";
 
 describe("event form schemas", () => {
   it("requires a future poll close", () => {

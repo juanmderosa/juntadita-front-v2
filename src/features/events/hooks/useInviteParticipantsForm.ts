@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import type { InviteParticipantsResult } from "../../../types/events";
+import type { InviteParticipantsResult } from "@/types/events";
 import {
   getInviteEmailsValidationError,
   parseInviteEmails,
-} from "../lib/eventParticipants.lib";
+} from "@/features/events/lib/eventParticipants.lib";
 import {
   inviteParticipantsFormSchema,
   type InviteParticipantsFormInput,
-} from "../schemas/events.schemas";
+} from "@/features/events/schemas/events.schemas";
 
 export function useInviteParticipantsForm(
   inviteParticipants: (emails: string[]) => Promise<InviteParticipantsResult>,

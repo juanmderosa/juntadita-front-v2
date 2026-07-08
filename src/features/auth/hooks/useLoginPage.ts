@@ -3,16 +3,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { usersApi } from "../../../api/users.api";
-import { getErrorMessage } from "../../../lib/errors";
-import { getSupabaseBrowser } from "../../../lib/supabase";
-import { useAuth } from "./useAuth";
+import { usersApi } from "@/api/users.api";
+import { getErrorMessage } from "@/lib/errors";
+import { getSupabaseBrowser } from "@/lib/supabase";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
   emailOtpSchema,
   otpCodeSchema,
   type EmailOtpInput,
   type OtpCodeInput,
-} from "../schemas/auth.schemas";
+} from "@/features/auth/schemas/auth.schemas";
 
 type LoginStep = "email" | "code";
 

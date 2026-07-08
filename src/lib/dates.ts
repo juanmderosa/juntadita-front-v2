@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, DEFAULT_TIME_ZONE } from "./localization";
+import { DEFAULT_LOCALE, DEFAULT_TIME_ZONE } from "@/lib/localization";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 type DateFormatOptions = {

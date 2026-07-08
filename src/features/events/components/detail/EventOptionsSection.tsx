@@ -2,11 +2,11 @@ import type {
   CreateEventOptionInput,
   EventDetail,
   UpdateEventOptionInput,
-} from "../../../types/events";
-import { EventOptionAdminPanel } from "./EventOptionAdminPanel";
-import { EventOptionsEmptyState } from "./EventOptionsEmptyState";
-import { EventOptionsHeader } from "./EventOptionsHeader";
-import { EventOptionsList } from "./EventOptionsList";
+} from "@/types/events";
+import { EmptyState } from "@/components/feedback/EmptyState";
+import { EventOptionAdminPanel } from "@/features/events/components/detail/EventOptionAdminPanel";
+import { EventOptionsHeader } from "@/features/events/components/detail/EventOptionsHeader";
+import { EventOptionsList } from "@/features/events/components/detail/EventOptionsList";
 
 type EventOptionsSectionProps = {
   event: EventDetail;
@@ -35,7 +35,10 @@ export function EventOptionsSection({
       <EventOptionsHeader optionsCount={event.options.length} />
 
       {event.options.length === 0 ? (
-        <EventOptionsEmptyState />
+        <EmptyState
+          className="mt-5 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-left"
+          title="Todavia no hay opciones cargadas."
+        />
       ) : (
         <EventOptionsList
           canManage={canManage}

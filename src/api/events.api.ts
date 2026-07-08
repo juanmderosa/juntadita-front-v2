@@ -1,11 +1,11 @@
-import { http } from "./http";
+import { http } from "@/api/http";
 import {
   eventResponseSchema,
   inviteParticipantsResponseSchema,
   optionResponseSchema,
   paginatedEventsResponseSchema,
   participantsResponseSchema,
-} from "../features/events/schemas/events.schemas";
+} from "@/features/events/schemas/events.schemas";
 import type {
   CreateEventOptionInput,
   CreateEventInput,
@@ -16,8 +16,8 @@ import type {
   InviteParticipantsResult,
   UpdateEventOptionInput,
   UpdateEventInput,
-} from "../types/events";
-import type { PaginatedResponse, SuccessResponse } from "../types/api";
+} from "@/types/events";
+import type { PaginatedResponse, SuccessResponse } from "@/types/api";
 
 export const eventsApi = {
   async list(accessToken: string, page = 1, limit = 20) {

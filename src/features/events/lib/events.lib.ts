@@ -1,5 +1,5 @@
-import { formatDateTime } from "../../../lib/dates";
-import type { EventSummary } from "../../../types/events";
+import { formatDateTime } from "@/lib/dates";
+import type { EventSummary } from "@/types/events";
 
 export function getEventStatus(event: EventSummary) {
   if (event.finalizedAt) return "Finalizado";

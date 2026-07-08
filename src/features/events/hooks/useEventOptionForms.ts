@@ -5,17 +5,17 @@ import type {
   CreateEventOptionInput,
   EventOption,
   UpdateEventOptionInput,
-} from "../../../types/events";
+} from "@/types/events";
 import {
   defaultOptionFormValues,
   toCreateEventOptionInput,
   toOptionFormValues,
   toUpdateEventOptionInput,
-} from "../lib/eventOptions.lib";
+} from "@/features/events/lib/eventOptions.lib";
 import {
   optionFormSchema,
   type OptionFormInput,
-} from "../schemas/events.schemas";
+} from "@/features/events/schemas/events.schemas";
 
 export function useCreateEventOptionForm({
   createOption,

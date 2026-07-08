@@ -1,9 +1,9 @@
 import type { UseFormReturn } from "react-hook-form";
 import { CalendarClock, CheckCircle2 } from "lucide-react";
-import { RHForm } from "../../../components/forms/RHForm";
-import { RHFormInput } from "../../../components/forms/RHFormInput";
-import { Button } from "../../../components/ui/Button";
-import type { EventFormInput } from "../schemas/events.schemas";
+import { RHForm } from "@/components/forms/RHForm";
+import { RHFormInput } from "@/components/forms/RHFormInput";
+import { Button } from "@/components/ui/Button";
+import type { EventFormInput } from "@/features/events/schemas/events.schemas";
 
 type EventFormProps = {
   form: UseFormReturn<EventFormInput>;

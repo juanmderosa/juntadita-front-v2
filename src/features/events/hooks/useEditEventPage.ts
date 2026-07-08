@@ -3,14 +3,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { eventsApi } from "../../../api/events.api";
-import { getErrorMessage } from "../../../lib/errors";
-import { useAuth } from "../../auth/hooks/useAuth";
+import { eventsApi } from "@/api/events.api";
+import { getErrorMessage } from "@/lib/errors";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
   editEventFormSchema,
   type EditEventFormInput,
-} from "../schemas/events.schemas";
-import { eventQueryKey, eventsQueryKey } from "./useEventsPage";
+} from "@/features/events/schemas/events.schemas";
+import { eventQueryKey, eventsQueryKey } from "@/features/events/hooks/useEventsPage";
 
 export function useEditEventPage() {
   const { eventId = "" } = useParams();

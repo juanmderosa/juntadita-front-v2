@@ -2,13 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { usersApi } from "../../../api/users.api";
-import { getErrorMessage } from "../../../lib/errors";
-import { useAuth } from "./useAuth";
+import { usersApi } from "@/api/users.api";
+import { getErrorMessage } from "@/lib/errors";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
   displayNameSchema,
   type DisplayNameInput,
-} from "../schemas/auth.schemas";
+} from "@/features/auth/schemas/auth.schemas";
 
 export function useOnboardingPage() {
   const navigate = useNavigate();

@@ -1,13 +1,13 @@
-import { RHForm } from "../../../components/forms/RHForm";
-import { RHFormInput } from "../../../components/forms/RHFormInput";
-import { Button } from "../../../components/ui/Button";
-import { AuthShell } from "../components/AuthShell";
-import { AuthStatus } from "../components/AuthStatus";
-import { useLoginPage } from "../hooks/useLoginPage";
+import { RHForm } from "@/components/forms/RHForm";
+import { RHFormInput } from "@/components/forms/RHFormInput";
+import { Button } from "@/components/ui/Button";
+import { AuthShell } from "@/features/auth/components/AuthShell";
+import { AuthStatus } from "@/features/auth/components/AuthStatus";
+import { useLoginPage } from "@/features/auth/hooks/useLoginPage";
 import {
   type EmailOtpInput,
   type OtpCodeInput,
-} from "../schemas/auth.schemas";
+} from "@/features/auth/schemas/auth.schemas";
 
 export function LoginPage() {
   const login = useLoginPage();

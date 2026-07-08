@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { eventsApi } from "../../../api/events.api";
+import { eventsApi } from "@/api/events.api";
 import type {
   CreateEventOptionInput,
   UpdateEventOptionInput,
-} from "../../../types/events";
-import { useAuth } from "../../auth/hooks/useAuth";
-import { eventQueryKey, eventsQueryKey } from "./useEventsPage";
+} from "@/types/events";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { eventQueryKey, eventsQueryKey } from "@/features/events/hooks/useEventsPage";
 
 export function useEventDetailPage() {
   const { eventId = "" } = useParams();

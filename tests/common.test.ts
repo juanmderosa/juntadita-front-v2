@@ -4,15 +4,15 @@ import {
   formatDateTime,
   isoToLocalDateTime,
   localDateTimeToIso,
-} from "../src/lib/dates";
-import { formatMoney, parseMoneyToCents } from "../src/lib/money";
+} from "@/lib/dates";
+import { formatMoney, parseMoneyToCents } from "@/lib/money";
 import {
   amountInCentsSchema,
   currencyCodeSchema,
   normalizedEmailSchema,
   paginationQuerySchema,
   timeZoneSchema,
-} from "../src/schemas/common.schemas";
+} from "@/schemas/common.schemas";
 
 describe("shared frontend helpers", () => {
   it("formats dates with default and custom timezones", () => {

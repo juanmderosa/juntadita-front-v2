@@ -1,10 +1,10 @@
 import type {
   EventDetail,
   InviteParticipantsResult,
-} from "../../../types/events";
-import { EventParticipantsHeader } from "./EventParticipantsHeader";
-import { EventParticipantsList } from "./EventParticipantsList";
-import { InviteParticipantsPanel } from "./InviteParticipantsPanel";
+} from "@/types/events";
+import { EventParticipantsHeader } from "@/features/events/components/detail/EventParticipantsHeader";
+import { EventParticipantsList } from "@/features/events/components/detail/EventParticipantsList";
+import { InviteParticipantsPanel } from "@/features/events/components/detail/InviteParticipantsPanel";
 
 type EventParticipantsSectionProps = {
   event: EventDetail;

@@ -9,9 +9,9 @@ import {
 } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { usersApi } from "../../../api/users.api";
-import { getSupabaseBrowser } from "../../../lib/supabase";
-import type { CurrentUser } from "../../../types/users";
+import { usersApi } from "@/api/users.api";
+import { getSupabaseBrowser } from "@/lib/supabase";
+import type { CurrentUser } from "@/types/users";
 
 type AuthContextValue = {
   session: Session | null;

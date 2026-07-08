@@ -1,6 +1,6 @@
-import { getErrorMessage } from "../../../lib/errors";
-import type { CreateEventOptionInput } from "../../../types/events";
-import { EventOptionCreateForm } from "./EventOptionCreateForm";
+import { getErrorMessage } from "@/lib/errors";
+import type { CreateEventOptionInput } from "@/types/events";
+import { EventOptionCreateForm } from "@/features/events/components/detail/EventOptionCreateForm";
 
 type EventOptionAdminPanelProps = {
   createOption: (input: CreateEventOptionInput) => Promise<unknown>;

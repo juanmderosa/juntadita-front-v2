@@ -1,5 +1,5 @@
 import type { ZodType } from "zod";
-import { errorResponseSchema } from "../schemas/api.schemas";
+import { errorResponseSchema } from "@/schemas/api.schemas";
 
 export type ApiFieldError = {
   field?: string;

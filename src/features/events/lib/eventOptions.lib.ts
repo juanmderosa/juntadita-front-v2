@@ -5,13 +5,13 @@ import {
   isoToLocalDateTime,
   localDateToIso,
   localDateTimeToIso,
-} from "../../../lib/dates";
+} from "@/lib/dates";
 import type {
   CreateEventOptionInput,
   EventOption,
   UpdateEventOptionInput,
-} from "../../../types/events";
-import type { OptionFormInput } from "../schemas/events.schemas";
+} from "@/types/events";
+import type { OptionFormInput } from "@/features/events/schemas/events.schemas";
 
 export const optionTypeLabels = {
   date: "Dia",

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidTimeZone } from "../lib/timezones";
+import { isValidTimeZone } from "@/lib/timezones";
 
 export const DEFAULT_PAGE = 1;
 export const DEFAULT_PAGE_LIMIT = 20;

@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { successResponseSchema } from "./api.schemas";
+import { successResponseSchema } from "@/schemas/api.schemas";
 import {
   isoDateTimeSchema,
   normalizedEmailSchema,
   uuidSchema,
-} from "./common.schemas";
+} from "@/schemas/common.schemas";
 
 const profileSchema = z.object({
   id: uuidSchema,
