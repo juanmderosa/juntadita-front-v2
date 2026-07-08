@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { successResponseSchema, paginatedResponseSchema } from "../../../schemas/api.schemas";
+import { successResponseSchema, paginatedResponseSchema } from "@/schemas/api.schemas";
 import {
   currencyCodeSchema,
   isoDateTimeSchema,
   timeZoneSchema,
   uuidSchema,
-} from "../../../schemas/common.schemas";
-import { localDateTimeToIso } from "../../../lib/dates";
+} from "@/schemas/common.schemas";
+import { localDateTimeToIso } from "@/lib/dates";
 
 export const eventSummarySchema = z.object({
   id: uuidSchema,

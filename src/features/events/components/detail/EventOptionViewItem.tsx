@@ -1,10 +1,10 @@
 import { CalendarDays, Clock, Pencil, Trash2 } from "lucide-react";
-import { Button } from "../../../components/ui/Button";
-import type { EventOption } from "../../../types/events";
+import { Button } from "@/components/ui/Button";
+import type { EventOption } from "@/types/events";
 import {
   formatOptionSchedule,
   optionTypeLabels,
-} from "../lib/eventOptions.lib";
+} from "@/features/events/lib/eventOptions.lib";
 
 type EventOptionViewItemProps = {
   canManage: boolean;

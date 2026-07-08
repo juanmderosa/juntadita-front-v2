@@ -1,5 +1,5 @@
-import type { InviteParticipantsResult } from "../../../types/events";
-import { getDeliveryLabel } from "../lib/eventParticipants.lib";
+import type { InviteParticipantsResult } from "@/types/events";
+import { getDeliveryLabel } from "@/features/events/lib/eventParticipants.lib";
 
 type InviteParticipantsResultListProps = {
   inviteResult: InviteParticipantsResult;

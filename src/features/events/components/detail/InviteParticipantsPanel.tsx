@@ -1,8 +1,8 @@
 import { UserRoundPlus } from "lucide-react";
-import { getErrorMessage } from "../../../lib/errors";
-import type { InviteParticipantsResult } from "../../../types/events";
-import { InviteParticipantsForm } from "./InviteParticipantsForm";
-import { InviteParticipantsResultList } from "./InviteParticipantsResultList";
+import { getErrorMessage } from "@/lib/errors";
+import type { InviteParticipantsResult } from "@/types/events";
+import { InviteParticipantsForm } from "@/features/events/components/detail/InviteParticipantsForm";
+import { InviteParticipantsResultList } from "@/features/events/components/detail/InviteParticipantsResultList";
 
 type InviteParticipantsPanelProps = {
   error: unknown;

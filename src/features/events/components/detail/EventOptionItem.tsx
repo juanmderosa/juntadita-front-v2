@@ -1,10 +1,10 @@
 import type {
   EventOption,
   UpdateEventOptionInput,
-} from "../../../types/events";
-import { useEditableEventOption } from "../hooks/useEventOptionForms";
-import { EventOptionEditForm } from "./EventOptionEditForm";
-import { EventOptionViewItem } from "./EventOptionViewItem";
+} from "@/types/events";
+import { useEditableEventOption } from "@/features/events/hooks/useEventOptionForms";
+import { EventOptionEditForm } from "@/features/events/components/detail/EventOptionEditForm";
+import { EventOptionViewItem } from "@/features/events/components/detail/EventOptionViewItem";
 
 type EventOptionItemProps = {
   canManage: boolean;

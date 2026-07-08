@@ -1,11 +1,11 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { RHForm } from "../../../components/forms/RHForm";
-import { RHFormInput } from "../../../components/forms/RHFormInput";
-import { Button } from "../../../components/ui/Button";
-import { getErrorMessage } from "../../../lib/errors";
-import { useEditEventPage } from "../hooks/useEditEventPage";
-import type { EditEventFormInput } from "../schemas/events.schemas";
+import { RHForm } from "@/components/forms/RHForm";
+import { RHFormInput } from "@/components/forms/RHFormInput";
+import { Button } from "@/components/ui/Button";
+import { getErrorMessage } from "@/lib/errors";
+import { useEditEventPage } from "@/features/events/hooks/useEditEventPage";
+import type { EditEventFormInput } from "@/features/events/schemas/events.schemas";
 
 export function EditEventPage() {
   const controller = useEditEventPage();

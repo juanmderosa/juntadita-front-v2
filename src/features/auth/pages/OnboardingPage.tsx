@@ -1,10 +1,10 @@
-import { RHForm } from "../../../components/forms/RHForm";
-import { RHFormInput } from "../../../components/forms/RHFormInput";
-import { Button } from "../../../components/ui/Button";
-import { AuthShell } from "../components/AuthShell";
-import { AuthStatus } from "../components/AuthStatus";
-import { useOnboardingPage } from "../hooks/useOnboardingPage";
-import type { DisplayNameInput } from "../schemas/auth.schemas";
+import { RHForm } from "@/components/forms/RHForm";
+import { RHFormInput } from "@/components/forms/RHFormInput";
+import { Button } from "@/components/ui/Button";
+import { AuthShell } from "@/features/auth/components/AuthShell";
+import { AuthStatus } from "@/features/auth/components/AuthStatus";
+import { useOnboardingPage } from "@/features/auth/hooks/useOnboardingPage";
+import type { DisplayNameInput } from "@/features/auth/schemas/auth.schemas";
 
 export function OnboardingPage() {
   const onboarding = useOnboardingPage();

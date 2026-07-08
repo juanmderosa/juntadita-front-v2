@@ -5,19 +5,19 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
-import { CreateEventPage } from "../src/features/events/pages/CreateEventPage";
+import { CreateEventPage } from "@/features/events/pages/CreateEventPage";
 
 const mocks = vi.hoisted(() => ({
   create: vi.fn(),
 }));
 
-vi.mock("../src/api/events.api", () => ({
+vi.mock("@/api/events.api", () => ({
   eventsApi: {
     create: mocks.create,
   },
 }));
 
-vi.mock("../src/features/auth/hooks/useAuth", () => ({
+vi.mock("@/features/auth/hooks/useAuth", () => ({
   useAuth: () => ({ accessToken: "access-token" }),
 }));
 

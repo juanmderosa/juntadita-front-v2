@@ -2,16 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { eventsApi } from "../../../api/events.api";
-import { localDateTimeToIso } from "../../../lib/dates";
-import { getErrorMessage } from "../../../lib/errors";
-import type { CreateEventInput } from "../../../types/events";
-import { useAuth } from "../../auth/hooks/useAuth";
+import { eventsApi } from "@/api/events.api";
+import { localDateTimeToIso } from "@/lib/dates";
+import { getErrorMessage } from "@/lib/errors";
+import type { CreateEventInput } from "@/types/events";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import {
   eventFormSchema,
   type EventFormInput,
-} from "../schemas/events.schemas";
-import { eventsQueryKey } from "./useEventsPage";
+} from "@/features/events/schemas/events.schemas";
+import { eventsQueryKey } from "@/features/events/hooks/useEventsPage";
 
 export function useCreateEventPage() {
   const { accessToken } = useAuth();

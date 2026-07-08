@@ -5,7 +5,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
-import { useAuth } from "../../features/auth/hooks/useAuth";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 function navClass({ isActive }: { isActive: boolean }) {
   return `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${

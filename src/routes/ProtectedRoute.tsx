@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { Button } from "../components/ui/Button";
-import { AuthShell } from "../features/auth/components/AuthShell";
-import { useAuth } from "../features/auth/hooks/useAuth";
-import { getAuthRedirectPath } from "../lib/auth";
-import { getErrorMessage } from "../lib/errors";
+import { Button } from "@/components/ui/Button";
+import { AuthShell } from "@/features/auth/components/AuthShell";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { getAuthRedirectPath } from "@/lib/auth";
+import { getErrorMessage } from "@/lib/errors";
 
 type ProtectedRouteProps = {
   mode?: "app" | "onboarding" | "public";

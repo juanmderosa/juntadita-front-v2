@@ -1,4 +1,4 @@
-import { DEFAULT_CURRENCY_CODE, DEFAULT_LOCALE } from "./localization";
+import { DEFAULT_CURRENCY_CODE, DEFAULT_LOCALE } from "@/lib/localization";
 
 const DECIMAL_MONEY_PATTERN = /^\d+(?:[.,]\d{1,2})?$/;
 

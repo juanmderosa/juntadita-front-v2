@@ -1,11 +1,11 @@
 import { CalendarClock, ChevronRight, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { EventSummary } from "../../../types/events";
+import type { EventSummary } from "@/types/events";
 import {
   getEventSchedule,
   getEventStatus,
   getEventTypeLabel,
-} from "../lib/events.lib";
+} from "@/features/events/lib/events.lib";
 
 export function EventCard({ event }: { event: EventSummary }) {
   const status = getEventStatus(event);

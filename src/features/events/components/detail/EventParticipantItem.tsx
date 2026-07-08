@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react";
-import type { EventParticipant } from "../../../types/events";
+import type { EventParticipant } from "@/types/events";
 
 type EventParticipantItemProps = {
   participant: EventParticipant;

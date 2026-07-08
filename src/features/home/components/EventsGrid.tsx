@@ -1,12 +1,12 @@
 import React from "react";
-import { EventCard } from "../../events/components/EventCard";
-import { EventSummary } from "../../../types/events";
+import { EventCard } from "@/features/events/components/list/EventCard";
+import { EventSummary } from "@/types/events";
 import {
   FetchNextPageOptions,
   InfiniteData,
   InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
-import { PaginatedResponse } from "../../../types/api";
+import { PaginatedResponse } from "@/types/api";
 
 interface Props {
   events: EventSummary[];

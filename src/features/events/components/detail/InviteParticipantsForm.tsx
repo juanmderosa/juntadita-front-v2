@@ -1,7 +1,7 @@
-import { Button } from "../../../components/ui/Button";
-import { RHForm } from "../../../components/forms/RHForm";
-import type { InviteParticipantsResult } from "../../../types/events";
-import { useInviteParticipantsForm } from "../hooks/useInviteParticipantsForm";
+import { Button } from "@/components/ui/Button";
+import { RHForm } from "@/components/forms/RHForm";
+import type { InviteParticipantsResult } from "@/types/events";
+import { useInviteParticipantsForm } from "@/features/events/hooks/useInviteParticipantsForm";
 
 type InviteParticipantsFormProps = {
   inviteParticipants: (emails: string[]) => Promise<InviteParticipantsResult>;

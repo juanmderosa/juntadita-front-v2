@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { EventForm } from "../components/EventForm";
-import { useCreateEventPage } from "../hooks/useCreateEventPage";
+import { EventForm } from "@/features/events/components/create/EventForm";
+import { useCreateEventPage } from "@/features/events/hooks/useCreateEventPage";
 
 export function CreateEventPage() {
   const controller = useCreateEventPage();

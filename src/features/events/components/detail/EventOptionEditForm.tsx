@@ -1,12 +1,12 @@
-import { Button } from "../../../components/ui/Button";
-import { RHForm } from "../../../components/forms/RHForm";
-import { RHFormInput } from "../../../components/forms/RHFormInput";
+import { Button } from "@/components/ui/Button";
+import { RHForm } from "@/components/forms/RHForm";
+import { RHFormInput } from "@/components/forms/RHFormInput";
 import type {
   EventOption,
   UpdateEventOptionInput,
-} from "../../../types/events";
-import { useEditableEventOption } from "../hooks/useEventOptionForms";
-import type { OptionFormInput } from "../schemas/events.schemas";
+} from "@/types/events";
+import { useEditableEventOption } from "@/features/events/hooks/useEventOptionForms";
+import type { OptionFormInput } from "@/features/events/schemas/events.schemas";
 
 type EventOptionEditFormProps = {
   cancelEditing: () => void;

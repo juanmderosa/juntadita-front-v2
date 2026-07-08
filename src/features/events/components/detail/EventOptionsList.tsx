@@ -1,8 +1,8 @@
 import type {
   EventOption,
   UpdateEventOptionInput,
-} from "../../../types/events";
-import { EventOptionItem } from "./EventOptionItem";
+} from "@/types/events";
+import { EventOptionItem } from "@/features/events/components/detail/EventOptionItem";
 
 type EventOptionsListProps = {
   canManage: boolean;

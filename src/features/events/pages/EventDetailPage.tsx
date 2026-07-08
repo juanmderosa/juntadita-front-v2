@@ -1,27 +1,40 @@
-import { ArrowLeft, CalendarClock, Crown, Pencil } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { getErrorMessage } from "../../../lib/errors";
-import {
-  getEventSchedule,
-  getEventStatus,
-  getEventTypeLabel,
-} from "../lib/events.lib";
-import { useEventDetailPage } from "../hooks/useEventDetailPage";
-import { EventOptionsSection } from "../components/EventOptionsSection";
-import { EventParticipantsSection } from "../components/EventParticipantsSection";
-import { EventDetailLoader } from "../components/EventDetailLoader";
-import { EventDetailError } from "../components/EventDetailError";
-import { EventDetailHeader } from "../components/EventDetailHeader";
-import { EventDescription } from "../components/EventDescription";
-import { EventDetailAside } from "../components/EventDetailAside";
+import { ErrorState } from "@/components/feedback/ErrorState";
+import { PageLoader } from "@/components/feedback/PageLoader";
+import { useEventDetailPage } from "@/features/events/hooks/useEventDetailPage";
+import { EventOptionsSection } from "@/features/events/components/detail/EventOptionsSection";
+import { EventParticipantsSection } from "@/features/events/components/detail/EventParticipantsSection";
+import { EventDetailHeader } from "@/features/events/components/detail/EventDetailHeader";
+import { EventDescription } from "@/features/events/components/detail/EventDescription";
+import { EventDetailAside } from "@/features/events/components/detail/EventDetailAside";
 
 export function EventDetailPage() {
   const controller = useEventDetailPage();
 
-  if (controller.isLoading) return <EventDetailLoader />;
+  if (controller.isLoading) {
+    return (
+      <PageLoader
+        className="mx-auto max-w-5xl px-4 py-12"
+        itemClassName="h-80 rounded-2xl"
+      />
+    );
+  }
 
   if (controller.error || !controller.event)
-    return <EventDetailError error={controller.error} />;
+    return (
+      <ErrorState
+        action={
+          <Link
+            className="inline-block font-bold text-indigo-700"
+            to="/">
+            Volver a mis eventos
+          </Link>
+        }
+        className="mx-auto max-w-3xl px-4 py-12"
+        error={controller.error}
+      />
+    );
 
   const event = controller.event;
   const canManage = event.currentUserRole === "admin";

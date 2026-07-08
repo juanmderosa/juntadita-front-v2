@@ -3,19 +3,19 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
-import { HomePage } from "../src/features/home/pages/HomePage";
-import { EventDetailPage } from "../src/features/events/pages/EventDetailPage";
+import { HomePage } from "@/features/home/pages/HomePage";
+import { EventDetailPage } from "@/features/events/pages/EventDetailPage";
 
 const mocks = vi.hoisted(() => ({
   useEventsPage: vi.fn(),
   useEventDetailPage: vi.fn(),
 }));
 
-vi.mock("../src/features/events/hooks/useEventsPage", () => ({
+vi.mock("@/features/events/hooks/useEventsPage", () => ({
   useEventsPage: mocks.useEventsPage,
 }));
 
-vi.mock("../src/features/events/hooks/useEventDetailPage", () => ({
+vi.mock("@/features/events/hooks/useEventDetailPage", () => ({
   useEventDetailPage: mocks.useEventDetailPage,
 }));
 

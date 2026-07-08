@@ -1,9 +1,9 @@
-import { Button } from "../../../components/ui/Button";
-import { RHForm } from "../../../components/forms/RHForm";
-import { RHFormInput } from "../../../components/forms/RHFormInput";
-import type { CreateEventOptionInput } from "../../../types/events";
-import { useCreateEventOptionForm } from "../hooks/useEventOptionForms";
-import type { OptionFormInput } from "../schemas/events.schemas";
+import { Button } from "@/components/ui/Button";
+import { RHForm } from "@/components/forms/RHForm";
+import { RHFormInput } from "@/components/forms/RHFormInput";
+import type { CreateEventOptionInput } from "@/types/events";
+import { useCreateEventOptionForm } from "@/features/events/hooks/useEventOptionForms";
+import type { OptionFormInput } from "@/features/events/schemas/events.schemas";
 
 type EventOptionCreateFormProps = {
   createOption: (input: CreateEventOptionInput) => Promise<unknown>;

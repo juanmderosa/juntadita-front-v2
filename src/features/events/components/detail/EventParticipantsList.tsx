@@ -1,5 +1,5 @@
-import type { EventParticipant } from "../../../types/events";
-import { EventParticipantItem } from "./EventParticipantItem";
+import type { EventParticipant } from "@/types/events";
+import { EventParticipantItem } from "@/features/events/components/detail/EventParticipantItem";
 
 type EventParticipantsListProps = {
   participants: EventParticipant[];

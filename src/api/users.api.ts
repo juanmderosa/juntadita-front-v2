@@ -1,7 +1,7 @@
-import { http } from "./http";
-import type { SuccessResponse } from "../types/api";
-import type { CurrentUser } from "../types/users";
-import { currentUserResponseSchema } from "../schemas/users.schemas";
+import { http } from "@/api/http";
+import type { SuccessResponse } from "@/types/api";
+import type { CurrentUser } from "@/types/users";
+import { currentUserResponseSchema } from "@/schemas/users.schemas";
 
 export const usersApi = {
   async getCurrentUser(accessToken: string) {

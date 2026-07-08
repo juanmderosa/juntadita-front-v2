@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { eventsApi } from "../../../api/events.api";
-import { useAuth } from "../../auth/hooks/useAuth";
+import { eventsApi } from "@/api/events.api";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export const eventsQueryKey = ["events"] as const;
 export const eventQueryKey = (eventId: string) => ["events", eventId] as const;
