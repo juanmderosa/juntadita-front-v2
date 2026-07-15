@@ -200,7 +200,7 @@ export const optionFormSchema = z
   });
 
 export const inviteParticipantsFormSchema = z.object({
-  emailsText: z.string().trim().min(1, "Agrega al menos un email."),
+  emailsText: z.string(),
 });
 
 export type EventFormInput = z.infer<typeof eventFormSchema>;

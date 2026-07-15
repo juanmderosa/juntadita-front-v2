@@ -56,6 +56,11 @@ export type InviteParticipantsResult = {
   emails: InviteEmailDelivery[];
 };
 
+export type InviteParticipantsInput = {
+  emails: string[];
+  groupIds: string[];
+};
+
 export type EventDetail = EventSummary & {
   optionsLocked: boolean;
   options: EventOption[];

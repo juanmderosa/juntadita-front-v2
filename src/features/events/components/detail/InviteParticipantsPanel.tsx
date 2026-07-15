@@ -1,15 +1,22 @@
 import { UserRoundPlus } from "lucide-react";
 import { getErrorMessage } from "@/lib/errors";
-import type { InviteParticipantsResult } from "@/types/events";
+import type {
+  InviteParticipantsInput,
+  InviteParticipantsResult,
+} from "@/types/events";
+import type { ContactGroup } from "@/types/groups";
 import { InviteParticipantsForm } from "@/features/events/components/detail/InviteParticipantsForm";
 import { InviteParticipantsResultList } from "@/features/events/components/detail/InviteParticipantsResultList";
 
 type InviteParticipantsPanelProps = {
   error: unknown;
-  inviteParticipants: (emails: string[]) => Promise<InviteParticipantsResult>;
+  inviteParticipants: (
+    input: InviteParticipantsInput,
+  ) => Promise<InviteParticipantsResult>;
   inviteResult?: InviteParticipantsResult;
   isInviting: boolean;
   showPublishWarning?: boolean;
+  groups?: ContactGroup[];
 };
 
 export function InviteParticipantsPanel({
@@ -18,6 +25,7 @@ export function InviteParticipantsPanel({
   inviteResult,
   isInviting,
   showPublishWarning = false,
+  groups,
 }: InviteParticipantsPanelProps) {
   return (
     <div className="mt-6 rounded-2xl bg-slate-50 p-4">
@@ -34,6 +42,7 @@ export function InviteParticipantsPanel({
       <InviteParticipantsForm
         inviteParticipants={inviteParticipants}
         isInviting={isInviting}
+        groups={groups}
       />
       {inviteResult ? (
         <InviteParticipantsResultList inviteResult={inviteResult} />

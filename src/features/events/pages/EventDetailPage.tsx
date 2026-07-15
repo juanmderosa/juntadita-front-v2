@@ -51,11 +51,15 @@ export function EventDetailPage() {
   const showOptions =
     event.type === "poll" && (!isSetupMode || setupStep === "options");
   const showParticipants = !isSetupMode || setupStep === "guests";
-  const goToOptions = () => setSearchParams({ setup: "options" }, { replace: true });
-  const goToGuests = () => setSearchParams({ setup: "guests" }, { replace: true });
+  const goToOptions = () =>
+    setSearchParams({ setup: "options" }, { replace: true });
+  const goToGuests = () =>
+    setSearchParams({ setup: "guests" }, { replace: true });
   const finishSetup = () => setSearchParams({}, { replace: true });
   const needsOptionsBeforeInviting =
-    event.type === "poll" && setupStep === "options" && event.options.length === 0;
+    event.type === "poll" &&
+    setupStep === "options" &&
+    event.options.length === 0;
 
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:py-12">
@@ -72,7 +76,10 @@ export function EventDetailPage() {
       />
 
       {isSetupMode ? (
-        <EventSetupSteps currentStep={setupStep} eventType={event.type} />
+        <EventSetupSteps
+          currentStep={setupStep}
+          eventType={event.type}
+        />
       ) : null}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_280px]">
@@ -102,6 +109,7 @@ export function EventDetailPage() {
               inviteParticipants={controller.inviteParticipants}
               inviteResult={controller.inviteParticipantsResult}
               isInviting={controller.isInvitingParticipants}
+              groups={controller.groups}
               showPublishWarning={isSetupMode && event.type === "poll"}
             />
           ) : null}

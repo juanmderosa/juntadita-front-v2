@@ -3,15 +3,21 @@ import { useParams } from "react-router-dom";
 import { eventsApi } from "@/api/events.api";
 import type {
   CreateEventOptionInput,
+  InviteParticipantsInput,
   UpdateEventOptionInput,
 } from "@/types/events";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { eventQueryKey, eventsQueryKey } from "@/features/events/hooks/useEventsPage";
+import { useGroups } from "@/features/groups/hooks/useGroups";
+import {
+  eventQueryKey,
+  eventsQueryKey,
+} from "@/features/events/hooks/useEventsPage";
 
 export function useEventDetailPage() {
   const { eventId = "" } = useParams();
   const { accessToken } = useAuth();
   const queryClient = useQueryClient();
+  const groupsQuery = useGroups();
   const query = useQuery({
     queryKey: eventQueryKey(eventId),
     enabled: Boolean(accessToken && eventId),
@@ -48,8 +54,8 @@ export function useEventDetailPage() {
     onSuccess: invalidateEvent,
   });
   const inviteParticipantsMutation = useMutation({
-    mutationFn: (emails: string[]) =>
-      eventsApi.inviteParticipants(accessToken!, eventId, emails),
+    mutationFn: (input: InviteParticipantsInput) =>
+      eventsApi.inviteParticipants(accessToken!, eventId, input),
     onSuccess: invalidateEvent,
   });
 
@@ -70,13 +76,15 @@ export function useEventDetailPage() {
       updateOptionMutation.mutateAsync({ optionId, input }),
     updateOptionError: updateOptionMutation.error,
     isUpdatingOption: updateOptionMutation.isPending,
-    deleteOption: (optionId: string) => deleteOptionMutation.mutateAsync(optionId),
+    deleteOption: (optionId: string) =>
+      deleteOptionMutation.mutateAsync(optionId),
     deleteOptionError: deleteOptionMutation.error,
     isDeletingOption: deleteOptionMutation.isPending,
-    inviteParticipants: (emails: string[]) =>
-      inviteParticipantsMutation.mutateAsync(emails),
+    inviteParticipants: (input: InviteParticipantsInput) =>
+      inviteParticipantsMutation.mutateAsync(input),
     inviteParticipantsResult: inviteParticipantsMutation.data,
     inviteParticipantsError: inviteParticipantsMutation.error,
     isInvitingParticipants: inviteParticipantsMutation.isPending,
+    groups: groupsQuery.data ?? [],
   };
 }
