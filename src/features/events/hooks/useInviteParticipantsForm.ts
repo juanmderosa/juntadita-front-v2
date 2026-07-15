@@ -1,6 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import type { InviteParticipantsResult } from "@/types/events";
+import type {
+  InviteParticipantsInput,
+  InviteParticipantsResult,
+} from "@/types/events";
 import {
   getInviteEmailsValidationError,
   parseInviteEmails,
@@ -11,7 +14,10 @@ import {
 } from "@/features/events/schemas/events.schemas";
 
 export function useInviteParticipantsForm(
-  inviteParticipants: (emails: string[]) => Promise<InviteParticipantsResult>,
+  inviteParticipants: (
+    input: InviteParticipantsInput,
+  ) => Promise<InviteParticipantsResult>,
+  groupIds: string[],
 ) {
   const form = useForm<InviteParticipantsFormInput>({
     resolver: zodResolver(inviteParticipantsFormSchema),
@@ -20,14 +26,17 @@ export function useInviteParticipantsForm(
 
   async function submit(values: InviteParticipantsFormInput) {
     const emails = parseInviteEmails(values.emailsText);
-    const validationError = getInviteEmailsValidationError(emails);
+    const validationError =
+      emails.length > 0 ? getInviteEmailsValidationError(emails) : null;
 
-    if (validationError) {
-      form.setError("emailsText", { message: validationError });
+    if (validationError || (emails.length === 0 && groupIds.length === 0)) {
+      form.setError("emailsText", {
+        message: validationError ?? "Agrega un email o selecciona un grupo.",
+      });
       return;
     }
 
-    await inviteParticipants(emails);
+    await inviteParticipants({ emails, groupIds });
     form.reset({ emailsText: "" });
   }
 
