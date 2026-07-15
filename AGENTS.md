@@ -38,8 +38,14 @@ design           capturas de referencia
 ## Convenciones
 
 - Revisar `DESIGN.md` antes de tocar UI, layout o estilos.
+- Revisar tambien las capturas de `design/` relacionadas antes de implementar
+  una pantalla o flujo visual.
 - Usar arquitectura feature-based.
-- Componentes renderizan; logica en hooks personalizados.
+- Paginas componen la pantalla; no concentran estado, requests ni reglas.
+- Componentes renderizan y reciben callbacks/datos; la logica de estado,
+  queries, mutations, transformaciones y reglas vive en hooks o `lib`.
+- Dividir componentes grandes en piezas pequenas por responsabilidad; no mezclar
+  formularios, listados, paneles y logica de datos en un mismo componente.
 - Usar React Hook Form + Zod para formularios.
 - Usar `schemas`, nunca `schema`; usar `lib`, nunca `utils`.
 - Supabase en frontend solo para Auth; datos de negocio via API Express.
@@ -54,16 +60,24 @@ design           capturas de referencia
 - No crear paquete compartido con backend durante el MVP.
 - No guardar secretos reales en el repo.
 - No marcar tareas como `Hecha` sin aceptacion explicita de Juan.
+- No avanzar de una subtarea a la siguiente sin aprobacion explicita de Juan.
 
 ## flujo de trabajo
 
-1. Para tareas grandes, revisar plan y decisiones globales.
-2. Revisar README, DESIGN y capturas si hay cambios visuales.
-3. Revisar docs API si se consumen endpoints.
-4. Revisar si hay skills disponibles que ayuden a cumplir la tarea.
-5. Implementar con UI en componentes y logica en hooks.
-6. Ejecutar `pnpm build` y `pnpm lint` cuando aplique.
-7. Cerrar con resumen, pruebas, riesgos y propuesta de commit.
+1. Para tareas grandes, revisar plan y decisiones globales y proponer etapas
+   chicas, con alcance y criterio de aceptacion por etapa.
+2. Esperar aprobacion explicita de Juan al plan antes de implementar.
+3. Revisar README, `DESIGN.md`, capturas relacionadas y docs API antes de
+   tocar el frontend.
+4. Implementar solo la etapa actual, respetando la separacion pagina -> hooks
+   -> componentes pequenos -> `lib`/API. Si una decision de producto o diseno
+   es ambigua, detenerse y pedir definicion.
+5. Ejecutar las pruebas, build y lint aplicables; revisar visualmente los
+   cambios cuando afecten UI.
+6. Cerrar cada etapa con resumen, archivos modificados, pruebas, riesgos y
+   propuesta de commit, dejandola `En revision`.
+7. Esperar aprobacion explicita de Juan antes de iniciar la siguiente etapa o
+   marcar una tarea como `Hecha`.
 
 ## Documentación
 

@@ -18,6 +18,14 @@ export const contactGroupSchema = z.object({
   updatedAt: isoDateTimeSchema,
 });
 
+export const createGroupFormSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, "Indicá un nombre para el grupo.")
+    .max(120, "El nombre no puede superar 120 caracteres."),
+});
+
 export const contactGroupDetailSchema = contactGroupSchema.extend({
   members: z.array(contactGroupMemberSchema),
 });
@@ -28,3 +36,5 @@ export const groupsResponseSchema = successResponseSchema(
 export const groupResponseSchema = successResponseSchema(
   contactGroupDetailSchema,
 );
+
+export type CreateGroupFormInput = z.infer<typeof createGroupFormSchema>;
