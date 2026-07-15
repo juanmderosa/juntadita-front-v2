@@ -4,10 +4,7 @@ import type {
   InviteParticipantsInput,
   InviteParticipantsResult,
 } from "@/types/events";
-import {
-  getInviteEmailsValidationError,
-  parseInviteEmails,
-} from "@/features/events/lib/eventParticipants.lib";
+import { getEmailsValidationError, parseEmails } from "@/lib/emails";
 import {
   inviteParticipantsFormSchema,
   type InviteParticipantsFormInput,
@@ -25,9 +22,9 @@ export function useInviteParticipantsForm(
   });
 
   async function submit(values: InviteParticipantsFormInput) {
-    const emails = parseInviteEmails(values.emailsText);
+    const emails = parseEmails(values.emailsText);
     const validationError =
-      emails.length > 0 ? getInviteEmailsValidationError(emails) : null;
+      emails.length > 0 ? getEmailsValidationError(emails) : null;
 
     if (validationError || (emails.length === 0 && groupIds.length === 0)) {
       form.setError("emailsText", {

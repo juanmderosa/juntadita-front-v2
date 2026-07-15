@@ -26,6 +26,10 @@ export const createGroupFormSchema = z.object({
     .max(120, "El nombre no puede superar 120 caracteres."),
 });
 
+export const addGroupContactsFormSchema = z.object({
+  emailsText: z.string(),
+});
+
 export const contactGroupDetailSchema = contactGroupSchema.extend({
   members: z.array(contactGroupMemberSchema),
 });
@@ -38,3 +42,6 @@ export const groupResponseSchema = successResponseSchema(
 );
 
 export type CreateGroupFormInput = z.infer<typeof createGroupFormSchema>;
+export type AddGroupContactsFormInput = z.infer<
+  typeof addGroupContactsFormSchema
+>;
