@@ -7,6 +7,8 @@ import { HomePage } from "@/features/home/pages/HomePage";
 import { CreateEventPage } from "@/features/events/pages/CreateEventPage";
 import { EditEventPage } from "@/features/events/pages/EditEventPage";
 import { EventDetailPage } from "@/features/events/pages/EventDetailPage";
+import { GroupsPage } from "@/features/groups/pages/GroupsPage";
+import { GroupDetailPage } from "@/features/groups/pages/GroupDetailPage";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -28,6 +30,8 @@ export const router = createBrowserRouter([
             element: <AuthenticatedLayout />,
             children: [
               { path: "/", element: <HomePage /> },
+              { path: "/groups", element: <GroupsPage /> },
+              { path: "/groups/:groupId", element: <GroupDetailPage /> },
               { path: "/events/new", element: <CreateEventPage /> },
               { path: "/events/:eventId", element: <EventDetailPage /> },
               { path: "/events/:eventId/edit", element: <EditEventPage /> },

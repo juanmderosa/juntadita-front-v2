@@ -15,6 +15,7 @@ import type {
   EventParticipant,
   EventSummary,
   InviteParticipantsResult,
+  InviteParticipantsInput,
   UpdateEventOptionInput,
   UpdateEventInput,
 } from "@/types/events";
@@ -45,11 +46,7 @@ export const eventsApi = {
     return response.data;
   },
 
-  async update(
-    accessToken: string,
-    eventId: string,
-    input: UpdateEventInput,
-  ) {
+  async update(accessToken: string, eventId: string, input: UpdateEventInput) {
     const response = await http.patch<SuccessResponse<EventDetail>>(
       `/api/v1/events/${encodeURIComponent(eventId)}`,
       input,
@@ -116,11 +113,11 @@ export const eventsApi = {
   async inviteParticipants(
     accessToken: string,
     eventId: string,
-    emails: string[],
+    input: InviteParticipantsInput,
   ) {
     const response = await http.post<SuccessResponse<InviteParticipantsResult>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/participants/invite`,
-      { emails },
+      input,
       { accessToken, responseSchema: inviteParticipantsResponseSchema },
     );
     return response.data;
