@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ErrorState } from "@/components/feedback/ErrorState";
 import { PageLoader } from "@/components/feedback/PageLoader";
 import { useEventDetailPage } from "@/features/events/hooks/useEventDetailPage";
@@ -8,15 +8,22 @@ import { EventParticipantsSection } from "@/features/events/components/detail/Ev
 import { EventDetailHeader } from "@/features/events/components/detail/EventDetailHeader";
 import { EventDescription } from "@/features/events/components/detail/EventDescription";
 import { EventDetailAside } from "@/features/events/components/detail/EventDetailAside";
-import {
-  EventSetupSteps,
-  type EventSetupStep,
-} from "@/features/events/components/detail/EventSetupSteps";
+import { EventSetupSteps } from "@/features/events/components/detail/EventSetupSteps";
 import { EventSetupActions } from "@/features/events/components/detail/EventSetupActions";
+import { VotingSection } from "@/features/events/components/detail/VotingSection";
+import { useEventVoting } from "@/features/events/hooks/useEventVoting";
+import { useEventSetup } from "@/features/events/hooks/useEventSetup";
 
 export function EventDetailPage() {
   const controller = useEventDetailPage();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const setup = useEventSetup(
+    controller.event,
+    controller.event?.currentUserRole === "admin",
+  );
+  const voting = useEventVoting(
+    controller.eventId,
+    controller.event?.type === "poll" && setup.setupStep === null,
+  );
 
   if (controller.isLoading) {
     return (
@@ -44,22 +51,6 @@ export function EventDetailPage() {
 
   const event = controller.event;
   const canManage = event.currentUserRole === "admin";
-  const requestedSetupStep = searchParams.get("setup");
-  const setupStep = getSetupStep(requestedSetupStep, event.type);
-  const isSetupMode = canManage && setupStep !== null;
-  const showDescription = !isSetupMode;
-  const showOptions =
-    event.type === "poll" && (!isSetupMode || setupStep === "options");
-  const showParticipants = !isSetupMode || setupStep === "guests";
-  const goToOptions = () =>
-    setSearchParams({ setup: "options" }, { replace: true });
-  const goToGuests = () =>
-    setSearchParams({ setup: "guests" }, { replace: true });
-  const finishSetup = () => setSearchParams({}, { replace: true });
-  const needsOptionsBeforeInviting =
-    event.type === "poll" &&
-    setupStep === "options" &&
-    event.options.length === 0;
 
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:py-12">
@@ -75,19 +66,39 @@ export function EventDetailPage() {
         canManage={canManage}
       />
 
-      {isSetupMode ? (
+      {setup.isSetupMode ? (
         <EventSetupSteps
-          currentStep={setupStep}
+          currentStep={setup.setupStep!}
           eventType={event.type}
         />
       ) : null}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_280px]">
         <div className="space-y-6">
-          {showDescription ? (
+          {setup.showDescription ? (
             <EventDescription description={event.description} />
           ) : null}
-          {showOptions ? (
+          {setup.showVoting ? (
+            <VotingSection
+              canManage={canManage}
+              cancelTieResolution={voting.cancelTieResolution}
+              confirmTieResolution={voting.confirmTieResolution}
+              error={voting.error}
+              isLoading={voting.isLoading}
+              isResolvingTie={voting.isResolvingTie}
+              isSaving={voting.isSaving}
+              onRequestTieResolution={voting.requestTieResolution}
+              onSave={voting.saveVotes}
+              onToggle={voting.toggleOption}
+              pendingTieOptionId={voting.pendingTieOptionId}
+              resolveTieError={voting.resolveTieError}
+              selectedOptionIds={voting.selectedOptionIds}
+              selectionError={voting.selectionError}
+              timeZone={event.timezone}
+              voting={voting.voting}
+            />
+          ) : null}
+          {setup.showOptions ? (
             <EventOptionsSection
               canManage={canManage}
               createOption={controller.createOption}
@@ -101,36 +112,36 @@ export function EventDetailPage() {
               updateOption={controller.updateOption}
             />
           ) : null}
-          {showParticipants ? (
+          {setup.showParticipants ? (
             <EventParticipantsSection
-              canManage={canManage}
+              canInvite={canManage && !event.finalizedAt}
               error={controller.inviteParticipantsError}
               event={event}
               inviteParticipants={controller.inviteParticipants}
               inviteResult={controller.inviteParticipantsResult}
               isInviting={controller.isInvitingParticipants}
               groups={controller.groups}
-              showPublishWarning={isSetupMode && event.type === "poll"}
+              showPublishWarning={setup.isSetupMode && event.type === "poll"}
             />
           ) : null}
-          {isSetupMode ? (
+          {setup.isSetupMode ? (
             <EventSetupActions
               backLabel="Volver a opciones"
               finishLabel="Ver evento"
               helperText={
-                needsOptionsBeforeInviting
+                setup.needsOptionsBeforeInviting
                   ? "Agrega al menos una opcion antes de invitar personas."
                   : undefined
               }
-              isNextDisabled={needsOptionsBeforeInviting}
+              isNextDisabled={setup.needsOptionsBeforeInviting}
               nextLabel="Continuar a invitados"
               onBack={
-                event.type === "poll" && setupStep === "guests"
-                  ? goToOptions
+                event.type === "poll" && setup.setupStep === "guests"
+                  ? setup.goToOptions
                   : undefined
               }
-              onFinish={setupStep === "guests" ? finishSetup : undefined}
-              onNext={setupStep === "options" ? goToGuests : undefined}
+              onFinish={setup.setupStep === "guests" ? setup.finishSetup : undefined}
+              onNext={setup.setupStep === "options" ? setup.goToGuests : undefined}
             />
           ) : null}
         </div>
@@ -142,13 +153,4 @@ export function EventDetailPage() {
       </div>
     </section>
   );
-}
-
-function getSetupStep(
-  value: string | null,
-  eventType: "poll" | "fixed",
-): EventSetupStep | null {
-  if (value === "guests") return "guests";
-  if (eventType === "poll" && value === "options") return "options";
-  return null;
 }

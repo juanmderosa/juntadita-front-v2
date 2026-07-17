@@ -24,7 +24,7 @@ export type RequestOptions<T> = Omit<RequestInit, "body" | "method"> & {
 
 type InternalRequestOptions<T> = RequestOptions<T> & {
   body?: BodyInit;
-  method: "GET" | "POST" | "PATCH" | "DELETE";
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 };
 
 const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
@@ -103,6 +103,12 @@ export const http = {
     request<T>(path, {
       ...options,
       method: "POST",
+      body: body == null ? undefined : JSON.stringify(body),
+    }),
+  put: <T>(path: string, body?: unknown, options: RequestOptions<T> = {}) =>
+    request<T>(path, {
+      ...options,
+      method: "PUT",
       body: body == null ? undefined : JSON.stringify(body),
     }),
   patch: <T>(path: string, body?: unknown, options: RequestOptions<T> = {}) =>
