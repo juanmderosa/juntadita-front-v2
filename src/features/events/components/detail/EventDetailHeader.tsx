@@ -6,7 +6,7 @@ import {
   getEventStatus,
   getEventSchedule,
 } from "@/features/events/lib/events.lib";
-import { EventDetail, EventSummary } from "@/types/events";
+import { EventDetail } from "@/types/events";
 
 interface Props {
   event: EventDetail;
