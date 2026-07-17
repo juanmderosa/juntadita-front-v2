@@ -21,6 +21,16 @@ export const eventSummarySchema = z.object({
   fixedStartAt: isoDateTimeSchema.nullable(),
   fixedEndAt: isoDateTimeSchema.nullable(),
   finalizedAt: isoDateTimeSchema.nullable(),
+  winningOption: z.object({
+    id: uuidSchema,
+    eventId: uuidSchema,
+    type: z.enum(["date", "datetime", "range"]),
+    label: z.string().nullable(),
+    startAt: isoDateTimeSchema,
+    endAt: isoDateTimeSchema.nullable(),
+    createdAt: isoDateTimeSchema,
+    updatedAt: isoDateTimeSchema,
+  }).nullable(),
   createdAt: isoDateTimeSchema,
   updatedAt: isoDateTimeSchema,
 });
@@ -76,6 +86,27 @@ export const participantsResponseSchema = successResponseSchema(
 export const inviteParticipantsResponseSchema = successResponseSchema(
   inviteParticipantsResultSchema,
 );
+const eventResultSchema = z.object({
+  status: z.enum(["finalized", "tie_pending", "no_winner"]),
+  winningOptionId: uuidSchema.nullable(),
+  totalVotes: z.number().int().nonnegative(),
+  decidedBy: z.enum(["system", "admin"]),
+  decidedAt: isoDateTimeSchema,
+});
+const votingOptionSchema = eventOptionSchema.extend({
+  votesCount: z.number().int().nonnegative(),
+  availabilityPercent: z.number().int().min(0).max(100),
+});
+export const votingStateSchema = z.object({
+  isOpen: z.boolean(),
+  votingClosesAt: isoDateTimeSchema,
+  eligibleParticipants: z.number().int().nonnegative(),
+  selectedOptionIds: z.array(uuidSchema),
+  options: z.array(votingOptionSchema),
+  result: eventResultSchema.nullable(),
+  tiedOptionIds: z.array(uuidSchema),
+});
+export const votingResponseSchema = successResponseSchema(votingStateSchema);
 export const paginatedEventsResponseSchema =
   paginatedResponseSchema(eventSummarySchema);
 
@@ -203,9 +234,14 @@ export const inviteParticipantsFormSchema = z.object({
   emailsText: z.string(),
 });
 
+export const voteFormSchema = z.object({
+  optionIds: z.array(uuidSchema).min(1, "Selecciona al menos una opción."),
+});
+
 export type EventFormInput = z.infer<typeof eventFormSchema>;
 export type EditEventFormInput = z.infer<typeof editEventFormSchema>;
 export type OptionFormInput = z.infer<typeof optionFormSchema>;
 export type InviteParticipantsFormInput = z.infer<
   typeof inviteParticipantsFormSchema
 >;
+export type VoteFormInput = z.infer<typeof voteFormSchema>;

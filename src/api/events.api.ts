@@ -6,6 +6,7 @@ import {
   optionsResponseSchema,
   paginatedEventsResponseSchema,
   participantsResponseSchema,
+  votingResponseSchema,
 } from "@/features/events/schemas/events.schemas";
 import type {
   CreateEventOptionInput,
@@ -18,6 +19,8 @@ import type {
   InviteParticipantsInput,
   UpdateEventOptionInput,
   UpdateEventInput,
+  ReplaceVotesInput,
+  VotingState,
 } from "@/types/events";
 import type { PaginatedResponse, SuccessResponse } from "@/types/api";
 
@@ -119,6 +122,36 @@ export const eventsApi = {
       `/api/v1/events/${encodeURIComponent(eventId)}/participants/invite`,
       input,
       { accessToken, responseSchema: inviteParticipantsResponseSchema },
+    );
+    return response.data;
+  },
+
+  async getVoting(accessToken: string, eventId: string) {
+    const response = await http.get<SuccessResponse<VotingState>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/voting`,
+      { accessToken, responseSchema: votingResponseSchema },
+    );
+    return response.data;
+  },
+
+  async replaceVotes(
+    accessToken: string,
+    eventId: string,
+    input: ReplaceVotesInput,
+  ) {
+    const response = await http.put<SuccessResponse<VotingState>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/votes`,
+      input,
+      { accessToken, responseSchema: votingResponseSchema },
+    );
+    return response.data;
+  },
+
+  async resolveTie(accessToken: string, eventId: string, optionId: string) {
+    const response = await http.post<SuccessResponse<VotingState>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/result/resolve-tie`,
+      { optionId },
+      { accessToken, responseSchema: votingResponseSchema },
     );
     return response.data;
   },
