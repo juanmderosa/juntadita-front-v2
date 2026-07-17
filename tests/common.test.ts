@@ -27,9 +27,7 @@ describe("shared frontend helpers", () => {
     expect(localDateTimeToIso("2026-07-06T12:30")).toBe(
       "2026-07-06T15:30:00.000Z",
     );
-    expect(isoToLocalDateTime("2026-07-06T15:30:00Z")).toBe(
-      "2026-07-06T12:30",
-    );
+    expect(isoToLocalDateTime("2026-07-06T15:30:00Z")).toBe("2026-07-06T12:30");
   });
 
   it("parses and formats money in cents", () => {

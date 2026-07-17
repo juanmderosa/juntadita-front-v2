@@ -9,6 +9,7 @@ import { EventDetailPage } from "@/features/events/pages/EventDetailPage";
 const mocks = vi.hoisted(() => ({
   useEventsPage: vi.fn(),
   useEventDetailPage: vi.fn(),
+  useEventVoting: vi.fn(),
 }));
 
 vi.mock("@/features/events/hooks/useEventsPage", () => ({
@@ -17,6 +18,10 @@ vi.mock("@/features/events/hooks/useEventsPage", () => ({
 
 vi.mock("@/features/events/hooks/useEventDetailPage", () => ({
   useEventDetailPage: mocks.useEventDetailPage,
+}));
+
+vi.mock("@/features/events/hooks/useEventVoting", () => ({
+  useEventVoting: mocks.useEventVoting,
 }));
 
 const event = {
@@ -32,6 +37,7 @@ const event = {
   fixedStartAt: "2026-08-01T23:00:00Z",
   fixedEndAt: null,
   finalizedAt: null,
+  winningOption: null,
   createdAt: "2026-07-06T15:00:00Z",
   updatedAt: "2026-07-06T15:00:00Z",
   optionsLocked: false,
@@ -99,6 +105,16 @@ beforeEach(() => {
     isLoading: false,
     loadMore: vi.fn(),
   });
+  mocks.useEventVoting.mockReturnValue({
+    voting: undefined,
+    error: null,
+    isLoading: false,
+    isSaving: false,
+    selectedOptionIds: [],
+    toggleOption: vi.fn(),
+    saveVotes: vi.fn(),
+    selectionError: undefined,
+  });
 });
 
 afterEach(() => cleanup());
@@ -155,8 +171,24 @@ describe("events pages", () => {
 
     expect(screen.getByText("Editar datos")).toBeTruthy();
     expect(screen.getByText("Enviar invitaciones")).toBeTruthy();
-    expect(screen.getByText("Las opciones quedaron bloqueadas porque la encuesta ya fue publicada.")).toBeTruthy();
+    expect(screen.queryByText("Opciones de votación")).toBeNull();
     expect(screen.queryByText("Agregar opcion")).toBeNull();
+  });
+
+  it("only shows the guest list once a poll result is finalized", () => {
+    mocks.useEventDetailPage.mockReturnValue({
+      ...detailController,
+      event: {
+        ...detailController.event,
+        finalizedAt: "2026-08-02T00:00:00Z",
+        optionsLocked: true,
+      },
+    });
+
+    render(<MemoryRouter><EventDetailPage /></MemoryRouter>);
+
+    expect(screen.getAllByText("Invitados").length).toBeGreaterThan(0);
+    expect(screen.queryByText("Invitar por email")).toBeNull();
   });
 
   it("shows setup steps and publish warning for invited step", () => {

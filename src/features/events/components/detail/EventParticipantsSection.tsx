@@ -10,7 +10,7 @@ import { InviteParticipantsPanel } from "@/features/events/components/detail/Inv
 
 type EventParticipantsSectionProps = {
   event: EventDetail;
-  canManage: boolean;
+  canInvite: boolean;
   inviteParticipants: (
     input: InviteParticipantsInput,
   ) => Promise<InviteParticipantsResult>;
@@ -23,7 +23,7 @@ type EventParticipantsSectionProps = {
 
 export function EventParticipantsSection({
   event,
-  canManage,
+  canInvite,
   inviteParticipants,
   inviteResult,
   isInviting,
@@ -36,7 +36,7 @@ export function EventParticipantsSection({
       <EventParticipantsHeader participantsCount={event.participants.length} />
       <EventParticipantsList participants={event.participants} />
 
-      {canManage ? (
+      {canInvite ? (
         <InviteParticipantsPanel
           error={error}
           inviteParticipants={inviteParticipants}

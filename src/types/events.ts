@@ -16,6 +16,7 @@ export type EventSummary = {
   fixedStartAt: string | null;
   fixedEndAt: string | null;
   finalizedAt: string | null;
+  winningOption: EventOption | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -109,4 +110,33 @@ export type UpdateEventOptionInput = {
   label?: string | null;
   startAt?: string;
   endAt?: string | null;
+};
+
+export type EventResultStatus = "finalized" | "tie_pending" | "no_winner";
+
+export type EventResult = {
+  status: EventResultStatus;
+  winningOptionId: string | null;
+  totalVotes: number;
+  decidedBy: "system" | "admin";
+  decidedAt: string;
+};
+
+export type VotingOption = EventOption & {
+  votesCount: number;
+  availabilityPercent: number;
+};
+
+export type VotingState = {
+  isOpen: boolean;
+  votingClosesAt: string;
+  eligibleParticipants: number;
+  selectedOptionIds: string[];
+  options: VotingOption[];
+  result: EventResult | null;
+  tiedOptionIds: string[];
+};
+
+export type ReplaceVotesInput = {
+  optionIds: string[];
 };
