@@ -21,6 +21,10 @@ export const eventSummarySchema = z.object({
   fixedStartAt: isoDateTimeSchema.nullable(),
   fixedEndAt: isoDateTimeSchema.nullable(),
   finalizedAt: isoDateTimeSchema.nullable(),
+  financialStatus: z.enum(["collecting_expenses", "payments_enabled"]),
+  financialStateChangedAt: isoDateTimeSchema,
+  financialStateChangedBy: uuidSchema.nullable(),
+  financialParticipantsLockedAt: isoDateTimeSchema.nullable(),
   winningOption: z.object({
     id: uuidSchema,
     eventId: uuidSchema,

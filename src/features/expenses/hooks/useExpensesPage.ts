@@ -5,7 +5,11 @@ import { expensesApi } from "@/api/expenses.api";
 import { eventsApi } from "@/api/events.api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { canManageExpense } from "@/features/expenses/lib/expensePermissions";
-import type { Expense, ExpenseAttachment, ExpenseInput } from "@/types/expenses";
+import type {
+  Expense,
+  ExpenseAttachment,
+  ExpenseInput,
+} from "@/types/expenses";
 
 export function useExpensesPage() {
   const { eventId = "" } = useParams();
@@ -16,6 +20,9 @@ export function useExpensesPage() {
   >(undefined);
   const [expenseToDelete, setExpenseToDelete] = useState<Expense | null>(null);
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
+  const [financialAction, setFinancialAction] = useState<
+    "enable" | "reopen" | null
+  >(null);
 
   const eventQuery = useQuery({
     queryKey: ["events", eventId],
@@ -65,8 +72,19 @@ export function useExpensesPage() {
   });
 
   const deleteAttachmentMutation = useMutation({
-    mutationFn: ({ expenseId, attachmentId }: { expenseId: string; attachmentId: string }) =>
-      expensesApi.deleteAttachment(accessToken!, eventId, expenseId, attachmentId),
+    mutationFn: ({
+      expenseId,
+      attachmentId,
+    }: {
+      expenseId: string;
+      attachmentId: string;
+    }) =>
+      expensesApi.deleteAttachment(
+        accessToken!,
+        eventId,
+        expenseId,
+        attachmentId,
+      ),
     onSuccess: invalidate,
   });
 
@@ -84,6 +102,13 @@ export function useExpensesPage() {
         participantId,
         participates,
       ),
+    onSuccess: invalidate,
+  });
+  const financialStatusMutation = useMutation({
+    mutationFn: (action: "enable" | "reopen") =>
+      action === "enable"
+        ? eventsApi.enablePayments(accessToken!, eventId)
+        : eventsApi.reopenExpenses(accessToken!, eventId),
     onSuccess: invalidate,
   });
   return {
@@ -116,7 +141,10 @@ export function useExpensesPage() {
       window.open(result.url, "_blank", "noopener");
     },
     deleteAttachment: (expenseId: string, attachment: ExpenseAttachment) =>
-      deleteAttachmentMutation.mutateAsync({ expenseId, attachmentId: attachment.id }),
+      deleteAttachmentMutation.mutateAsync({
+        expenseId,
+        attachmentId: attachment.id,
+      }),
     isDeletingAttachment: deleteAttachmentMutation.isPending,
     attachmentError: deleteAttachmentMutation.error,
     updateParticipation: participationMutation.mutateAsync,
@@ -134,5 +162,16 @@ export function useExpensesPage() {
     isParticipantsOpen,
     openParticipants: () => setIsParticipantsOpen(true),
     closeParticipants: () => setIsParticipantsOpen(false),
+    financialAction,
+    requestEnablePayments: () => setFinancialAction("enable"),
+    requestReopenExpenses: () => setFinancialAction("reopen"),
+    cancelFinancialAction: () => setFinancialAction(null),
+    confirmFinancialAction: async () => {
+      if (!financialAction) return;
+      await financialStatusMutation.mutateAsync(financialAction);
+      setFinancialAction(null);
+    },
+    isChangingFinancialStatus: financialStatusMutation.isPending,
+    financialStatusError: financialStatusMutation.error,
   };
 }

@@ -5,6 +5,8 @@ import { ExpenseActions } from "@/features/expenses/components/ExpenseActions";
 import { ExpenseAttachments } from "@/features/expenses/components/ExpenseAttachments";
 import { DeleteExpenseModal } from "@/features/expenses/components/DeleteExpenseModal";
 import { ExpenseFormModal } from "@/features/expenses/components/ExpenseFormModal";
+import { FinancialStatusModal } from "@/features/expenses/components/FinancialStatusModal";
+import { FinancialStatusPanel } from "@/features/expenses/components/FinancialStatusPanel";
 import { useExpensesPage } from "@/features/expenses/hooks/useExpensesPage";
 import { getErrorMessage } from "@/lib/errors";
 
@@ -15,16 +17,23 @@ const money = (cents: number) =>
 
 export function ExpensesPage() {
   const page = useExpensesPage();
+
   if (page.isLoading)
     return <p className="p-8 text-slate-600">Cargando gastos...</p>;
+
   if (!page.event)
     return <p className="p-8 text-red-700">{getErrorMessage(page.error)}</p>;
+
   const event = page.event;
   const canManage = event.currentUserRole === "admin";
+  const canManageParticipants =
+    canManage && !event.financialParticipantsLockedAt;
+  const expensesAreOpen = event.financialStatus === "collecting_expenses";
   const total = page.expenses.reduce(
     (sum, expense) => sum + expense.amountCents,
     0,
   );
+
   return (
     <main className="mx-auto max-w-5xl p-4 sm:p-8">
       <Link
@@ -40,20 +49,29 @@ export function ExpensesPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          {canManage ? (
+          {canManageParticipants ? (
             <Button
               variant="secondary"
               onClick={page.openParticipants}>
               Participantes de gastos
             </Button>
           ) : null}
-          <Button onClick={page.openCreate}>+ Cargar gasto</Button>
+          {expensesAreOpen ? (
+            <Button onClick={page.openCreate}>+ Cargar gasto</Button>
+          ) : null}
         </div>
       </header>
       <section className="mt-6 rounded-2xl bg-indigo-600 p-6 text-white">
         <p>Total gastado</p>
         <strong className="text-4xl">{money(total)}</strong>
       </section>
+      <FinancialStatusPanel
+        canManage={canManage}
+        financialStatus={event.financialStatus}
+        hasBeenFinanciallyClosed={Boolean(event.financialParticipantsLockedAt)}
+        onEnablePayments={page.requestEnablePayments}
+        onReopenExpenses={page.requestReopenExpenses}
+      />
       <section className="mt-8">
         <h2 className="text-xl font-bold">Movimientos</h2>
         {page.expenses.length === 0 ? (
@@ -80,13 +98,13 @@ export function ExpensesPage() {
                   <strong>{money(expense.amountCents)}</strong>
                 </div>
                 <ExpenseActions
-                  canManage={page.canManageExpense(expense)}
+                  canManage={expensesAreOpen && page.canManageExpense(expense)}
                   onEdit={() => page.openEdit(expense)}
                   onRequestDelete={() => page.requestDeleteExpense(expense)}
                 />
                 <ExpenseAttachments
                   attachments={expense.attachments}
-                  canManage={page.canManageExpense(expense)}
+                  canManage={expensesAreOpen && page.canManageExpense(expense)}
                   onDownload={(attachmentId) =>
                     page.downloadAttachment(expense.id, attachmentId)
                   }
@@ -120,6 +138,21 @@ export function ExpensesPage() {
         onClose={page.cancelDeleteExpense}
         onConfirm={page.confirmDeleteExpense}
       />
+      <FinancialStatusModal
+        mode={page.financialAction}
+        expensesCount={page.expenses.length}
+        participantsCount={
+          event.participants.filter(
+            (participant) =>
+              participant.participatesInExpenses &&
+              participant.status !== "removed",
+          ).length
+        }
+        isPending={page.isChangingFinancialStatus}
+        error={page.financialStatusError}
+        onClose={page.cancelFinancialAction}
+        onConfirm={() => void page.confirmFinancialAction()}
+      />
       <Modal
         isOpen={page.isParticipantsOpen}
         onClose={page.closeParticipants}
@@ -133,6 +166,7 @@ export function ExpensesPage() {
                 className="flex items-center justify-between rounded-lg bg-slate-50 p-3">
                 <span>{p.displayName ?? p.email}</span>
                 <Button
+                  disabled={!expensesAreOpen}
                   variant={p.participatesInExpenses ? "secondary" : "primary"}
                   onClick={() =>
                     void page.updateParticipation({
