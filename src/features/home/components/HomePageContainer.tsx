@@ -32,9 +32,7 @@ export const HomePageContainer = ({ controller }: Props) => {
       <div className="mt-6 rounded-2xl border border-dashed border-indigo-200 bg-white px-5">
         <EmptyState
           action={
-            <Link
-              className="font-bold text-indigo-700 hover:text-indigo-900"
-              to="/events/new">
+            <Link className="font-bold text-indigo-700 hover:text-indigo-900" to="/events/new">
               Crear mi primer evento
             </Link>
           }

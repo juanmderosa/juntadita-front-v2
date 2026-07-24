@@ -12,27 +12,17 @@ export function AddGroupContactsPanel({ isAdding, onAdd }: Props) {
       <p className="mt-1 text-sm text-slate-600">
         Pegá emails separados por coma, espacio o salto de línea.
       </p>
-      <RHForm
-        className="mt-4 space-y-3"
-        form={form}
-        onSubmit={submit}>
+      <RHForm className="mt-4 space-y-3" form={form} onSubmit={submit}>
         <textarea
           className="min-h-28 w-full rounded-lg border border-slate-200 px-3 py-2.5 text-sm outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
           placeholder="ana@mail.com, juan@mail.com"
           {...form.register("emailsText")}
         />
         {form.formState.errors.emailsText?.message ? (
-          <p className="text-sm text-red-700">
-            {form.formState.errors.emailsText.message}
-          </p>
+          <p className="text-sm text-red-700">{form.formState.errors.emailsText.message}</p>
         ) : null}
-        <Button
-          disabled={isAdding}
-          type="submit">
-          <UserPlus
-            aria-hidden="true"
-            className="mr-2 inline size-4"
-          />
+        <Button disabled={isAdding} type="submit">
+          <UserPlus aria-hidden="true" className="mr-2 inline size-4" />
           {isAdding ? "Agregando..." : "Agregar contactos"}
         </Button>
       </RHForm>

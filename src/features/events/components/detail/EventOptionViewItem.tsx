@@ -1,10 +1,7 @@
 import { CalendarDays, Clock, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import type { EventOption } from "@/types/events";
-import {
-  formatOptionSchedule,
-  optionTypeLabels,
-} from "@/features/events/lib/eventOptions.lib";
+import { formatOptionSchedule, optionTypeLabels } from "@/features/events/lib/eventOptions.lib";
 
 type EventOptionViewItemProps = {
   canManage: boolean;
@@ -32,22 +29,14 @@ export function EventOptionViewItem({
           )}
           {option.label || optionTypeLabels[option.type]}
         </p>
-        <p className="mt-1 text-sm text-slate-600">
-          {formatOptionSchedule(option, timeZone)}
-        </p>
+        <p className="mt-1 text-sm text-slate-600">{formatOptionSchedule(option, timeZone)}</p>
       </div>
       {canManage ? (
         <div className="flex gap-2">
-          <Button
-            className="px-3"
-            onClick={startEditing}
-            variant="secondary">
+          <Button className="px-3" onClick={startEditing} variant="secondary">
             <Pencil className="size-4" />
           </Button>
-          <Button
-            className="px-3"
-            onClick={() => deleteOption(option.id)}
-            variant="danger">
+          <Button className="px-3" onClick={() => deleteOption(option.id)} variant="danger">
             <Trash2 className="size-4" />
           </Button>
         </div>

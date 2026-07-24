@@ -28,7 +28,9 @@ export function EventForm({
       <fieldset>
         <legend className="text-sm font-bold text-slate-800">Tipo de evento</legend>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <label className={`cursor-pointer rounded-xl border p-4 transition ${type === "poll" ? "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-100" : "border-slate-200 bg-white"}`}>
+          <label
+            className={`cursor-pointer rounded-xl border p-4 transition ${type === "poll" ? "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-100" : "border-slate-200 bg-white"}`}
+          >
             <input className="sr-only" type="radio" value="poll" {...form.register("type")} />
             <span className="flex items-center gap-2 font-bold text-slate-950">
               <CalendarClock className="size-5 text-indigo-600" />
@@ -38,7 +40,9 @@ export function EventForm({
               Define un cierre y agrega opciones en la siguiente etapa.
             </span>
           </label>
-          <label className={`cursor-pointer rounded-xl border p-4 transition ${type === "fixed" ? "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-100" : "border-slate-200 bg-white"}`}>
+          <label
+            className={`cursor-pointer rounded-xl border p-4 transition ${type === "fixed" ? "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-100" : "border-slate-200 bg-white"}`}
+          >
             <input className="sr-only" type="radio" value="fixed" {...form.register("type")} />
             <span className="flex items-center gap-2 font-bold text-slate-950">
               <CheckCircle2 className="size-5 text-teal-600" />
@@ -80,11 +84,7 @@ export function EventForm({
         />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
-          <RHFormInput<EventFormInput>
-            label="Comienza"
-            name="fixedStartAt"
-            type="datetime-local"
-          />
+          <RHFormInput<EventFormInput> label="Comienza" name="fixedStartAt" type="datetime-local" />
           <RHFormInput<EventFormInput>
             label="Finaliza (opcional)"
             name="fixedEndAt"
@@ -94,8 +94,7 @@ export function EventForm({
       )}
 
       <p className="rounded-xl bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
-        Las fechas se interpretan en America/Buenos_Aires. La moneda del evento
-        sera ARS.
+        Las fechas se interpretan en America/Buenos_Aires. La moneda del evento sera ARS.
       </p>
 
       {rootError ? (

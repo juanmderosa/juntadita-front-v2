@@ -39,10 +39,9 @@ function wrapper(entry: string) {
 
 describe("useEventSetup", () => {
   it("recognizes the options step only for polls", () => {
-    const { result: poll } = renderHook(
-      () => useEventSetup(pollEvent, true),
-      { wrapper: wrapper("/events/id?setup=options") },
-    );
+    const { result: poll } = renderHook(() => useEventSetup(pollEvent, true), {
+      wrapper: wrapper("/events/id?setup=options"),
+    });
     const { result: fixed } = renderHook(
       () => useEventSetup({ ...pollEvent, type: "fixed", votingClosesAt: null }, true),
       { wrapper: wrapper("/events/id?setup=options") },
@@ -53,24 +52,21 @@ describe("useEventSetup", () => {
   });
 
   it("recognizes guests and ignores invalid setup values", () => {
-    const { result: guests } = renderHook(
-      () => useEventSetup(pollEvent, true),
-      { wrapper: wrapper("/events/id?setup=guests") },
-    );
-    const { result: invalid } = renderHook(
-      () => useEventSetup(pollEvent, true),
-      { wrapper: wrapper("/events/id?setup=unexpected") },
-    );
+    const { result: guests } = renderHook(() => useEventSetup(pollEvent, true), {
+      wrapper: wrapper("/events/id?setup=guests"),
+    });
+    const { result: invalid } = renderHook(() => useEventSetup(pollEvent, true), {
+      wrapper: wrapper("/events/id?setup=unexpected"),
+    });
 
     expect(guests.current.setupStep).toBe("guests");
     expect(invalid.current.setupStep).toBeNull();
   });
 
   it("blocks the next setup action until a poll has options", () => {
-    const { result } = renderHook(
-      () => useEventSetup(pollEvent, true),
-      { wrapper: wrapper("/events/id?setup=options") },
-    );
+    const { result } = renderHook(() => useEventSetup(pollEvent, true), {
+      wrapper: wrapper("/events/id?setup=options"),
+    });
 
     expect(result.current.needsOptionsBeforeInviting).toBe(true);
   });

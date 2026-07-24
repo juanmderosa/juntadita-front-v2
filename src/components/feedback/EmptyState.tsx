@@ -14,9 +14,7 @@ export function EmptyState({
   return (
     <section className={className}>
       <h1 className="text-2xl font-bold">{title}</h1>
-      {description ? (
-        <p className="mt-3 text-sm text-stone-600">{description}</p>
-      ) : null}
+      {description ? <p className="mt-3 text-sm text-stone-600">{description}</p> : null}
       {action ? <div className="mt-5">{action}</div> : null}
     </section>
   );

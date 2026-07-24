@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  formatDate,
-  formatDateTime,
-  isoToLocalDateTime,
-  localDateTimeToIso,
-} from "@/lib/dates";
+import { formatDate, formatDateTime, isoToLocalDateTime, localDateTimeToIso } from "@/lib/dates";
 import { formatMoney, parseMoneyToCents } from "@/lib/money";
 import {
   amountInCentsSchema,
@@ -24,18 +19,14 @@ describe("shared frontend helpers", () => {
   });
 
   it("converts datetime-local using Buenos Aires instead of device timezone", () => {
-    expect(localDateTimeToIso("2026-07-06T12:30")).toBe(
-      "2026-07-06T15:30:00.000Z",
-    );
+    expect(localDateTimeToIso("2026-07-06T12:30")).toBe("2026-07-06T15:30:00.000Z");
     expect(isoToLocalDateTime("2026-07-06T15:30:00Z")).toBe("2026-07-06T12:30");
   });
 
   it("parses and formats money in cents", () => {
     expect(parseMoneyToCents("12,34")).toBe(1234);
     expect(formatMoney(1234)).toContain("12,34");
-    expect(formatMoney(1234, { currencyCode: "USD", locale: "en-US" })).toBe(
-      "$12.34",
-    );
+    expect(formatMoney(1234, { currencyCode: "USD", locale: "en-US" })).toBe("$12.34");
   });
 
   it.each(["-1", "1.234", "text"])("rejects invalid money %s", (value) => {
@@ -43,9 +34,7 @@ describe("shared frontend helpers", () => {
   });
 
   it("validates and normalizes shared input", () => {
-    expect(normalizedEmailSchema.parse(" USER@EXAMPLE.COM ")).toBe(
-      "user@example.com",
-    );
+    expect(normalizedEmailSchema.parse(" USER@EXAMPLE.COM ")).toBe("user@example.com");
     expect(currencyCodeSchema.parse(" ars ")).toBe("ARS");
     expect(timeZoneSchema.safeParse("America/Buenos_Aires").success).toBe(true);
     expect(timeZoneSchema.safeParse("Invalid/Zone").success).toBe(false);

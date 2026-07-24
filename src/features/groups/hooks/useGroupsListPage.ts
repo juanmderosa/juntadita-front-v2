@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  useGroupMutations,
-  useGroups,
-} from "@/features/groups/hooks/useGroups";
+import { useGroupMutations, useGroups } from "@/features/groups/hooks/useGroups";
 
 export function useGroupsListPage() {
   const navigate = useNavigate();

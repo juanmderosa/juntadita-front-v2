@@ -4,19 +4,13 @@ import { Button } from "@/components/ui/Button";
 import { AuthShell } from "@/features/auth/components/AuthShell";
 import { AuthStatus } from "@/features/auth/components/AuthStatus";
 import { useLoginPage } from "@/features/auth/hooks/useLoginPage";
-import {
-  type EmailOtpInput,
-  type OtpCodeInput,
-} from "@/features/auth/schemas/auth.schemas";
+import { type EmailOtpInput, type OtpCodeInput } from "@/features/auth/schemas/auth.schemas";
 
 export function LoginPage() {
   const login = useLoginPage();
 
   return (
-    <AuthShell
-      description={login.description}
-      title={login.title}
-    >
+    <AuthShell description={login.description} title={login.title}>
       <div className="space-y-4">
         <AuthStatus error={login.error} success={login.status} />
 

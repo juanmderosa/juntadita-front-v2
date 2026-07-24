@@ -8,10 +8,7 @@ import type {
 } from "@/types/events";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useGroups } from "@/features/groups/hooks/useGroups";
-import {
-  eventQueryKey,
-  eventsQueryKey,
-} from "@/features/events/hooks/useEventsPage";
+import { eventQueryKey, eventsQueryKey } from "@/features/events/hooks/useEventsPage";
 
 export function useEventDetailPage() {
   const { eventId = "" } = useParams();
@@ -39,18 +36,12 @@ export function useEventDetailPage() {
     onSuccess: invalidateEvent,
   });
   const updateOptionMutation = useMutation({
-    mutationFn: ({
-      optionId,
-      input,
-    }: {
-      optionId: string;
-      input: UpdateEventOptionInput;
-    }) => eventsApi.updateOption(accessToken!, eventId, optionId, input),
+    mutationFn: ({ optionId, input }: { optionId: string; input: UpdateEventOptionInput }) =>
+      eventsApi.updateOption(accessToken!, eventId, optionId, input),
     onSuccess: invalidateEvent,
   });
   const deleteOptionMutation = useMutation({
-    mutationFn: (optionId: string) =>
-      eventsApi.deleteOption(accessToken!, eventId, optionId),
+    mutationFn: (optionId: string) => eventsApi.deleteOption(accessToken!, eventId, optionId),
     onSuccess: invalidateEvent,
   });
   const inviteParticipantsMutation = useMutation({
@@ -64,20 +55,16 @@ export function useEventDetailPage() {
     event: query.data,
     error: query.error,
     isLoading: query.isLoading,
-    createOption: (input: CreateEventOptionInput) =>
-      createOptionMutation.mutateAsync(input),
+    createOption: (input: CreateEventOptionInput) => createOptionMutation.mutateAsync(input),
     createOptionsBatch: (options: CreateEventOptionInput[]) =>
       createOptionsBatchMutation.mutateAsync(options),
-    createOptionError:
-      createOptionMutation.error ?? createOptionsBatchMutation.error,
-    isCreatingOption:
-      createOptionMutation.isPending || createOptionsBatchMutation.isPending,
+    createOptionError: createOptionMutation.error ?? createOptionsBatchMutation.error,
+    isCreatingOption: createOptionMutation.isPending || createOptionsBatchMutation.isPending,
     updateOption: (optionId: string, input: UpdateEventOptionInput) =>
       updateOptionMutation.mutateAsync({ optionId, input }),
     updateOptionError: updateOptionMutation.error,
     isUpdatingOption: updateOptionMutation.isPending,
-    deleteOption: (optionId: string) =>
-      deleteOptionMutation.mutateAsync(optionId),
+    deleteOption: (optionId: string) => deleteOptionMutation.mutateAsync(optionId),
     deleteOptionError: deleteOptionMutation.error,
     isDeletingOption: deleteOptionMutation.isPending,
     inviteParticipants: (input: InviteParticipantsInput) =>

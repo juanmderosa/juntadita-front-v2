@@ -18,7 +18,8 @@ export function FinancialStatusPanel({
   const paymentsEnabled = financialStatus === "payments_enabled";
   return (
     <section
-      className={`mt-6 rounded-2xl border p-5 ${paymentsEnabled ? "border-emerald-200 bg-emerald-50" : "border-indigo-100 bg-indigo-50"}`}>
+      className={`mt-6 rounded-2xl border p-5 ${paymentsEnabled ? "border-emerald-200 bg-emerald-50" : "border-indigo-100 bg-indigo-50"}`}
+    >
       <p className="font-bold">
         {paymentsEnabled
           ? "Pagos habilitados"
@@ -37,7 +38,8 @@ export function FinancialStatusPanel({
         <Button
           className="mt-4"
           variant={paymentsEnabled ? "secondary" : "primary"}
-          onClick={paymentsEnabled ? onReopenExpenses : onEnablePayments}>
+          onClick={paymentsEnabled ? onReopenExpenses : onEnablePayments}
+        >
           {paymentsEnabled ? "Reabrir gastos" : "Habilitar pagos"}
         </Button>
       ) : null}

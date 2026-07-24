@@ -146,7 +146,9 @@ describe("events pages", () => {
   it("only exposes editing to an admin", () => {
     mocks.useEventDetailPage.mockReturnValue(detailController);
     const { rerender } = render(
-      <MemoryRouter><EventDetailPage /></MemoryRouter>,
+      <MemoryRouter>
+        <EventDetailPage />
+      </MemoryRouter>,
     );
     expect(screen.getByText("Editar datos")).toBeTruthy();
     expect(screen.getAllByText("Agregar opcion").length).toBeGreaterThan(0);
@@ -156,7 +158,11 @@ describe("events pages", () => {
       ...detailController,
       event: { ...event, currentUserRole: "guest" },
     });
-    rerender(<MemoryRouter><EventDetailPage /></MemoryRouter>);
+    rerender(
+      <MemoryRouter>
+        <EventDetailPage />
+      </MemoryRouter>,
+    );
     expect(screen.queryByText("Editar datos")).toBeNull();
     expect(screen.queryByText("Agregar opcion")).toBeNull();
     expect(screen.queryByText("Enviar invitaciones")).toBeNull();
@@ -171,7 +177,11 @@ describe("events pages", () => {
       },
     });
 
-    render(<MemoryRouter><EventDetailPage /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <EventDetailPage />
+      </MemoryRouter>,
+    );
 
     expect(screen.getByText("Editar datos")).toBeTruthy();
     expect(screen.getByText("Enviar invitaciones")).toBeTruthy();
@@ -189,7 +199,11 @@ describe("events pages", () => {
       },
     });
 
-    render(<MemoryRouter><EventDetailPage /></MemoryRouter>);
+    render(
+      <MemoryRouter>
+        <EventDetailPage />
+      </MemoryRouter>,
+    );
 
     expect(screen.getAllByText("Invitados").length).toBeGreaterThan(0);
     expect(screen.queryByText("Invitar por email")).toBeNull();
@@ -234,8 +248,6 @@ describe("events pages", () => {
     });
 
     expect(continueButton).toHaveProperty("disabled", true);
-    expect(
-      screen.getByText("Agrega al menos una opcion antes de invitar personas."),
-    ).toBeTruthy();
+    expect(screen.getByText("Agrega al menos una opcion antes de invitar personas.")).toBeTruthy();
   });
 });

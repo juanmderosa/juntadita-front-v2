@@ -11,9 +11,7 @@ export function parseMoneyToCents(value: string) {
   const normalized = value.trim();
 
   if (!DECIMAL_MONEY_PATTERN.test(normalized)) {
-    throw new Error(
-      "El importe debe ser positivo o cero y tener hasta dos decimales.",
-    );
+    throw new Error("El importe debe ser positivo o cero y tener hasta dos decimales.");
   }
 
   const [whole, fraction = ""] = normalized.replace(",", ".").split(".");
@@ -26,10 +24,7 @@ export function parseMoneyToCents(value: string) {
   return Number(cents);
 }
 
-export function formatMoney(
-  amountInCents: number,
-  options: MoneyFormatOptions = {},
-) {
+export function formatMoney(amountInCents: number, options: MoneyFormatOptions = {}) {
   if (!Number.isSafeInteger(amountInCents) || amountInCents < 0) {
     throw new RangeError("El importe debe ser un entero seguro no negativo.");
   }

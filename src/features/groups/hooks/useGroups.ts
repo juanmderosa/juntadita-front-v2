@@ -28,8 +28,7 @@ export function useGroupMutations() {
   const client = useQueryClient();
   const refresh = async (groupId?: string) => {
     await client.invalidateQueries({ queryKey: groupsQueryKey });
-    if (groupId)
-      await client.invalidateQueries({ queryKey: groupQueryKey(groupId) });
+    if (groupId) await client.invalidateQueries({ queryKey: groupQueryKey(groupId) });
   };
   return {
     create: useMutation({
@@ -46,23 +45,13 @@ export function useGroupMutations() {
       onSuccess: () => refresh(),
     }),
     addMembers: useMutation({
-      mutationFn: ({
-        groupId,
-        emails,
-      }: {
-        groupId: string;
-        emails: string[];
-      }) => groupsApi.addMembers(accessToken!, groupId, emails),
+      mutationFn: ({ groupId, emails }: { groupId: string; emails: string[] }) =>
+        groupsApi.addMembers(accessToken!, groupId, emails),
       onSuccess: (group) => refresh(group.id),
     }),
     removeMember: useMutation({
-      mutationFn: ({
-        groupId,
-        memberId,
-      }: {
-        groupId: string;
-        memberId: string;
-      }) => groupsApi.deleteMember(accessToken!, groupId, memberId),
+      mutationFn: ({ groupId, memberId }: { groupId: string; memberId: string }) =>
+        groupsApi.deleteMember(accessToken!, groupId, memberId),
       onSuccess: (_result, input) => refresh(input.groupId),
     }),
   };

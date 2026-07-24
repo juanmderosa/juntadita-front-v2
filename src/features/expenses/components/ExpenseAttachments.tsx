@@ -7,12 +7,7 @@ type Props = {
   onRequestDelete: (attachment: ExpenseAttachment) => void;
 };
 
-export function ExpenseAttachments({
-  attachments,
-  canManage,
-  onDownload,
-  onRequestDelete,
-}: Props) {
+export function ExpenseAttachments({ attachments, canManage, onDownload, onRequestDelete }: Props) {
   if (attachments.length === 0) return null;
 
   return (
@@ -21,14 +16,16 @@ export function ExpenseAttachments({
         <li className="flex items-center gap-2" key={attachment.id}>
           <button
             className="font-semibold text-indigo-700 underline"
-            onClick={() => void onDownload(attachment.id)}>
+            onClick={() => void onDownload(attachment.id)}
+          >
             Ver {attachment.fileName}
           </button>
           {canManage ? (
             <button
               aria-label={`Eliminar comprobante ${attachment.fileName}`}
               className="text-xs font-semibold text-red-700"
-              onClick={() => onRequestDelete(attachment)}>
+              onClick={() => onRequestDelete(attachment)}
+            >
               Eliminar
             </button>
           ) : null}

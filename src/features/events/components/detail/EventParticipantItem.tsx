@@ -5,9 +5,7 @@ type EventParticipantItemProps = {
   participant: EventParticipant;
 };
 
-export function EventParticipantItem({
-  participant,
-}: EventParticipantItemProps) {
+export function EventParticipantItem({ participant }: EventParticipantItemProps) {
   return (
     <li className="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:justify-between">
       <div>

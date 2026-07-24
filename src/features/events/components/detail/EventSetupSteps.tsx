@@ -8,10 +8,7 @@ type EventSetupStepsProps = {
   eventType: EventType;
 };
 
-export function EventSetupSteps({
-  currentStep,
-  eventType,
-}: EventSetupStepsProps) {
+export function EventSetupSteps({ currentStep, eventType }: EventSetupStepsProps) {
   const steps =
     eventType === "poll"
       ? [
@@ -34,7 +31,8 @@ export function EventSetupSteps({
             className={`flex items-center gap-3 rounded-xl px-3 py-2 ${
               active ? "bg-indigo-50 text-indigo-800" : "text-slate-600"
             }`}
-            key={step.id}>
+            key={step.id}
+          >
             <span
               className={`flex size-7 items-center justify-center rounded-full text-xs font-bold ${
                 step.done
@@ -42,7 +40,8 @@ export function EventSetupSteps({
                   : active
                     ? "bg-indigo-600 text-white"
                     : "bg-slate-100 text-slate-500"
-              }`}>
+              }`}
+            >
               {step.done ? <Check className="size-4" /> : steps.indexOf(step) + 1}
             </span>
             <span className="text-sm font-bold">{step.label}</span>

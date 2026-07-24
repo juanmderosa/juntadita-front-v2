@@ -1,15 +1,10 @@
 import type { InputHTMLAttributes } from "react";
-import {
-  useFormContext,
-  type FieldValues,
-  type Path,
-} from "react-hook-form";
+import { useFormContext, type FieldValues, type Path } from "react-hook-form";
 
-type RHFormInputProps<TValues extends FieldValues> =
-  InputHTMLAttributes<HTMLInputElement> & {
-    label: string;
-    name: Path<TValues>;
-  };
+type RHFormInputProps<TValues extends FieldValues> = InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+  name: Path<TValues>;
+};
 
 export function RHFormInput<TValues extends FieldValues>({
   className = "",

@@ -22,7 +22,9 @@ export function VotingSectionHeader({
             : "La votación cerró y ya no admite cambios."}
         </p>
       </div>
-      <p className={`inline-flex w-fit items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold ${isOpen ? "bg-amber-50 text-amber-900" : "bg-slate-100 text-slate-700"}`}>
+      <p
+        className={`inline-flex w-fit items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold ${isOpen ? "bg-amber-50 text-amber-900" : "bg-slate-100 text-slate-700"}`}
+      >
         <Clock3 className="size-4" />
         {isOpen ? "Cierra" : "Cerró"} {formatDateTime(votingClosesAt, { timeZone })}
       </p>

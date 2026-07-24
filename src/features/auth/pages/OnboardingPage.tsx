@@ -23,11 +23,7 @@ export function OnboardingPage() {
           placeholder="Juan"
           type="text"
         />
-        <Button
-          className="w-full"
-          disabled={onboarding.isSubmitting}
-          type="submit"
-        >
+        <Button className="w-full" disabled={onboarding.isSubmitting} type="submit">
           {onboarding.submitLabel}
         </Button>
       </RHForm>

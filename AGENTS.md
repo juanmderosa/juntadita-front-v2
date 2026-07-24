@@ -18,6 +18,8 @@ React Hook Form + Zod + Supabase Auth + pnpm.
 pnpm dev
 pnpm build
 pnpm lint
+pnpm format
+pnpm format:check
 pnpm preview
 ```
 

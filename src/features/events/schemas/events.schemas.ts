@@ -25,16 +25,18 @@ export const eventSummarySchema = z.object({
   financialStateChangedAt: isoDateTimeSchema,
   financialStateChangedBy: uuidSchema.nullable(),
   financialParticipantsLockedAt: isoDateTimeSchema.nullable(),
-  winningOption: z.object({
-    id: uuidSchema,
-    eventId: uuidSchema,
-    type: z.enum(["date", "datetime", "range"]),
-    label: z.string().nullable(),
-    startAt: isoDateTimeSchema,
-    endAt: isoDateTimeSchema.nullable(),
-    createdAt: isoDateTimeSchema,
-    updatedAt: isoDateTimeSchema,
-  }).nullable(),
+  winningOption: z
+    .object({
+      id: uuidSchema,
+      eventId: uuidSchema,
+      type: z.enum(["date", "datetime", "range"]),
+      label: z.string().nullable(),
+      startAt: isoDateTimeSchema,
+      endAt: isoDateTimeSchema.nullable(),
+      createdAt: isoDateTimeSchema,
+      updatedAt: isoDateTimeSchema,
+    })
+    .nullable(),
   createdAt: isoDateTimeSchema,
   updatedAt: isoDateTimeSchema,
 });
@@ -85,9 +87,7 @@ export const eventDetailSchema = eventSummarySchema.extend({
 export const eventResponseSchema = successResponseSchema(eventDetailSchema);
 export const optionResponseSchema = successResponseSchema(eventOptionSchema);
 export const optionsResponseSchema = successResponseSchema(z.array(eventOptionSchema));
-export const participantsResponseSchema = successResponseSchema(
-  z.array(eventParticipantSchema),
-);
+export const participantsResponseSchema = successResponseSchema(z.array(eventParticipantSchema));
 export const inviteParticipantsResponseSchema = successResponseSchema(
   inviteParticipantsResultSchema,
 );
@@ -112,8 +112,7 @@ export const votingStateSchema = z.object({
   tiedOptionIds: z.array(uuidSchema),
 });
 export const votingResponseSchema = successResponseSchema(votingStateSchema);
-export const paginatedEventsResponseSchema =
-  paginatedResponseSchema(eventSummarySchema);
+export const paginatedEventsResponseSchema = paginatedResponseSchema(eventSummarySchema);
 
 const titleSchema = z
   .string()
@@ -246,7 +245,5 @@ export const voteFormSchema = z.object({
 export type EventFormInput = z.infer<typeof eventFormSchema>;
 export type EditEventFormInput = z.infer<typeof editEventFormSchema>;
 export type OptionFormInput = z.infer<typeof optionFormSchema>;
-export type InviteParticipantsFormInput = z.infer<
-  typeof inviteParticipantsFormSchema
->;
+export type InviteParticipantsFormInput = z.infer<typeof inviteParticipantsFormSchema>;
 export type VoteFormInput = z.infer<typeof voteFormSchema>;

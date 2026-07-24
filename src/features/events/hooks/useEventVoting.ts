@@ -4,20 +4,10 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { eventsApi } from "@/api/events.api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import {
-  eventQueryKey,
-  eventsQueryKey,
-} from "@/features/events/hooks/useEventsPage";
-import {
-  voteFormSchema,
-  type VoteFormInput,
-} from "@/features/events/schemas/events.schemas";
+import { eventQueryKey, eventsQueryKey } from "@/features/events/hooks/useEventsPage";
+import { voteFormSchema, type VoteFormInput } from "@/features/events/schemas/events.schemas";
 
-export const votingQueryKey = (eventId: string) => [
-  "events",
-  eventId,
-  "voting",
-];
+export const votingQueryKey = (eventId: string) => ["events", eventId, "voting"];
 
 export function useEventVoting(eventId: string, enabled: boolean) {
   const { accessToken } = useAuth();
@@ -28,9 +18,7 @@ export function useEventVoting(eventId: string, enabled: boolean) {
     resolver: zodResolver(voteFormSchema),
   });
 
-  const [pendingTieOptionId, setPendingTieOptionId] = useState<string | null>(
-    null,
-  );
+  const [pendingTieOptionId, setPendingTieOptionId] = useState<string | null>(null);
   const query = useQuery({
     queryKey: votingQueryKey(eventId),
     enabled: Boolean(accessToken && eventId && enabled),
@@ -38,8 +26,7 @@ export function useEventVoting(eventId: string, enabled: boolean) {
   });
 
   const mutation = useMutation({
-    mutationFn: (input: VoteFormInput) =>
-      eventsApi.replaceVotes(accessToken!, eventId, input),
+    mutationFn: (input: VoteFormInput) => eventsApi.replaceVotes(accessToken!, eventId, input),
     onSuccess: async (voting) => {
       form.reset({ optionIds: voting.selectedOptionIds });
       await Promise.all([
@@ -51,8 +38,7 @@ export function useEventVoting(eventId: string, enabled: boolean) {
   });
 
   const resolveTieMutation = useMutation({
-    mutationFn: (optionId: string) =>
-      eventsApi.resolveTie(accessToken!, eventId, optionId),
+    mutationFn: (optionId: string) => eventsApi.resolveTie(accessToken!, eventId, optionId),
     onSuccess: async () => {
       setPendingTieOptionId(null);
       await Promise.all([
@@ -87,9 +73,7 @@ export function useEventVoting(eventId: string, enabled: boolean) {
     requestTieResolution: setPendingTieOptionId,
     cancelTieResolution: () => setPendingTieOptionId(null),
     confirmTieResolution: () =>
-      pendingTieOptionId
-        ? resolveTieMutation.mutateAsync(pendingTieOptionId)
-        : Promise.resolve(),
+      pendingTieOptionId ? resolveTieMutation.mutateAsync(pendingTieOptionId) : Promise.resolve(),
     isResolvingTie: resolveTieMutation.isPending,
     resolveTieError: resolveTieMutation.error,
   };

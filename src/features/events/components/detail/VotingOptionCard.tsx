@@ -30,7 +30,8 @@ export function VotingOptionCard({
         } ${!isOpen ? "cursor-default" : "focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"}`}
         disabled={!isOpen}
         onClick={onToggle}
-        type="button">
+        type="button"
+      >
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="font-bold text-slate-900">
@@ -44,18 +45,21 @@ export function VotingOptionCard({
           </div>
           {isOpen ? (
             <span
-              className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${isSelected ? "bg-teal-50 text-teal-700" : "bg-slate-100 text-slate-600"}`}>
+              className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${isSelected ? "bg-teal-50 text-teal-700" : "bg-slate-100 text-slate-600"}`}
+            >
               <Check className="size-4" />
               {isSelected ? "Seleccionada" : "Seleccionar"}
             </span>
           ) : null}
         </div>
         <div
-          className={`${compact ? "mt-3" : "mt-4 border-t border-slate-100 pt-3"} flex items-center gap-3`}>
+          className={`${compact ? "mt-3" : "mt-4 border-t border-slate-100 pt-3"} flex items-center gap-3`}
+        >
           <UsersRound className="size-4 shrink-0 text-slate-400" />
           <div
             aria-label={`${option.availabilityPercent}% de disponibilidad`}
-            className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
+            className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200"
+          >
             <div
               className="h-full rounded-full bg-teal-600 transition-[width]"
               style={{ width: `${option.availabilityPercent}%` }}

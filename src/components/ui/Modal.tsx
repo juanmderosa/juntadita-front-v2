@@ -27,7 +27,8 @@ export function Modal({ children, isOpen, onClose, title }: ModalProps) {
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
-      role="dialog">
+      role="dialog"
+    >
       <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl">
         <h2 className="text-xl font-bold text-slate-950" id="modal-title">
           {title}

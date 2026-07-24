@@ -1,7 +1,4 @@
-import {
-  weekdayOptions,
-  type WeekdayValue,
-} from "@/features/events/lib/eventOptionGenerator.lib";
+import { weekdayOptions, type WeekdayValue } from "@/features/events/lib/eventOptionGenerator.lib";
 
 type EventOptionWeekdaySelectorProps = {
   selectedWeekdays: WeekdayValue[];
@@ -28,7 +25,8 @@ export function EventOptionWeekdaySelector({
               }`}
               key={weekday.value}
               onClick={() => toggleWeekday(weekday.value)}
-              type="button">
+              type="button"
+            >
               {weekday.label}
             </button>
           );

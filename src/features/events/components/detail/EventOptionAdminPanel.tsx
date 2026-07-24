@@ -45,9 +45,7 @@ export function EventOptionAdminPanel({
           timeZone={timeZone}
         />
       )}
-      {error ? (
-        <p className="mt-3 text-sm text-red-700">{getErrorMessage(error)}</p>
-      ) : null}
+      {error ? <p className="mt-3 text-sm text-red-700">{getErrorMessage(error)}</p> : null}
     </div>
   );
 }

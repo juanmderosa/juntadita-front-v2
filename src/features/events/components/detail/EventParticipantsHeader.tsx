@@ -2,9 +2,7 @@ type EventParticipantsHeaderProps = {
   participantsCount: number;
 };
 
-export function EventParticipantsHeader({
-  participantsCount,
-}: EventParticipantsHeaderProps) {
+export function EventParticipantsHeader({ participantsCount }: EventParticipantsHeaderProps) {
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
       <div>

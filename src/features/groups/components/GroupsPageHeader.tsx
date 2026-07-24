@@ -15,13 +15,8 @@ export function GroupsPageHeader({ onCreate }: GroupsPageHeaderProps) {
           Guardá contactos para invitarlos de nuevo cuando armes un evento.
         </p>
       </div>
-      <Button
-        onClick={onCreate}
-        type="button">
-        <FolderPlus
-          aria-hidden="true"
-          className="mr-2 inline size-4"
-        />
+      <Button onClick={onCreate} type="button">
+        <FolderPlus aria-hidden="true" className="mr-2 inline size-4" />
         Crear grupo
       </Button>
     </header>

@@ -18,9 +18,7 @@ afterEachVitest(() => cleanup());
 describe("invite participants form", () => {
   it("submits selected groups together with manual emails", async () => {
     const user = userEvent.setup();
-    const inviteParticipants = vi
-      .fn()
-      .mockResolvedValue({ participants: [], emails: [] });
+    const inviteParticipants = vi.fn().mockResolvedValue({ participants: [], emails: [] });
     render(
       <InviteParticipantsForm
         groups={[group]}
@@ -31,9 +29,7 @@ describe("invite participants form", () => {
 
     await user.click(screen.getByRole("checkbox"));
     await user.type(screen.getByLabelText("Emails"), "ana@example.com");
-    await user.click(
-      screen.getByRole("button", { name: "Enviar invitaciones" }),
-    );
+    await user.click(screen.getByRole("button", { name: "Enviar invitaciones" }));
 
     expect(inviteParticipants).toHaveBeenCalledWith({
       emails: ["ana@example.com"],
@@ -43,9 +39,7 @@ describe("invite participants form", () => {
 
   it("allows a group-only invitation", async () => {
     const user = userEvent.setup();
-    const inviteParticipants = vi
-      .fn()
-      .mockResolvedValue({ participants: [], emails: [] });
+    const inviteParticipants = vi.fn().mockResolvedValue({ participants: [], emails: [] });
     render(
       <InviteParticipantsForm
         groups={[group]}
@@ -55,9 +49,7 @@ describe("invite participants form", () => {
     );
 
     await user.click(screen.getByRole("checkbox"));
-    await user.click(
-      screen.getByRole("button", { name: "Enviar invitaciones" }),
-    );
+    await user.click(screen.getByRole("button", { name: "Enviar invitaciones" }));
 
     expect(inviteParticipants).toHaveBeenCalledWith({
       emails: [],
