@@ -5,6 +5,7 @@ import { expensesApi } from "@/api/expenses.api";
 import { eventsApi } from "@/api/events.api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { canManageExpense } from "@/features/expenses/lib/expensePermissions";
+import { usePayments } from "@/features/payments/hooks/usePayments";
 import type {
   Expense,
   ExpenseAttachment,
@@ -35,11 +36,16 @@ export function useExpensesPage() {
     queryFn: () => expensesApi.list(accessToken!, eventId),
     enabled: Boolean(accessToken && eventId),
   });
+  const payments = usePayments(
+    eventId,
+    eventQuery.data?.financialStatus === "payments_enabled",
+  );
 
   const invalidate = () =>
     Promise.all([
       queryClient.invalidateQueries({ queryKey: ["events", eventId] }),
       queryClient.invalidateQueries({ queryKey: ["expenses", eventId] }),
+      queryClient.invalidateQueries({ queryKey: ["payments", eventId] }),
     ]);
 
   const saveMutation = useMutation({
@@ -173,5 +179,18 @@ export function useExpensesPage() {
     },
     isChangingFinancialStatus: financialStatusMutation.isPending,
     financialStatusError: financialStatusMutation.error,
+    payments,
+    financialParticipants: (eventQuery.data?.participants ?? []).filter(
+      (participant) =>
+        participant.status !== "removed" && participant.participatesInExpenses,
+    ),
+    allowedPaymentPayers: (eventQuery.data?.participants ?? []).filter(
+      (participant) =>
+        participant.status !== "removed" &&
+        participant.participatesInExpenses &&
+        (participant.userId === currentUser?.user.id ||
+          (eventQuery.data?.currentUserRole === "admin" &&
+            participant.userId === null)),
+    ),
   };
 }

@@ -8,6 +8,9 @@ import { ExpenseFormModal } from "@/features/expenses/components/ExpenseFormModa
 import { FinancialStatusModal } from "@/features/expenses/components/FinancialStatusModal";
 import { FinancialStatusPanel } from "@/features/expenses/components/FinancialStatusPanel";
 import { useExpensesPage } from "@/features/expenses/hooks/useExpensesPage";
+import { PaymentFormModal } from "@/features/payments/components/PaymentFormModal";
+import { PaymentsSection } from "@/features/payments/components/PaymentsSection";
+import { VoidPaymentModal } from "@/features/payments/components/VoidPaymentModal";
 import { getErrorMessage } from "@/lib/errors";
 
 const money = (cents: number) =>
@@ -117,6 +120,21 @@ export function ExpensesPage() {
           </ul>
         )}
       </section>
+      {event.financialStatus === "payments_enabled" ? (
+        page.payments.isLoading ? (
+          <p className="mt-8 text-slate-600">Calculando balances...</p>
+        ) : page.payments.overview ? (
+          <PaymentsSection
+            overview={page.payments.overview}
+            currentUserId={page.payments.currentUserId}
+            isAdmin={canManage}
+            onRegister={page.payments.openForm}
+            onVoid={page.payments.requestVoid}
+          />
+        ) : (
+          <p className="mt-8 text-red-700">{getErrorMessage(page.payments.error)}</p>
+        )
+      ) : null}
       <ExpenseFormModal
         isOpen={page.editingExpense !== undefined}
         expense={page.editingExpense ?? null}
@@ -152,6 +170,30 @@ export function ExpensesPage() {
         error={page.financialStatusError}
         onClose={page.cancelFinancialAction}
         onConfirm={() => void page.confirmFinancialAction()}
+      />
+      <PaymentFormModal
+        isOpen={page.payments.isFormOpen}
+        isAdmin={canManage}
+        participants={page.financialParticipants}
+        allowedPayers={page.allowedPaymentPayers}
+        suggestions={page.payments.overview?.suggestions ?? []}
+        isSaving={page.payments.isCreating}
+        error={page.payments.createError}
+        onClose={page.payments.closeForm}
+        onSave={page.payments.createPayment}
+      />
+      <VoidPaymentModal
+        payment={page.payments.paymentToVoid}
+        isSaving={page.payments.isVoiding}
+        error={page.payments.voidError}
+        onClose={page.payments.cancelVoid}
+        onConfirm={async (reason) => {
+          if (!page.payments.paymentToVoid) return;
+          await page.payments.voidPayment({
+            paymentId: page.payments.paymentToVoid.id,
+            reason,
+          });
+        }}
       />
       <Modal
         isOpen={page.isParticipantsOpen}
