@@ -135,6 +135,24 @@ export const eventsApi = {
     return response.data;
   },
 
+  async enablePayments(accessToken: string, eventId: string) {
+    const response = await http.post<SuccessResponse<EventDetail>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/financial-status/enable-payments`,
+      {},
+      { accessToken, responseSchema: eventResponseSchema },
+    );
+    return response.data;
+  },
+
+  async reopenExpenses(accessToken: string, eventId: string) {
+    const response = await http.post<SuccessResponse<EventDetail>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/financial-status/reopen-expenses`,
+      {},
+      { accessToken, responseSchema: eventResponseSchema },
+    );
+    return response.data;
+  },
+
   async getVoting(accessToken: string, eventId: string) {
     const response = await http.get<SuccessResponse<VotingState>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/voting`,

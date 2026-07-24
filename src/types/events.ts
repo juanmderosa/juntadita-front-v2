@@ -1,4 +1,5 @@
 export type EventType = "poll" | "fixed";
+export type EventFinancialStatus = "collecting_expenses" | "payments_enabled";
 export type EventParticipantRole = "admin" | "guest";
 export type EventParticipantStatus = "invited" | "joined" | "removed";
 export type EventOptionType = "date" | "datetime" | "range";
@@ -16,6 +17,10 @@ export type EventSummary = {
   fixedStartAt: string | null;
   fixedEndAt: string | null;
   finalizedAt: string | null;
+  financialStatus: EventFinancialStatus;
+  financialStateChangedAt: string;
+  financialStateChangedBy: string | null;
+  financialParticipantsLockedAt: string | null;
   winningOption: EventOption | null;
   createdAt: string;
   updatedAt: string;
