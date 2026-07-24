@@ -36,7 +36,7 @@ async function request<T>(
   const { accessToken, responseSchema, ...fetchOptions } = options;
   const headers = new Headers(options.headers);
 
-  if (options.body != null && !headers.has("Content-Type")) {
+  if (options.body != null && !(options.body instanceof FormData) && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }
 
@@ -105,6 +105,8 @@ export const http = {
       method: "POST",
       body: body == null ? undefined : JSON.stringify(body),
     }),
+  postForm: <T>(path: string, body: FormData, options: RequestOptions<T> = {}) =>
+    request<T>(path, { ...options, method: "POST", body }),
   put: <T>(path: string, body?: unknown, options: RequestOptions<T> = {}) =>
     request<T>(path, {
       ...options,

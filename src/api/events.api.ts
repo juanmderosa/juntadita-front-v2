@@ -126,6 +126,15 @@ export const eventsApi = {
     return response.data;
   },
 
+  async updateExpenseParticipation(accessToken: string, eventId: string, participantId: string, participatesInExpenses: boolean) {
+    const response = await http.patch<SuccessResponse<EventParticipant>>(
+      `/api/v1/events/${encodeURIComponent(eventId)}/participants/${encodeURIComponent(participantId)}/expense-participation`,
+      { participatesInExpenses },
+      { accessToken },
+    );
+    return response.data;
+  },
+
   async getVoting(accessToken: string, eventId: string) {
     const response = await http.get<SuccessResponse<VotingState>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/voting`,

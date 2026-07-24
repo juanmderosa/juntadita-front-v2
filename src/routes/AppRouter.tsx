@@ -9,6 +9,7 @@ import { EditEventPage } from "@/features/events/pages/EditEventPage";
 import { EventDetailPage } from "@/features/events/pages/EventDetailPage";
 import { GroupsPage } from "@/features/groups/pages/GroupsPage";
 import { GroupDetailPage } from "@/features/groups/pages/GroupDetailPage";
+import { ExpensesPage } from "@/features/expenses/pages/ExpensesPage";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
               { path: "/groups/:groupId", element: <GroupDetailPage /> },
               { path: "/events/new", element: <CreateEventPage /> },
               { path: "/events/:eventId", element: <EventDetailPage /> },
+              { path: "/events/:eventId/expenses", element: <ExpensesPage /> },
               { path: "/events/:eventId/edit", element: <EditEventPage /> },
             ],
           },
