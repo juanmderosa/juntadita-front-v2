@@ -54,6 +54,7 @@ export const eventParticipantSchema = z.object({
   displayName: z.string().nullable(),
   role: z.enum(["admin", "guest"]),
   status: z.enum(["invited", "joined", "removed"]),
+  participatesInExpenses: z.boolean().default(true),
   invitedBy: uuidSchema.nullable(),
   createdAt: isoDateTimeSchema,
   updatedAt: isoDateTimeSchema,
