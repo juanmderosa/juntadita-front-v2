@@ -6,10 +6,7 @@ import {
   type CreateGroupFormInput,
 } from "@/features/groups/schemas/groups.schemas";
 
-export function useGroupNameForm(
-  name: string,
-  onSave: (name: string) => Promise<void>,
-) {
+export function useGroupNameForm(name: string, onSave: (name: string) => Promise<void>) {
   const form = useForm<CreateGroupFormInput>({
     resolver: zodResolver(createGroupFormSchema),
     defaultValues: { name },

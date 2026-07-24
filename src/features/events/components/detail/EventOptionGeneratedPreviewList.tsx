@@ -39,7 +39,8 @@ export function EventOptionGeneratedPreviewList({
         <Button
           disabled={isCreating || newOptionsCount === 0 || Boolean(errorMessage)}
           onClick={submit}
-          type="button">
+          type="button"
+        >
           {isCreating ? "Creando..." : `Crear ${newOptionsCount} opciones`}
         </Button>
       </div>
@@ -59,7 +60,8 @@ export function EventOptionGeneratedPreviewList({
           {options.map((option) => (
             <li
               className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2"
-              key={option.key}>
+              key={option.key}
+            >
               <div>
                 <p className="text-sm font-bold text-slate-900">
                   {formatPreviewOption(option, timeZone)}
@@ -74,7 +76,8 @@ export function EventOptionGeneratedPreviewList({
                 aria-label="Quitar opcion"
                 className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
                 onClick={() => removePreviewOption(option.key)}
-                type="button">
+                type="button"
+              >
                 <X className="size-4" />
               </button>
             </li>
@@ -85,10 +88,7 @@ export function EventOptionGeneratedPreviewList({
   );
 }
 
-function formatPreviewOption(
-  option: GeneratedEventOptionPreview,
-  timeZone: string,
-) {
+function formatPreviewOption(option: GeneratedEventOptionPreview, timeZone: string) {
   if (option.input.type === "date") {
     return formatDate(option.input.startAt, { timeZone });
   }

@@ -26,9 +26,7 @@ export const EventDetailHeader = ({ event, canManage }: Props) => {
       </div>
       <div className="mt-5 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">
-            {event.title}
-          </h1>
+          <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">{event.title}</h1>
           <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-indigo-50 sm:text-base">
             <CalendarClock className="size-5" />
             {getEventSchedule(event)}
@@ -37,15 +35,19 @@ export const EventDetailHeader = ({ event, canManage }: Props) => {
         <div className="flex flex-wrap gap-2">
           <Link
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-white/15 px-4 py-2.5 text-sm font-bold text-white hover:bg-white/25"
-            to={`/events/${event.id}/expenses`}>
+            to={`/events/${event.id}/expenses`}
+          >
             Gastos
           </Link>
-          {canManage ? <Link
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-50"
-            to={`/events/${event.id}/edit`}>
-            <Pencil className="size-4" />
-            Editar datos
-          </Link> : null}
+          {canManage ? (
+            <Link
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-50"
+              to={`/events/${event.id}/edit`}
+            >
+              <Pencil className="size-4" />
+              Editar datos
+            </Link>
+          ) : null}
         </div>
       </div>
     </header>

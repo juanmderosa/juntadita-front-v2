@@ -6,16 +6,10 @@ interface Props {
   timezone: string;
 }
 
-export const EventDetailAside = ({
-  canManage,
-  currencyCode,
-  timezone,
-}: Props) => {
+export const EventDetailAside = ({ canManage, currencyCode, timezone }: Props) => {
   return (
     <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_4px_20px_rgba(15,23,42,0.04)]">
-      <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">
-        Tu acceso
-      </h2>
+      <h2 className="text-sm font-bold uppercase tracking-wide text-slate-500">Tu acceso</h2>
       <p className="mt-4 flex items-center gap-2 text-base font-bold text-slate-900">
         {canManage ? <Crown className="size-5 text-amber-600" /> : null}
         {canManage ? "Organizador" : "Participante"}

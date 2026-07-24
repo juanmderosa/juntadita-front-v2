@@ -26,17 +26,15 @@ describe("users API", () => {
         requiresProfileOnboarding: false,
       },
     };
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify(payload), { status: 200 }),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify(payload), { status: 200 }));
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(usersApi.getCurrentUser("access-token")).resolves.toEqual(
-      payload.data,
-    );
+    await expect(usersApi.getCurrentUser("access-token")).resolves.toEqual(payload.data);
     expect(fetchMock.mock.calls[0][0]).toContain("/api/v1/me");
-    expect(
-      (fetchMock.mock.calls[0][1].headers as Headers).get("Authorization"),
-    ).toBe("Bearer access-token");
+    expect((fetchMock.mock.calls[0][1].headers as Headers).get("Authorization")).toBe(
+      "Bearer access-token",
+    );
   });
 });

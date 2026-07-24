@@ -8,11 +8,7 @@ type VotingResultSummaryProps = {
   timeZone: string;
 };
 
-export function VotingResultSummary({
-  options,
-  result,
-  timeZone,
-}: VotingResultSummaryProps) {
+export function VotingResultSummary({ options, result, timeZone }: VotingResultSummaryProps) {
   if (!result) {
     return (
       <p className="mt-5 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700">
@@ -47,8 +43,7 @@ export function VotingResultSummary({
         Resultado final
       </p>
       <p className="mt-3 text-xl font-bold sm:text-2xl">
-        {winner?.label ||
-          (winner ? formatOptionSchedule(winner, timeZone) : "Opción elegida")}
+        {winner?.label || (winner ? formatOptionSchedule(winner, timeZone) : "Opción elegida")}
       </p>
     </div>
   );

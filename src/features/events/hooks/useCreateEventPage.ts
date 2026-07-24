@@ -7,10 +7,7 @@ import { localDateTimeToIso } from "@/lib/dates";
 import { getErrorMessage } from "@/lib/errors";
 import type { CreateEventInput } from "@/types/events";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import {
-  eventFormSchema,
-  type EventFormInput,
-} from "@/features/events/schemas/events.schemas";
+import { eventFormSchema, type EventFormInput } from "@/features/events/schemas/events.schemas";
 import { eventsQueryKey } from "@/features/events/hooks/useEventsPage";
 
 export function useCreateEventPage() {
@@ -56,9 +53,7 @@ export function useCreateEventPage() {
             ...base,
             type: "fixed",
             fixedStartAt: localDateTimeToIso(values.fixedStartAt),
-            fixedEndAt: values.fixedEndAt
-              ? localDateTimeToIso(values.fixedEndAt)
-              : null,
+            fixedEndAt: values.fixedEndAt ? localDateTimeToIso(values.fixedEndAt) : null,
           };
 
     try {

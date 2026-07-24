@@ -1,7 +1,4 @@
-import type {
-  EventOption,
-  UpdateEventOptionInput,
-} from "@/types/events";
+import type { EventOption, UpdateEventOptionInput } from "@/types/events";
 import { useEditableEventOption } from "@/features/events/hooks/useEventOptionForms";
 import { EventOptionEditForm } from "@/features/events/components/detail/EventOptionEditForm";
 import { EventOptionViewItem } from "@/features/events/components/detail/EventOptionViewItem";
@@ -11,10 +8,7 @@ type EventOptionItemProps = {
   deleteOption: (optionId: string) => Promise<unknown>;
   option: EventOption;
   timeZone: string;
-  updateOption: (
-    optionId: string,
-    input: UpdateEventOptionInput,
-  ) => Promise<unknown>;
+  updateOption: (optionId: string, input: UpdateEventOptionInput) => Promise<unknown>;
 };
 
 export function EventOptionItem({

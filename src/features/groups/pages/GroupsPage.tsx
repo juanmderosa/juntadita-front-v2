@@ -15,9 +15,7 @@ export function GroupsPage() {
           {getErrorMessage(controller.error)}
         </p>
       ) : null}
-      {controller.isLoading ? (
-        <p className="mt-10 text-slate-600">Cargando grupos...</p>
-      ) : null}
+      {controller.isLoading ? <p className="mt-10 text-slate-600">Cargando grupos...</p> : null}
       {!controller.isLoading && controller.groups.length === 0 ? (
         <div className="mt-8">
           <GroupsEmptyState />

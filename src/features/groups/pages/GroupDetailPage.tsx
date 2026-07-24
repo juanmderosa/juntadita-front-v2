@@ -18,9 +18,7 @@ export function GroupDetailPage() {
   if (!controller.group)
     return (
       <section className="mx-auto max-w-5xl px-4 py-10 text-red-700 sm:px-8">
-        {controller.error
-          ? getErrorMessage(controller.error)
-          : "No se encontró el grupo."}
+        {controller.error ? getErrorMessage(controller.error) : "No se encontró el grupo."}
       </section>
     );
   return (
@@ -39,8 +37,7 @@ export function GroupDetailPage() {
         />
         <p className="mt-3 text-sm text-slate-600">
           {controller.group.memberCount}{" "}
-          {controller.group.memberCount === 1 ? "contacto" : "contactos"} en
-          este grupo privado.
+          {controller.group.memberCount === 1 ? "contacto" : "contactos"} en este grupo privado.
         </p>
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">

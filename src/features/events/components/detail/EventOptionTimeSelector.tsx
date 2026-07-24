@@ -29,7 +29,8 @@ export function EventOptionTimeSelector({
           <button
             className="rounded-lg border border-indigo-200 bg-white px-3 py-2 text-sm font-bold text-indigo-700 transition hover:bg-indigo-50"
             onClick={addTime}
-            type="button">
+            type="button"
+          >
             Agregar
           </button>
         </div>
@@ -41,7 +42,8 @@ export function EventOptionTimeSelector({
             className="inline-flex items-center gap-1 rounded-full bg-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-300"
             key={time}
             onClick={() => removeTime(time)}
-            type="button">
+            type="button"
+          >
             {time}
             <X className="size-3" />
           </button>

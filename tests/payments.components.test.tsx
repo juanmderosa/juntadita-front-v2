@@ -24,9 +24,7 @@ const overview: PaymentOverview = {
     { participant: a, balanceCents: 1500 },
     { participant: b, balanceCents: -1500 },
   ],
-  suggestions: [
-    { fromParticipantId: "b", toParticipantId: "a", amountCents: 1500 },
-  ],
+  suggestions: [{ fromParticipantId: "b", toParticipantId: "a", amountCents: 1500 }],
   payments: [
     {
       id: "payment-id",
@@ -62,9 +60,7 @@ describe("PaymentsSection", () => {
       />,
     );
     expect(screen.getByText(/Te deben/)).not.toBeNull();
-    expect(
-      screen.getByText("Sugerencias").parentElement?.textContent,
-    ).toContain("B paga");
+    expect(screen.getByText("Sugerencias").parentElement?.textContent).toContain("B paga");
   });
   it("only exposes void action to the payment creator or admin", () => {
     const onVoid = vi.fn();

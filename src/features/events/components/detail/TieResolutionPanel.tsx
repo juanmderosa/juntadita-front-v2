@@ -9,11 +9,7 @@ type TieResolutionPanelProps = {
   timeZone: string;
 };
 
-export function TieResolutionPanel({
-  onChoose,
-  options,
-  timeZone,
-}: TieResolutionPanelProps) {
+export function TieResolutionPanel({ onChoose, options, timeZone }: TieResolutionPanelProps) {
   return (
     <section className="mt-5 rounded-xl border border-amber-200 bg-amber-50/70 p-4">
       <div className="flex gap-3">
@@ -31,7 +27,8 @@ export function TieResolutionPanel({
             className="text-left"
             key={option.id}
             onClick={() => onChoose(option.id)}
-            variant="secondary">
+            variant="secondary"
+          >
             Elegir {option.label || formatOptionSchedule(option, timeZone)}
           </Button>
         ))}

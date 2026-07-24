@@ -11,9 +11,7 @@ const formSchema = z.object({
   amount: z.number().positive("Ingresa un monto válido."),
   paidByParticipantId: z.string().min(1),
   splitMethod: z.enum(["equal", "custom"]),
-  participantIds: z
-    .array(z.string())
-    .min(1, "Selecciona al menos una persona."),
+  participantIds: z.array(z.string()).min(1, "Selecciona al menos una persona."),
   customAmounts: z.record(z.string(), z.string()),
   files: z.array(z.instanceof(File)).max(5),
 });
@@ -27,9 +25,7 @@ export function useExpenseForm(
   const eligible = useMemo(
     () =>
       participants.filter(
-        (participant) =>
-          participant.participatesInExpenses &&
-          participant.status !== "removed",
+        (participant) => participant.participatesInExpenses && participant.status !== "removed",
       ),
     [participants],
   );
@@ -63,9 +59,7 @@ export function useExpenseForm(
             splitMethod: "custom",
             splits: values.participantIds.map((participantId) => ({
               participantId,
-              amountCents: Math.round(
-                Number(values.customAmounts[participantId] ?? 0) * 100,
-              ),
+              amountCents: Math.round(Number(values.customAmounts[participantId] ?? 0) * 100),
             })),
           };
     await onSave(input, values.files);
@@ -73,10 +67,7 @@ export function useExpenseForm(
   return { form, submit, eligible };
 }
 
-function getDefaults(
-  expense: Expense | null,
-  participants: EventParticipant[],
-): ExpenseFormValues {
+function getDefaults(expense: Expense | null, participants: EventParticipant[]): ExpenseFormValues {
   const splitIds =
     expense?.splits.map((split) => split.participantId) ??
     participants.map((participant) => participant.id);
@@ -84,15 +75,11 @@ function getDefaults(
     title: expense?.title ?? "",
     description: expense?.description ?? "",
     amount: expense ? expense.amountCents / 100 : 0,
-    paidByParticipantId:
-      expense?.paidByParticipantId ?? participants[0]?.id ?? "",
+    paidByParticipantId: expense?.paidByParticipantId ?? participants[0]?.id ?? "",
     splitMethod: expense?.splitMethod ?? "equal",
     participantIds: splitIds,
     customAmounts: Object.fromEntries(
-      expense?.splits.map((split) => [
-        split.participantId,
-        String(split.amountCents / 100),
-      ]) ?? [],
+      expense?.splits.map((split) => [split.participantId, String(split.amountCents / 100)]) ?? [],
     ),
     files: [],
   };

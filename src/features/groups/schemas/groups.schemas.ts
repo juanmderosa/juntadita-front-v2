@@ -34,14 +34,8 @@ export const contactGroupDetailSchema = contactGroupSchema.extend({
   members: z.array(contactGroupMemberSchema),
 });
 
-export const groupsResponseSchema = successResponseSchema(
-  z.array(contactGroupSchema),
-);
-export const groupResponseSchema = successResponseSchema(
-  contactGroupDetailSchema,
-);
+export const groupsResponseSchema = successResponseSchema(z.array(contactGroupSchema));
+export const groupResponseSchema = successResponseSchema(contactGroupDetailSchema);
 
 export type CreateGroupFormInput = z.infer<typeof createGroupFormSchema>;
-export type AddGroupContactsFormInput = z.infer<
-  typeof addGroupContactsFormSchema
->;
+export type AddGroupContactsFormInput = z.infer<typeof addGroupContactsFormSchema>;

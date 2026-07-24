@@ -39,9 +39,7 @@ export const paymentOverviewSchema = z.object({
   ),
   payments: z.array(paymentSchema),
 });
-export const paymentOverviewResponseSchema = successResponseSchema(
-  paymentOverviewSchema,
-);
+export const paymentOverviewResponseSchema = successResponseSchema(paymentOverviewSchema);
 export const paymentResponseSchema = successResponseSchema(paymentSchema);
 export const paymentFormSchema = z
   .object({
@@ -57,10 +55,7 @@ export const paymentFormSchema = z
           return false;
         }
       }, "Ingresá un importe válido de hasta dos decimales."),
-    note: z
-      .string()
-      .trim()
-      .max(500, "La nota no puede superar 500 caracteres."),
+    note: z.string().trim().max(500, "La nota no puede superar 500 caracteres."),
   })
   .refine((value) => value.fromParticipantId !== value.toParticipantId, {
     path: ["toParticipantId"],

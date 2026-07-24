@@ -8,13 +8,10 @@ import type { ContactGroup, ContactGroupDetail } from "@/types/groups";
 
 export const groupsApi = {
   async list(accessToken: string) {
-    const response = await http.get<SuccessResponse<ContactGroup[]>>(
-      "/api/v1/groups",
-      {
-        accessToken,
-        responseSchema: groupsResponseSchema,
-      },
-    );
+    const response = await http.get<SuccessResponse<ContactGroup[]>>("/api/v1/groups", {
+      accessToken,
+      responseSchema: groupsResponseSchema,
+    });
     return response.data;
   },
   async getById(accessToken: string, groupId: string) {

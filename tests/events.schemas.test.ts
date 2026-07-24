@@ -45,9 +45,7 @@ describe("event form schemas", () => {
         fixedEndAt: "2026-08-01T19:00",
       }).success,
     ).toBe(false);
-    expect(
-      editEventFormSchema.safeParse({ title: "", description: "" }).success,
-    ).toBe(false);
+    expect(editEventFormSchema.safeParse({ title: "", description: "" }).success).toBe(false);
   });
 
   it("validates option variants", () => {

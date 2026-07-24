@@ -14,54 +14,38 @@ import { VoidPaymentModal } from "@/features/payments/components/VoidPaymentModa
 import { getErrorMessage } from "@/lib/errors";
 
 const money = (cents: number) =>
-  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(
-    cents / 100,
-  );
+  new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(cents / 100);
 
 export function ExpensesPage() {
   const page = useExpensesPage();
 
-  if (page.isLoading)
-    return <p className="p-8 text-slate-600">Cargando gastos...</p>;
+  if (page.isLoading) return <p className="p-8 text-slate-600">Cargando gastos...</p>;
 
-  if (!page.event)
-    return <p className="p-8 text-red-700">{getErrorMessage(page.error)}</p>;
+  if (!page.event) return <p className="p-8 text-red-700">{getErrorMessage(page.error)}</p>;
 
   const event = page.event;
   const canManage = event.currentUserRole === "admin";
-  const canManageParticipants =
-    canManage && !event.financialParticipantsLockedAt;
+  const canManageParticipants = canManage && !event.financialParticipantsLockedAt;
   const expensesAreOpen = event.financialStatus === "collecting_expenses";
-  const total = page.expenses.reduce(
-    (sum, expense) => sum + expense.amountCents,
-    0,
-  );
+  const total = page.expenses.reduce((sum, expense) => sum + expense.amountCents, 0);
 
   return (
     <main className="mx-auto max-w-5xl p-4 sm:p-8">
-      <Link
-        to={`/events/${page.eventId}`}
-        className="text-sm font-semibold text-indigo-700">
+      <Link to={`/events/${page.eventId}`} className="text-sm font-semibold text-indigo-700">
         ← Volver al evento
       </Link>
       <header className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-3xl font-bold">{event.title} · Gastos</h1>
-          <p className="text-slate-600">
-            Repartí y consultá los gastos del evento.
-          </p>
+          <p className="text-slate-600">Repartí y consultá los gastos del evento.</p>
         </div>
         <div className="flex gap-2">
           {canManageParticipants ? (
-            <Button
-              variant="secondary"
-              onClick={page.openParticipants}>
+            <Button variant="secondary" onClick={page.openParticipants}>
               Participantes de gastos
             </Button>
           ) : null}
-          {expensesAreOpen ? (
-            <Button onClick={page.openCreate}>+ Cargar gasto</Button>
-          ) : null}
+          {expensesAreOpen ? <Button onClick={page.openCreate}>+ Cargar gasto</Button> : null}
         </div>
       </header>
       <section className="mt-6 rounded-2xl bg-indigo-600 p-6 text-white">
@@ -84,15 +68,12 @@ export function ExpensesPage() {
         ) : (
           <ul className="mt-4 space-y-3">
             {page.expenses.map((expense) => (
-              <li
-                key={expense.id}
-                className="rounded-2xl border bg-white p-4 shadow-sm">
+              <li key={expense.id} className="rounded-2xl border bg-white p-4 shadow-sm">
                 <div className="flex justify-between gap-3">
                   <div>
                     <p className="font-bold">{expense.title}</p>
                     <p className="text-sm text-slate-600">
-                      Pagó {expense.paidBy.displayName ?? expense.paidBy.email}{" "}
-                      ·{" "}
+                      Pagó {expense.paidBy.displayName ?? expense.paidBy.email} ·{" "}
                       {expense.splitMethod === "equal"
                         ? "Dividido en partes iguales"
                         : "División personalizada"}
@@ -108,9 +89,7 @@ export function ExpensesPage() {
                 <ExpenseAttachments
                   attachments={expense.attachments}
                   canManage={expensesAreOpen && page.canManageExpense(expense)}
-                  onDownload={(attachmentId) =>
-                    page.downloadAttachment(expense.id, attachmentId)
-                  }
+                  onDownload={(attachmentId) => page.downloadAttachment(expense.id, attachmentId)}
                   onRequestDelete={(attachment) =>
                     void page.deleteAttachment(expense.id, attachment)
                   }
@@ -161,9 +140,7 @@ export function ExpensesPage() {
         expensesCount={page.expenses.length}
         participantsCount={
           event.participants.filter(
-            (participant) =>
-              participant.participatesInExpenses &&
-              participant.status !== "removed",
+            (participant) => participant.participatesInExpenses && participant.status !== "removed",
           ).length
         }
         isPending={page.isChangingFinancialStatus}
@@ -198,14 +175,16 @@ export function ExpensesPage() {
       <Modal
         isOpen={page.isParticipantsOpen}
         onClose={page.closeParticipants}
-        title="Participantes de gastos">
+        title="Participantes de gastos"
+      >
         <ul className="mt-4 space-y-2">
           {event.participants
             .filter((p) => p.status !== "removed")
             .map((p) => (
               <li
                 key={p.id}
-                className="flex items-center justify-between rounded-lg bg-slate-50 p-3">
+                className="flex items-center justify-between rounded-lg bg-slate-50 p-3"
+              >
                 <span>{p.displayName ?? p.email}</span>
                 <Button
                   disabled={!expensesAreOpen}
@@ -215,16 +194,15 @@ export function ExpensesPage() {
                       participantId: p.id,
                       participates: !p.participatesInExpenses,
                     })
-                  }>
+                  }
+                >
                   {p.participatesInExpenses ? "Excluir" : "Incluir"}
                 </Button>
               </li>
             ))}
         </ul>
         {page.participationError ? (
-          <p className="mt-3 text-sm text-red-700">
-            {getErrorMessage(page.participationError)}
-          </p>
+          <p className="mt-3 text-sm text-red-700">{getErrorMessage(page.participationError)}</p>
         ) : null}
       </Modal>
     </main>

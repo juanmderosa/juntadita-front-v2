@@ -1,10 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type {
-  InviteParticipantsInput,
-  InviteParticipantsResult,
-} from "@/types/events";
+import type { InviteParticipantsInput, InviteParticipantsResult } from "@/types/events";
 import { getEmailsValidationError, parseEmails } from "@/lib/emails";
 import {
   inviteParticipantsFormSchema,
@@ -13,9 +10,7 @@ import {
 import type { ContactGroup } from "@/types/groups";
 
 export function useInviteParticipantsForm(
-  inviteParticipants: (
-    input: InviteParticipantsInput,
-  ) => Promise<InviteParticipantsResult>,
+  inviteParticipants: (input: InviteParticipantsInput) => Promise<InviteParticipantsResult>,
   groups: ContactGroup[],
 ) {
   const [selectedGroupIds, setSelectedGroupIds] = useState<string[]>([]);
@@ -26,13 +21,9 @@ export function useInviteParticipantsForm(
 
   async function submit(values: InviteParticipantsFormInput) {
     const emails = parseEmails(values.emailsText);
-    const validationError =
-      emails.length > 0 ? getEmailsValidationError(emails) : null;
+    const validationError = emails.length > 0 ? getEmailsValidationError(emails) : null;
 
-    if (
-      validationError ||
-      (emails.length === 0 && selectedGroupIds.length === 0)
-    ) {
+    if (validationError || (emails.length === 0 && selectedGroupIds.length === 0)) {
       form.setError("emailsText", {
         message: validationError ?? "Agrega un email o selecciona un grupo.",
       });
@@ -49,9 +40,7 @@ export function useInviteParticipantsForm(
     .reduce((total, group) => total + group.memberCount, 0);
   function toggleGroup(groupId: string) {
     setSelectedGroupIds((current) =>
-      current.includes(groupId)
-        ? current.filter((id) => id !== groupId)
-        : [...current, groupId],
+      current.includes(groupId) ? current.filter((id) => id !== groupId) : [...current, groupId],
     );
   }
 

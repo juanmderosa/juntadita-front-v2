@@ -24,9 +24,7 @@ export function EventCard({ event }: { event: EventSummary }) {
         </span>
       </div>
 
-      <h2 className="mt-5 text-2xl font-bold tracking-tight text-slate-950">
-        {event.title}
-      </h2>
+      <h2 className="mt-5 text-2xl font-bold tracking-tight text-slate-950">{event.title}</h2>
       <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-600">
         {event.description || "Sin descripcion por ahora."}
       </p>
@@ -45,7 +43,10 @@ export function EventCard({ event }: { event: EventSummary }) {
           </span>
           <span className="flex items-center gap-1 text-sm font-bold text-indigo-700">
             Ver detalle
-            <ChevronRight aria-hidden="true" className="size-4 transition group-hover:translate-x-1" />
+            <ChevronRight
+              aria-hidden="true"
+              className="size-4 transition group-hover:translate-x-1"
+            />
           </span>
         </div>
       </div>

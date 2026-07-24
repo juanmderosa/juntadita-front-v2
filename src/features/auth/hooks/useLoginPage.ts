@@ -35,8 +35,7 @@ export function useLoginPage() {
     defaultValues: { code: "" },
   });
 
-  const isSubmitting =
-    emailForm.formState.isSubmitting || codeForm.formState.isSubmitting;
+  const isSubmitting = emailForm.formState.isSubmitting || codeForm.formState.isSubmitting;
 
   async function requestCode(values: EmailOtpInput) {
     setError(null);

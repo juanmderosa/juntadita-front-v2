@@ -9,29 +9,22 @@ export function usePayments(eventId: string, enabled: boolean) {
   const queryClient = useQueryClient();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [paymentToVoid, setPaymentToVoid] = useState<Payment | null>(null);
-  const invalidate = () =>
-    queryClient.invalidateQueries({ queryKey: ["payments", eventId] });
+  const invalidate = () => queryClient.invalidateQueries({ queryKey: ["payments", eventId] });
   const query = useQuery({
     queryKey: ["payments", eventId],
     queryFn: () => paymentsApi.getOverview(accessToken!, eventId),
     enabled: Boolean(accessToken && eventId && enabled),
   });
   const createMutation = useMutation({
-    mutationFn: (input: CreatePaymentInput) =>
-      paymentsApi.create(accessToken!, eventId, input),
+    mutationFn: (input: CreatePaymentInput) => paymentsApi.create(accessToken!, eventId, input),
     onSuccess: async () => {
       await invalidate();
       setIsFormOpen(false);
     },
   });
   const voidMutation = useMutation({
-    mutationFn: ({
-      paymentId,
-      reason,
-    }: {
-      paymentId: string;
-      reason: string;
-    }) => paymentsApi.void(accessToken!, eventId, paymentId, reason),
+    mutationFn: ({ paymentId, reason }: { paymentId: string; reason: string }) =>
+      paymentsApi.void(accessToken!, eventId, paymentId, reason),
     onSuccess: async () => {
       await invalidate();
       setPaymentToVoid(null);

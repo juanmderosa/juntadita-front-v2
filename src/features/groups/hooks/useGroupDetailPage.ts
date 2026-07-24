@@ -9,8 +9,9 @@ export function useGroupDetailPage() {
   const groupQuery = useGroup(groupId);
   const mutations = useGroupMutations();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [memberPendingDeletion, setMemberPendingDeletion] =
-    useState<ContactGroupMember | null>(null);
+  const [memberPendingDeletion, setMemberPendingDeletion] = useState<ContactGroupMember | null>(
+    null,
+  );
   async function deleteGroup() {
     await mutations.remove.mutateAsync(groupId);
     navigate("/groups");
@@ -40,16 +41,13 @@ export function useGroupDetailPage() {
     openDeleteModal: () => setIsDeleteModalOpen(true),
     closeDeleteModal: () => setIsDeleteModalOpen(false),
     memberPendingDeletion,
-    requestContactDeletion: (member: ContactGroupMember) =>
-      setMemberPendingDeletion(member),
+    requestContactDeletion: (member: ContactGroupMember) => setMemberPendingDeletion(member),
     closeContactDeletion: () => setMemberPendingDeletion(null),
     deleteContact,
     saveName: (name: string) =>
       mutations.update.mutateAsync({ groupId, name }).then(() => undefined),
     addContacts: (emails: string[]) =>
-      mutations.addMembers
-        .mutateAsync({ groupId, emails })
-        .then(() => undefined),
+      mutations.addMembers.mutateAsync({ groupId, emails }).then(() => undefined),
     deleteGroup,
   };
 }

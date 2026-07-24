@@ -31,21 +31,22 @@ export function EditEventPage() {
         <h1 className="text-2xl font-bold">No podes editar este evento</h1>
         <Link
           className="mt-4 inline-block font-bold text-indigo-700"
-          to={`/events/${controller.event.id}`}>
+          to={`/events/${controller.event.id}`}
+        >
           Volver al detalle
         </Link>
       </section>
     );
   }
 
-  const descriptionError =
-    controller.form.formState.errors.description?.message;
+  const descriptionError = controller.form.formState.errors.description?.message;
 
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-8 sm:px-6 lg:py-12">
       <Link
         className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-indigo-700"
-        to={`/events/${controller.event.id}`}>
+        to={`/events/${controller.event.id}`}
+      >
         <ArrowLeft className="size-4" />
         Volver al evento
       </Link>
@@ -54,28 +55,17 @@ export function EditEventPage() {
         <p className="mt-3 text-sm text-slate-600">
           El tipo y las fechas no se modifican en esta etapa.
         </p>
-        <RHForm
-          className="mt-8 space-y-6"
-          form={controller.form}
-          onSubmit={controller.updateEvent}>
-          <RHFormInput<EditEventFormInput>
-            label="Titulo"
-            maxLength={120}
-            name="title"
-          />
+        <RHForm className="mt-8 space-y-6" form={controller.form} onSubmit={controller.updateEvent}>
+          <RHFormInput<EditEventFormInput> label="Titulo" maxLength={120} name="title" />
           <label className="block">
-            <span className="text-sm font-semibold text-gray-800">
-              Descripcion
-            </span>
+            <span className="text-sm font-semibold text-gray-800">Descripcion</span>
             <textarea
               className="mt-2 min-h-36 w-full resize-y rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-base outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100"
               maxLength={2000}
               {...controller.form.register("description")}
             />
             {descriptionError ? (
-              <span className="mt-2 block text-sm text-red-700">
-                {descriptionError}
-              </span>
+              <span className="mt-2 block text-sm text-red-700">{descriptionError}</span>
             ) : null}
           </label>
           {controller.rootError ? (
@@ -83,9 +73,7 @@ export function EditEventPage() {
               {controller.rootError}
             </p>
           ) : null}
-          <Button
-            disabled={controller.isSubmitting}
-            type="submit">
+          <Button disabled={controller.isSubmitting} type="submit">
             {controller.isSubmitting ? "Guardando..." : "Guardar cambios"}
           </Button>
         </RHForm>

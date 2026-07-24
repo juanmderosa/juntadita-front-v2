@@ -15,7 +15,8 @@ export function EventOptionModeTabs({ mode, setMode }: EventOptionModeTabsProps)
             : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
         }`}
         onClick={() => setMode("manual")}
-        type="button">
+        type="button"
+      >
         Manual
       </button>
       <button
@@ -25,7 +26,8 @@ export function EventOptionModeTabs({ mode, setMode }: EventOptionModeTabsProps)
             : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
         }`}
         onClick={() => setMode("generator")}
-        type="button">
+        type="button"
+      >
         Generar varias
       </button>
     </div>

@@ -54,22 +54,36 @@ describe("group components", () => {
     render(
       <GroupMembersList
         isRemoving={false}
-        members={[{ id: "member-id", groupId: group.id, email: "ana@example.com", createdAt: group.createdAt, updatedAt: group.updatedAt }]}
+        members={[
+          {
+            id: "member-id",
+            groupId: group.id,
+            email: "ana@example.com",
+            createdAt: group.createdAt,
+            updatedAt: group.updatedAt,
+          },
+        ]}
         onRequestRemove={onRequestRemove}
       />,
     );
 
     await user.click(screen.getByRole("button", { name: "Quitar ana@example.com" }));
-    expect(onRequestRemove).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "member-id" }),
-    );
+    expect(onRequestRemove).toHaveBeenCalledWith(expect.objectContaining({ id: "member-id" }));
   });
 
   it("confirms group deletion through the reusable modal", async () => {
     const user = userEvent.setup();
     const onConfirm = vi.fn().mockResolvedValue(undefined);
 
-    render(<DeleteGroupModal groupName="Amigos" isDeleting={false} isOpen onClose={vi.fn()} onConfirm={onConfirm} />);
+    render(
+      <DeleteGroupModal
+        groupName="Amigos"
+        isDeleting={false}
+        isOpen
+        onClose={vi.fn()}
+        onConfirm={onConfirm}
+      />,
+    );
 
     await user.click(screen.getByRole("button", { name: "Eliminar grupo" }));
     expect(onConfirm).toHaveBeenCalledOnce();
@@ -81,7 +95,13 @@ describe("group components", () => {
 
     render(
       <DeleteGroupContactModal
-        contact={{ id: "member-id", groupId: group.id, email: "ana@example.com", createdAt: group.createdAt, updatedAt: group.updatedAt }}
+        contact={{
+          id: "member-id",
+          groupId: group.id,
+          email: "ana@example.com",
+          createdAt: group.createdAt,
+          updatedAt: group.updatedAt,
+        }}
         isDeleting={false}
         onClose={vi.fn()}
         onConfirm={onConfirm}

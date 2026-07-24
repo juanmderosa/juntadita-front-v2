@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { usersApi } from "@/api/users.api";
 import { getErrorMessage } from "@/lib/errors";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import {
-  displayNameSchema,
-  type DisplayNameInput,
-} from "@/features/auth/schemas/auth.schemas";
+import { displayNameSchema, type DisplayNameInput } from "@/features/auth/schemas/auth.schemas";
 
 export function useOnboardingPage() {
   const navigate = useNavigate();
@@ -25,10 +22,7 @@ export function useOnboardingPage() {
     if (!accessToken) return;
 
     try {
-      const updatedUser = await usersApi.updateCurrentUserProfile(
-        accessToken,
-        values.displayName,
-      );
+      const updatedUser = await usersApi.updateCurrentUserProfile(accessToken, values.displayName);
 
       queryClient.setQueryData(["users", "me", accessToken], updatedUser);
       navigate("/", { replace: true });

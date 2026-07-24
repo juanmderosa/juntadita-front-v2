@@ -20,7 +20,8 @@ export function EventOptionScheduleModeSelector({
               : "border border-slate-200 bg-white text-slate-700 hover:border-indigo-300"
           }`}
           onClick={() => setScheduleMode("date")}
-          type="button">
+          type="button"
+        >
           Sin horario
         </button>
         <button
@@ -30,7 +31,8 @@ export function EventOptionScheduleModeSelector({
               : "border border-slate-200 bg-white text-slate-700 hover:border-indigo-300"
           }`}
           onClick={() => setScheduleMode("datetime")}
-          type="button">
+          type="button"
+        >
           Con horario
         </button>
       </div>
