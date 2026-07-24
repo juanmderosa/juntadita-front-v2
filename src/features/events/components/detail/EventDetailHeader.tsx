@@ -34,14 +34,19 @@ export const EventDetailHeader = ({ event, canManage }: Props) => {
             {getEventSchedule(event)}
           </p>
         </div>
-        {canManage ? (
+        <div className="flex flex-wrap gap-2">
           <Link
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-white/15 px-4 py-2.5 text-sm font-bold text-white hover:bg-white/25"
+            to={`/events/${event.id}/expenses`}>
+            Gastos
+          </Link>
+          {canManage ? <Link
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-50"
             to={`/events/${event.id}/edit`}>
             <Pencil className="size-4" />
             Editar datos
-          </Link>
-        ) : null}
+          </Link> : null}
+        </div>
       </div>
     </header>
   );

@@ -40,6 +40,7 @@ export type EventParticipant = {
   displayName: string | null;
   role: EventParticipantRole;
   status: EventParticipantStatus;
+  participatesInExpenses: boolean;
   invitedBy: string | null;
   createdAt: string;
   updatedAt: string;
