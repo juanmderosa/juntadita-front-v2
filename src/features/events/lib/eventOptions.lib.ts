@@ -6,11 +6,7 @@ import {
   localDateToIso,
   localDateTimeToIso,
 } from "@/lib/dates";
-import type {
-  CreateEventOptionInput,
-  EventOption,
-  UpdateEventOptionInput,
-} from "@/types/events";
+import type { CreateEventOptionInput, EventOption, UpdateEventOptionInput } from "@/types/events";
 import type { OptionFormInput } from "@/features/events/schemas/events.schemas";
 
 export const optionTypeLabels = {
@@ -70,16 +66,12 @@ export function toUpdateEventOptionInput(
   };
 }
 
-export function toOptionFormValues(
-  option: EventOption,
-  timeZone: string,
-): OptionFormInput {
+export function toOptionFormValues(option: EventOption, timeZone: string): OptionFormInput {
   return {
     type: option.type,
     label: option.label ?? "",
     date: option.type === "date" ? isoToLocalDate(option.startAt, timeZone) : "",
-    startAt:
-      option.type !== "date" ? isoToLocalDateTime(option.startAt, timeZone) : "",
+    startAt: option.type !== "date" ? isoToLocalDateTime(option.startAt, timeZone) : "",
     endAt: option.endAt ? isoToLocalDateTime(option.endAt, timeZone) : "",
   };
 }

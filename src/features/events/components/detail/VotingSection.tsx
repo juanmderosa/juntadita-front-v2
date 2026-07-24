@@ -50,21 +50,13 @@ export function VotingSection({
   }
 
   if (error && !voting) {
-    return (
-      <ErrorState
-        className="rounded-2xl bg-white p-6"
-        error={error}
-      />
-    );
+    return <ErrorState className="rounded-2xl bg-white p-6" error={error} />;
   }
 
   if (!voting) return null;
 
-  const tiedOptions = voting.options.filter((option) =>
-    voting.tiedOptionIds.includes(option.id),
-  );
-  const pendingTieOption =
-    tiedOptions.find((option) => option.id === pendingTieOptionId) ?? null;
+  const tiedOptions = voting.options.filter((option) => voting.tiedOptionIds.includes(option.id));
+  const pendingTieOption = tiedOptions.find((option) => option.id === pendingTieOptionId) ?? null;
 
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_4px_20px_rgba(15,23,42,0.04)] sm:p-8">
@@ -74,11 +66,7 @@ export function VotingSection({
         votingClosesAt={voting.votingClosesAt}
       />
       {!voting.isOpen ? (
-        <VotingResultSummary
-          options={voting.options}
-          result={voting.result}
-          timeZone={timeZone}
-        />
+        <VotingResultSummary options={voting.options} result={voting.result} timeZone={timeZone} />
       ) : null}
       <VotingOptionsList
         compact={!voting.isOpen}
@@ -95,9 +83,7 @@ export function VotingSection({
         </p>
       ) : null}
       {selectionError ? (
-        <p className="mt-3 text-sm font-semibold text-red-700">
-          {selectionError}
-        </p>
+        <p className="mt-3 text-sm font-semibold text-red-700">{selectionError}</p>
       ) : null}
       {resolveTieError ? (
         <p className="mt-4 flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm font-semibold text-red-800">
@@ -105,9 +91,7 @@ export function VotingSection({
           No pudimos confirmar el resultado. Inténtalo otra vez.
         </p>
       ) : null}
-      {!voting.isOpen &&
-      voting.result?.status === "tie_pending" &&
-      canManage ? (
+      {!voting.isOpen && voting.result?.status === "tie_pending" && canManage ? (
         <TieResolutionPanel
           onChoose={onRequestTieResolution}
           options={tiedOptions}
@@ -121,9 +105,7 @@ export function VotingSection({
               ? "Selecciona al menos una opción para votar."
               : `Elegiste ${selectedOptionIds.length} opción${selectedOptionIds.length === 1 ? "" : "es"}.`}
           </p>
-          <Button
-            disabled={isSaving}
-            onClick={onSave}>
+          <Button disabled={isSaving} onClick={onSave}>
             {isSaving ? "Guardando…" : "Guardar mi voto"}
           </Button>
         </div>

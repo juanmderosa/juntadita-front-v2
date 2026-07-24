@@ -16,31 +16,21 @@ import { useEventSetup } from "@/features/events/hooks/useEventSetup";
 
 export function EventDetailPage() {
   const controller = useEventDetailPage();
-  const setup = useEventSetup(
-    controller.event,
-    controller.event?.currentUserRole === "admin",
-  );
+  const setup = useEventSetup(controller.event, controller.event?.currentUserRole === "admin");
   const voting = useEventVoting(
     controller.eventId,
     controller.event?.type === "poll" && setup.setupStep === null,
   );
 
   if (controller.isLoading) {
-    return (
-      <PageLoader
-        className="mx-auto max-w-5xl px-4 py-12"
-        itemClassName="h-80 rounded-2xl"
-      />
-    );
+    return <PageLoader className="mx-auto max-w-5xl px-4 py-12" itemClassName="h-80 rounded-2xl" />;
   }
 
   if (controller.error || !controller.event)
     return (
       <ErrorState
         action={
-          <Link
-            className="inline-block font-bold text-indigo-700"
-            to="/">
+          <Link className="inline-block font-bold text-indigo-700" to="/">
             Volver a mis eventos
           </Link>
         }
@@ -56,28 +46,21 @@ export function EventDetailPage() {
     <section className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:py-12">
       <Link
         className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-indigo-700"
-        to="/">
+        to="/"
+      >
         <ArrowLeft className="size-4" />
         Mis eventos
       </Link>
 
-      <EventDetailHeader
-        event={event}
-        canManage={canManage}
-      />
+      <EventDetailHeader event={event} canManage={canManage} />
 
       {setup.isSetupMode ? (
-        <EventSetupSteps
-          currentStep={setup.setupStep!}
-          eventType={event.type}
-        />
+        <EventSetupSteps currentStep={setup.setupStep!} eventType={event.type} />
       ) : null}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_280px]">
         <div className="space-y-6">
-          {setup.showDescription ? (
-            <EventDescription description={event.description} />
-          ) : null}
+          {setup.showDescription ? <EventDescription description={event.description} /> : null}
           {setup.showVoting ? (
             <VotingSection
               canManage={canManage}
@@ -104,9 +87,7 @@ export function EventDetailPage() {
               createOption={controller.createOption}
               createOptionsBatch={controller.createOptionsBatch}
               deleteOption={controller.deleteOption}
-              error={
-                controller.createOptionError ?? controller.deleteOptionError
-              }
+              error={controller.createOptionError ?? controller.deleteOptionError}
               event={event}
               isCreating={controller.isCreatingOption}
               updateOption={controller.updateOption}

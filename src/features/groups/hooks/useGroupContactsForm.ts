@@ -6,9 +6,7 @@ import {
   type AddGroupContactsFormInput,
 } from "@/features/groups/schemas/groups.schemas";
 
-export function useGroupContactsForm(
-  onAdd: (emails: string[]) => Promise<void>,
-) {
+export function useGroupContactsForm(onAdd: (emails: string[]) => Promise<void>) {
   const form = useForm<AddGroupContactsFormInput>({
     resolver: zodResolver(addGroupContactsFormSchema),
     defaultValues: { emailsText: "" },

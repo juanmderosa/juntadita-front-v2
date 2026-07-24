@@ -11,9 +11,7 @@ import { InviteParticipantsPanel } from "@/features/events/components/detail/Inv
 type EventParticipantsSectionProps = {
   event: EventDetail;
   canInvite: boolean;
-  inviteParticipants: (
-    input: InviteParticipantsInput,
-  ) => Promise<InviteParticipantsResult>;
+  inviteParticipants: (input: InviteParticipantsInput) => Promise<InviteParticipantsResult>;
   inviteResult?: InviteParticipantsResult;
   isInviting: boolean;
   error: unknown;

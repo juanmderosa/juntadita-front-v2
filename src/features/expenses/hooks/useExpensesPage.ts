@@ -5,24 +5,17 @@ import { expensesApi } from "@/api/expenses.api";
 import { eventsApi } from "@/api/events.api";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { canManageExpense } from "@/features/expenses/lib/expensePermissions";
-import type {
-  Expense,
-  ExpenseAttachment,
-  ExpenseInput,
-} from "@/types/expenses";
+import { usePayments } from "@/features/payments/hooks/usePayments";
+import type { Expense, ExpenseAttachment, ExpenseInput } from "@/types/expenses";
 
 export function useExpensesPage() {
   const { eventId = "" } = useParams();
   const { accessToken, currentUser } = useAuth();
   const queryClient = useQueryClient();
-  const [editingExpense, setEditingExpense] = useState<
-    Expense | null | undefined
-  >(undefined);
+  const [editingExpense, setEditingExpense] = useState<Expense | null | undefined>(undefined);
   const [expenseToDelete, setExpenseToDelete] = useState<Expense | null>(null);
   const [isParticipantsOpen, setIsParticipantsOpen] = useState(false);
-  const [financialAction, setFinancialAction] = useState<
-    "enable" | "reopen" | null
-  >(null);
+  const [financialAction, setFinancialAction] = useState<"enable" | "reopen" | null>(null);
 
   const eventQuery = useQuery({
     queryKey: ["events", eventId],
@@ -35,11 +28,13 @@ export function useExpensesPage() {
     queryFn: () => expensesApi.list(accessToken!, eventId),
     enabled: Boolean(accessToken && eventId),
   });
+  const payments = usePayments(eventId, eventQuery.data?.financialStatus === "payments_enabled");
 
   const invalidate = () =>
     Promise.all([
       queryClient.invalidateQueries({ queryKey: ["events", eventId] }),
       queryClient.invalidateQueries({ queryKey: ["expenses", eventId] }),
+      queryClient.invalidateQueries({ queryKey: ["payments", eventId] }),
     ]);
 
   const saveMutation = useMutation({
@@ -56,9 +51,7 @@ export function useExpensesPage() {
         ? await expensesApi.update(accessToken!, eventId, expenseId, input)
         : await expensesApi.create(accessToken!, eventId, input);
       await Promise.all(
-        files.map((file) =>
-          expensesApi.uploadAttachment(accessToken!, eventId, expense.id, file),
-        ),
+        files.map((file) => expensesApi.uploadAttachment(accessToken!, eventId, expense.id, file)),
       );
       return expense;
     },
@@ -66,25 +59,13 @@ export function useExpensesPage() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (expenseId: string) =>
-      expensesApi.delete(accessToken!, eventId, expenseId),
+    mutationFn: (expenseId: string) => expensesApi.delete(accessToken!, eventId, expenseId),
     onSuccess: invalidate,
   });
 
   const deleteAttachmentMutation = useMutation({
-    mutationFn: ({
-      expenseId,
-      attachmentId,
-    }: {
-      expenseId: string;
-      attachmentId: string;
-    }) =>
-      expensesApi.deleteAttachment(
-        accessToken!,
-        eventId,
-        expenseId,
-        attachmentId,
-      ),
+    mutationFn: ({ expenseId, attachmentId }: { expenseId: string; attachmentId: string }) =>
+      expensesApi.deleteAttachment(accessToken!, eventId, expenseId, attachmentId),
     onSuccess: invalidate,
   });
 
@@ -95,13 +76,7 @@ export function useExpensesPage() {
     }: {
       participantId: string;
       participates: boolean;
-    }) =>
-      eventsApi.updateExpenseParticipation(
-        accessToken!,
-        eventId,
-        participantId,
-        participates,
-      ),
+    }) => eventsApi.updateExpenseParticipation(accessToken!, eventId, participantId, participates),
     onSuccess: invalidate,
   });
   const financialStatusMutation = useMutation({
@@ -173,5 +148,16 @@ export function useExpensesPage() {
     },
     isChangingFinancialStatus: financialStatusMutation.isPending,
     financialStatusError: financialStatusMutation.error,
+    payments,
+    financialParticipants: (eventQuery.data?.participants ?? []).filter(
+      (participant) => participant.status !== "removed" && participant.participatesInExpenses,
+    ),
+    allowedPaymentPayers: (eventQuery.data?.participants ?? []).filter(
+      (participant) =>
+        participant.status !== "removed" &&
+        participant.participatesInExpenses &&
+        (participant.userId === currentUser?.user.id ||
+          (eventQuery.data?.currentUserRole === "admin" && participant.userId === null)),
+    ),
   };
 }

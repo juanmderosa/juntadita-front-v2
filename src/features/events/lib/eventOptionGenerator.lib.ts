@@ -8,12 +8,7 @@ export const MAX_GENERATED_OPTIONS = 60;
 export type WeekdayValue = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export type GeneratorScheduleMode = "date" | "datetime";
 export type GeneratorPreset =
-  | "this-week"
-  | "next-week"
-  | "this-weekend"
-  | "next-weekend"
-  | "this-month"
-  | "next-month";
+  "this-week" | "next-week" | "this-weekend" | "next-weekend" | "this-month" | "next-month";
 
 export type EventOptionGeneratorInput = {
   endDate: string;

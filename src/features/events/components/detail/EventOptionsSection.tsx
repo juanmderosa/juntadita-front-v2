@@ -1,8 +1,4 @@
-import type {
-  CreateEventOptionInput,
-  EventDetail,
-  UpdateEventOptionInput,
-} from "@/types/events";
+import type { CreateEventOptionInput, EventDetail, UpdateEventOptionInput } from "@/types/events";
 import { EmptyState } from "@/components/feedback/EmptyState";
 import { EventOptionAdminPanel } from "@/features/events/components/detail/EventOptionAdminPanel";
 import { EventOptionsHeader } from "@/features/events/components/detail/EventOptionsHeader";
@@ -13,10 +9,7 @@ type EventOptionsSectionProps = {
   canManage: boolean;
   createOption: (input: CreateEventOptionInput) => Promise<unknown>;
   createOptionsBatch: (input: CreateEventOptionInput[]) => Promise<unknown>;
-  updateOption: (
-    optionId: string,
-    input: UpdateEventOptionInput,
-  ) => Promise<unknown>;
+  updateOption: (optionId: string, input: UpdateEventOptionInput) => Promise<unknown>;
   deleteOption: (optionId: string) => Promise<unknown>;
   isCreating: boolean;
   error: unknown;

@@ -1,21 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type {
-  CreateEventOptionInput,
-  EventOption,
-  UpdateEventOptionInput,
-} from "@/types/events";
+import type { CreateEventOptionInput, EventOption, UpdateEventOptionInput } from "@/types/events";
 import {
   defaultOptionFormValues,
   toCreateEventOptionInput,
   toOptionFormValues,
   toUpdateEventOptionInput,
 } from "@/features/events/lib/eventOptions.lib";
-import {
-  optionFormSchema,
-  type OptionFormInput,
-} from "@/features/events/schemas/events.schemas";
+import { optionFormSchema, type OptionFormInput } from "@/features/events/schemas/events.schemas";
 
 export function useCreateEventOptionForm({
   createOption,
@@ -48,10 +41,7 @@ export function useEditableEventOption({
 }: {
   option: EventOption;
   timeZone: string;
-  updateOption: (
-    optionId: string,
-    input: UpdateEventOptionInput,
-  ) => Promise<unknown>;
+  updateOption: (optionId: string, input: UpdateEventOptionInput) => Promise<unknown>;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const form = useForm<OptionFormInput>({

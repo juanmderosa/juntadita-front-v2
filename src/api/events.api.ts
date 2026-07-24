@@ -26,10 +26,10 @@ import type { PaginatedResponse, SuccessResponse } from "@/types/api";
 
 export const eventsApi = {
   async list(accessToken: string, page = 1, limit = 20) {
-    return http.get<PaginatedResponse<EventSummary>>(
-      `/api/v1/events?page=${page}&limit=${limit}`,
-      { accessToken, responseSchema: paginatedEventsResponseSchema },
-    );
+    return http.get<PaginatedResponse<EventSummary>>(`/api/v1/events?page=${page}&limit=${limit}`, {
+      accessToken,
+      responseSchema: paginatedEventsResponseSchema,
+    });
   },
 
   async getById(accessToken: string, eventId: string) {
@@ -41,11 +41,10 @@ export const eventsApi = {
   },
 
   async create(accessToken: string, input: CreateEventInput) {
-    const response = await http.post<SuccessResponse<EventDetail>>(
-      "/api/v1/events",
-      input,
-      { accessToken, responseSchema: eventResponseSchema },
-    );
+    const response = await http.post<SuccessResponse<EventDetail>>("/api/v1/events", input, {
+      accessToken,
+      responseSchema: eventResponseSchema,
+    });
     return response.data;
   },
 
@@ -58,11 +57,7 @@ export const eventsApi = {
     return response.data;
   },
 
-  async createOption(
-    accessToken: string,
-    eventId: string,
-    input: CreateEventOptionInput,
-  ) {
+  async createOption(accessToken: string, eventId: string, input: CreateEventOptionInput) {
     const response = await http.post<SuccessResponse<EventOption>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/options`,
       input,
@@ -113,11 +108,7 @@ export const eventsApi = {
     return response.data;
   },
 
-  async inviteParticipants(
-    accessToken: string,
-    eventId: string,
-    input: InviteParticipantsInput,
-  ) {
+  async inviteParticipants(accessToken: string, eventId: string, input: InviteParticipantsInput) {
     const response = await http.post<SuccessResponse<InviteParticipantsResult>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/participants/invite`,
       input,
@@ -126,7 +117,12 @@ export const eventsApi = {
     return response.data;
   },
 
-  async updateExpenseParticipation(accessToken: string, eventId: string, participantId: string, participatesInExpenses: boolean) {
+  async updateExpenseParticipation(
+    accessToken: string,
+    eventId: string,
+    participantId: string,
+    participatesInExpenses: boolean,
+  ) {
     const response = await http.patch<SuccessResponse<EventParticipant>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/participants/${encodeURIComponent(participantId)}/expense-participation`,
       { participatesInExpenses },
@@ -161,11 +157,7 @@ export const eventsApi = {
     return response.data;
   },
 
-  async replaceVotes(
-    accessToken: string,
-    eventId: string,
-    input: ReplaceVotesInput,
-  ) {
+  async replaceVotes(accessToken: string, eventId: string, input: ReplaceVotesInput) {
     const response = await http.put<SuccessResponse<VotingState>>(
       `/api/v1/events/${encodeURIComponent(eventId)}/votes`,
       input,

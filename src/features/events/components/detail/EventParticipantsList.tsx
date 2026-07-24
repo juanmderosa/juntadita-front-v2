@@ -5,9 +5,7 @@ type EventParticipantsListProps = {
   participants: EventParticipant[];
 };
 
-export function EventParticipantsList({
-  participants,
-}: EventParticipantsListProps) {
+export function EventParticipantsList({ participants }: EventParticipantsListProps) {
   return (
     <ul className="mt-5 divide-y divide-slate-100">
       {participants.map((participant) => (

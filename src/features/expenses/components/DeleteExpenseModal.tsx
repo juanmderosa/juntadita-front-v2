@@ -9,12 +9,7 @@ type Props = {
   onConfirm: () => Promise<void>;
 };
 
-export function DeleteExpenseModal({
-  expense,
-  isDeleting,
-  onClose,
-  onConfirm,
-}: Props) {
+export function DeleteExpenseModal({ expense, isDeleting, onClose, onConfirm }: Props) {
   return (
     <Modal isOpen={expense !== null} onClose={onClose} title="Eliminar gasto">
       <p className="mt-3 text-slate-600">

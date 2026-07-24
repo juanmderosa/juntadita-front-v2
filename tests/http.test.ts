@@ -25,9 +25,9 @@ describe("HTTP client", () => {
   });
 
   it("serializes bodies and validates a response schema", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ value: 2 }), { status: 200 }),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify({ value: 2 }), { status: 200 }));
     vi.stubGlobal("fetch", fetchMock);
 
     const result = await http.post(
@@ -38,9 +38,7 @@ describe("HTTP client", () => {
 
     const [, options] = fetchMock.mock.calls[0];
     expect(options.body).toBe('{"name":"test"}');
-    expect((options.headers as Headers).get("Content-Type")).toBe(
-      "application/json",
-    );
+    expect((options.headers as Headers).get("Content-Type")).toBe("application/json");
     expect(result).toEqual({ value: 2 });
   });
 
@@ -81,10 +79,7 @@ describe("HTTP client", () => {
       new ApiError("No se pudo conectar con el servidor."),
     );
 
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue(new Response("not-json", { status: 200 })),
-    );
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("not-json", { status: 200 })));
     await expect(http.get("/items")).rejects.toMatchObject({ statusCode: 200 });
 
     vi.stubGlobal(

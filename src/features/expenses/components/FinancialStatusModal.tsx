@@ -25,30 +25,20 @@ export function FinancialStatusModal({
     <Modal
       isOpen={mode !== null}
       onClose={onClose}
-      title={enabling ? "Habilitar pagos" : "Reabrir gastos"}>
+      title={enabling ? "Habilitar pagos" : "Reabrir gastos"}
+    >
       <p className="mt-3 text-sm text-slate-700">
         {enabling
           ? `Se cerrarán ${expensesCount} gasto(s) y se congelarán ${participantsCount} participante(s) financiero(s). Podrás registrar pagos con estos importes.`
           : "Los pagos ya registrados se conservarán. Podrás corregir gastos, pero no cambiar invitados ni participantes financieros."}
       </p>
-      {error instanceof Error ? (
-        <p className="mt-3 text-sm text-red-700">{error.message}</p>
-      ) : null}
+      {error instanceof Error ? <p className="mt-3 text-sm text-red-700">{error.message}</p> : null}
       <div className="mt-5 flex justify-end gap-2">
-        <Button
-          variant="secondary"
-          onClick={onClose}
-          disabled={isPending}>
+        <Button variant="secondary" onClick={onClose} disabled={isPending}>
           Cancelar
         </Button>
-        <Button
-          onClick={onConfirm}
-          disabled={isPending}>
-          {isPending
-            ? "Guardando..."
-            : enabling
-              ? "Habilitar pagos"
-              : "Reabrir gastos"}
+        <Button onClick={onConfirm} disabled={isPending}>
+          {isPending ? "Guardando..." : enabling ? "Habilitar pagos" : "Reabrir gastos"}
         </Button>
       </div>
     </Modal>

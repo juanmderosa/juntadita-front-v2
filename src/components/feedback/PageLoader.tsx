@@ -14,10 +14,7 @@ export function PageLoader({
   return (
     <div aria-label={ariaLabel} className={className}>
       {Array.from({ length: items }, (_, index) => (
-        <div
-          className={`animate-pulse bg-slate-200 ${itemClassName}`}
-          key={index}
-        />
+        <div className={`animate-pulse bg-slate-200 ${itemClassName}`} key={index} />
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-# Juntadita Frontend #
+# Juntadita Frontend
 
 ## Levantar el proyecto
 

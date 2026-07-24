@@ -60,23 +60,13 @@ describe("expense permissions", () => {
     const onEdit = vi.fn();
     const onRequestDelete = vi.fn();
     const { rerender } = render(
-      <ExpenseActions
-        canManage={false}
-        onEdit={onEdit}
-        onRequestDelete={onRequestDelete}
-      />,
+      <ExpenseActions canManage={false} onEdit={onEdit} onRequestDelete={onRequestDelete} />,
     );
 
     expect(screen.queryByRole("button", { name: "Editar" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Eliminar" })).toBeNull();
 
-    rerender(
-      <ExpenseActions
-        canManage
-        onEdit={onEdit}
-        onRequestDelete={onRequestDelete}
-      />,
-    );
+    rerender(<ExpenseActions canManage onEdit={onEdit} onRequestDelete={onRequestDelete} />);
     await user.click(screen.getByRole("button", { name: "Editar" }));
     await user.click(screen.getByRole("button", { name: "Eliminar" }));
 
@@ -106,9 +96,7 @@ describe("expense permissions", () => {
     );
 
     expect(screen.getByRole("button", { name: "Ver ticket.pdf" })).toBeTruthy();
-    expect(
-      screen.queryByRole("button", { name: "Eliminar comprobante ticket.pdf" }),
-    ).toBeNull();
+    expect(screen.queryByRole("button", { name: "Eliminar comprobante ticket.pdf" })).toBeNull();
 
     rerender(
       <ExpenseAttachments
@@ -119,9 +107,7 @@ describe("expense permissions", () => {
       />,
     );
 
-    expect(
-      screen.getByRole("button", { name: "Eliminar comprobante ticket.pdf" }),
-    ).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Eliminar comprobante ticket.pdf" })).toBeTruthy();
   });
 
   it("confirms an expense deletion in a modal", async () => {

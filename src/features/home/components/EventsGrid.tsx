@@ -15,27 +15,16 @@ interface Props {
   loadMore: (
     options?: FetchNextPageOptions,
   ) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<PaginatedResponse<EventSummary>, unknown>,
-      Error
-    >
+    InfiniteQueryObserverResult<InfiniteData<PaginatedResponse<EventSummary>, unknown>, Error>
   >;
 }
 
-export const EventsGrid = ({
-  events,
-  hasNextPage,
-  isFetchingNextPage,
-  loadMore,
-}: Props) => {
+export const EventsGrid = ({ events, hasNextPage, isFetchingNextPage, loadMore }: Props) => {
   return (
     <>
       <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {events.map((event) => (
-          <EventCard
-            event={event}
-            key={event.id}
-          />
+          <EventCard event={event} key={event.id} />
         ))}
       </div>
       {hasNextPage ? (
@@ -44,7 +33,8 @@ export const EventsGrid = ({
             className="rounded-lg border border-indigo-200 bg-white px-5 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-50 disabled:opacity-60"
             disabled={isFetchingNextPage}
             onClick={() => void loadMore()}
-            type="button">
+            type="button"
+          >
             {isFetchingNextPage ? "Cargando..." : "Cargar mas"}
           </button>
         </div>

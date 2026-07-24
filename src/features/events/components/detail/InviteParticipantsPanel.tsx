@@ -1,18 +1,13 @@
 import { UserRoundPlus } from "lucide-react";
 import { getErrorMessage } from "@/lib/errors";
-import type {
-  InviteParticipantsInput,
-  InviteParticipantsResult,
-} from "@/types/events";
+import type { InviteParticipantsInput, InviteParticipantsResult } from "@/types/events";
 import type { ContactGroup } from "@/types/groups";
 import { InviteParticipantsForm } from "@/features/events/components/detail/InviteParticipantsForm";
 import { InviteParticipantsResultList } from "@/features/events/components/detail/InviteParticipantsResultList";
 
 type InviteParticipantsPanelProps = {
   error: unknown;
-  inviteParticipants: (
-    input: InviteParticipantsInput,
-  ) => Promise<InviteParticipantsResult>;
+  inviteParticipants: (input: InviteParticipantsInput) => Promise<InviteParticipantsResult>;
   inviteResult?: InviteParticipantsResult;
   isInviting: boolean;
   showPublishWarning?: boolean;
@@ -35,8 +30,8 @@ export function InviteParticipantsPanel({
       </h3>
       {showPublishWarning ? (
         <p className="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-900">
-          Cuando envies invitaciones, la encuesta quedara publicada y no vas a
-          poder modificar las opciones.
+          Cuando envies invitaciones, la encuesta quedara publicada y no vas a poder modificar las
+          opciones.
         </p>
       ) : null}
       <InviteParticipantsForm
@@ -44,12 +39,8 @@ export function InviteParticipantsPanel({
         isInviting={isInviting}
         groups={groups}
       />
-      {inviteResult ? (
-        <InviteParticipantsResultList inviteResult={inviteResult} />
-      ) : null}
-      {error ? (
-        <p className="mt-3 text-sm text-red-700">{getErrorMessage(error)}</p>
-      ) : null}
+      {inviteResult ? <InviteParticipantsResultList inviteResult={inviteResult} /> : null}
+      {error ? <p className="mt-3 text-sm text-red-700">{getErrorMessage(error)}</p> : null}
     </div>
   );
 }

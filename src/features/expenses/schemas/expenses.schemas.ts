@@ -1,8 +1,5 @@
 import { z } from "zod";
-import {
-  paginatedResponseSchema,
-  successResponseSchema,
-} from "@/schemas/api.schemas";
+import { paginatedResponseSchema, successResponseSchema } from "@/schemas/api.schemas";
 import { isoDateTimeSchema, uuidSchema } from "@/schemas/common.schemas";
 import { eventParticipantSchema } from "@/features/events/schemas/events.schemas";
 

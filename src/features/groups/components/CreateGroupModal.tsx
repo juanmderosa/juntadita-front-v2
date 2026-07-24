@@ -21,17 +21,11 @@ export function CreateGroupModal({
 }: CreateGroupModalProps) {
   const { form, submit } = useCreateGroupForm(onCreate);
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="Crear grupo">
+    <Modal isOpen={isOpen} onClose={onClose} title="Crear grupo">
       <p className="mt-2 text-sm text-slate-600">
         Usalo para reunir los contactos que invitás con frecuencia.
       </p>
-      <RHForm
-        className="mt-5 space-y-4"
-        form={form}
-        onSubmit={submit}>
+      <RHForm className="mt-5 space-y-4" form={form} onSubmit={submit}>
         <label className="block">
           <span className="text-sm font-semibold text-slate-800">Nombre</span>
           <input
@@ -52,16 +46,10 @@ export function CreateGroupModal({
           </p>
         ) : null}
         <div className="flex justify-end gap-3">
-          <Button
-            disabled={isCreating}
-            onClick={onClose}
-            type="button"
-            variant="secondary">
+          <Button disabled={isCreating} onClick={onClose} type="button" variant="secondary">
             Cancelar
           </Button>
-          <Button
-            disabled={isCreating}
-            type="submit">
+          <Button disabled={isCreating} type="submit">
             {isCreating ? "Creando..." : "Crear grupo"}
           </Button>
         </div>

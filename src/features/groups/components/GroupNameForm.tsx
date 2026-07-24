@@ -9,10 +9,7 @@ type Props = {
   onSave: (name: string) => Promise<void>;
 };
 export function GroupNameForm({ isSaving, name, onSave }: Props) {
-  const { form, submit, isEditing, startEditing, cancel } = useGroupNameForm(
-    name,
-    onSave,
-  );
+  const { form, submit, isEditing, startEditing, cancel } = useGroupNameForm(name, onSave);
   if (!isEditing) {
     return (
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -25,10 +22,7 @@ export function GroupNameForm({ isSaving, name, onSave }: Props) {
     );
   }
   return (
-    <RHForm
-      className="flex flex-col gap-3 sm:flex-row"
-      form={form}
-      onSubmit={submit}>
+    <RHForm className="flex flex-col gap-3 sm:flex-row" form={form} onSubmit={submit}>
       <label className="min-w-0 flex-1">
         <span className="sr-only">Nombre del grupo</span>
         <input
@@ -41,19 +35,11 @@ export function GroupNameForm({ isSaving, name, onSave }: Props) {
           </span>
         ) : null}
       </label>
-      <Button
-        onClick={cancel}
-        type="button"
-        variant="secondary">
+      <Button onClick={cancel} type="button" variant="secondary">
         Cancelar
       </Button>
-      <Button
-        disabled={isSaving}
-        type="submit">
-        <Pencil
-          aria-hidden="true"
-          className="mr-2 inline size-4"
-        />
+      <Button disabled={isSaving} type="submit">
+        <Pencil aria-hidden="true" className="mr-2 inline size-4" />
         {isSaving ? "Guardando..." : "Guardar nombre"}
       </Button>
     </RHForm>

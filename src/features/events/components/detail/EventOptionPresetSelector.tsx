@@ -7,9 +7,7 @@ type EventOptionPresetSelectorProps = {
   applyPreset: (preset: GeneratorPreset) => void;
 };
 
-export function EventOptionPresetSelector({
-  applyPreset,
-}: EventOptionPresetSelectorProps) {
+export function EventOptionPresetSelector({ applyPreset }: EventOptionPresetSelectorProps) {
   return (
     <div>
       <p className="text-sm font-semibold text-gray-800">Atajos</p>
@@ -19,7 +17,8 @@ export function EventOptionPresetSelector({
             className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-indigo-300 hover:text-indigo-700"
             key={preset.value}
             onClick={() => applyPreset(preset.value)}
-            type="button">
+            type="button"
+          >
             {preset.label}
           </button>
         ))}

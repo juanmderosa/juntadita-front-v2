@@ -1,7 +1,4 @@
-import type {
-  EventOption,
-  UpdateEventOptionInput,
-} from "@/types/events";
+import type { EventOption, UpdateEventOptionInput } from "@/types/events";
 import { EventOptionItem } from "@/features/events/components/detail/EventOptionItem";
 
 type EventOptionsListProps = {
@@ -9,10 +6,7 @@ type EventOptionsListProps = {
   deleteOption: (optionId: string) => Promise<unknown>;
   options: EventOption[];
   timeZone: string;
-  updateOption: (
-    optionId: string,
-    input: UpdateEventOptionInput,
-  ) => Promise<unknown>;
+  updateOption: (optionId: string, input: UpdateEventOptionInput) => Promise<unknown>;
 };
 
 export function EventOptionsList({

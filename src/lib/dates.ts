@@ -6,20 +6,14 @@ type DateFormatOptions = {
   timeZone?: string;
 };
 
-export function formatDate(
-  value: string | Date,
-  options: DateFormatOptions = {},
-) {
+export function formatDate(value: string | Date, options: DateFormatOptions = {}) {
   return new Intl.DateTimeFormat(options.locale ?? DEFAULT_LOCALE, {
     dateStyle: "medium",
     timeZone: options.timeZone ?? DEFAULT_TIME_ZONE,
   }).format(new Date(value));
 }
 
-export function formatDateTime(
-  value: string | Date,
-  options: DateFormatOptions = {},
-) {
+export function formatDateTime(value: string | Date, options: DateFormatOptions = {}) {
   return new Intl.DateTimeFormat(options.locale ?? DEFAULT_LOCALE, {
     dateStyle: "medium",
     timeStyle: "short",
@@ -27,10 +21,7 @@ export function formatDateTime(
   }).format(new Date(value));
 }
 
-export function localDateTimeToIso(
-  value: string,
-  timeZone = DEFAULT_TIME_ZONE,
-) {
+export function localDateTimeToIso(value: string, timeZone = DEFAULT_TIME_ZONE) {
   return fromZonedTime(value, timeZone).toISOString();
 }
 
@@ -42,9 +33,6 @@ export function isoToLocalDate(value: string, timeZone = DEFAULT_TIME_ZONE) {
   return formatInTimeZone(value, timeZone, "yyyy-MM-dd");
 }
 
-export function isoToLocalDateTime(
-  value: string,
-  timeZone = DEFAULT_TIME_ZONE,
-) {
+export function isoToLocalDateTime(value: string, timeZone = DEFAULT_TIME_ZONE) {
   return formatInTimeZone(value, timeZone, "yyyy-MM-dd'T'HH:mm");
 }

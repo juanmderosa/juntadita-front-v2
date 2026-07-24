@@ -7,10 +7,7 @@ export function GroupsList({ groups }: GroupsListProps) {
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {groups.map((group) => (
-        <GroupCard
-          group={group}
-          key={group.id}
-        />
+        <GroupCard group={group} key={group.id} />
       ))}
     </div>
   );

@@ -19,8 +19,7 @@ export function getEventSchedule(event: EventSummary) {
   if (event.winningOption) {
     return `Fecha elegida: ${event.winningOption.label || formatOptionSchedule(event.winningOption, event.timezone)}`;
   }
-  const value =
-    event.type === "poll" ? event.votingClosesAt : event.fixedStartAt;
+  const value = event.type === "poll" ? event.votingClosesAt : event.fixedStartAt;
   if (!value) return "Sin fecha";
 
   const prefix = event.type === "poll" ? "Cierra" : "Comienza";

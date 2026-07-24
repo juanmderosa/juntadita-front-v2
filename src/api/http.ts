@@ -29,10 +29,7 @@ type InternalRequestOptions<T> = RequestOptions<T> & {
 
 const apiUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
-async function request<T>(
-  path: string,
-  options: InternalRequestOptions<T>,
-): Promise<T> {
+async function request<T>(path: string, options: InternalRequestOptions<T>): Promise<T> {
   const { accessToken, responseSchema, ...fetchOptions } = options;
   const headers = new Headers(options.headers);
 
@@ -73,9 +70,7 @@ async function request<T>(
     const parsedError = errorResponseSchema.safeParse(payload);
 
     throw new ApiError(
-      parsedError.success
-        ? parsedError.data.message
-        : "No se pudo completar la solicitud.",
+      parsedError.success ? parsedError.data.message : "No se pudo completar la solicitud.",
       response.status,
       parsedError.success ? parsedError.data.errors : undefined,
     );

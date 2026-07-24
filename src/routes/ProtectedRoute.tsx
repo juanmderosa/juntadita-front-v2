@@ -15,10 +15,7 @@ export function ProtectedRoute({ mode = "app" }: ProtectedRouteProps) {
 
   if (isLoading) {
     return (
-      <AuthShell
-        description="Estamos preparando tu sesion."
-        title="Cargando"
-      >
+      <AuthShell description="Estamos preparando tu sesion." title="Cargando">
         <p className="text-sm text-gray-600">Un momento...</p>
       </AuthShell>
     );
@@ -45,12 +42,7 @@ export function ProtectedRoute({ mode = "app" }: ProtectedRouteProps) {
   if (mode === "public") {
     if (!session) return <Outlet />;
 
-    return (
-      <Navigate
-        replace
-        to={requiresOnboarding ? "/onboarding" : "/"}
-      />
-    );
+    return <Navigate replace to={requiresOnboarding ? "/onboarding" : "/"} />;
   }
 
   if (!session) {
