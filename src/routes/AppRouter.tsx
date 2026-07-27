@@ -1,15 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { AuthenticatedLayout } from "@/components/layout/AuthenticatedLayout";
-import { LoginPage } from "@/features/auth/pages/LoginPage";
-import { OnboardingPage } from "@/features/auth/pages/OnboardingPage";
-import { HomePage } from "@/features/home/pages/HomePage";
-import { CreateEventPage } from "@/features/events/pages/CreateEventPage";
-import { EditEventPage } from "@/features/events/pages/EditEventPage";
-import { EventDetailPage } from "@/features/events/pages/EventDetailPage";
-import { GroupsPage } from "@/features/groups/pages/GroupsPage";
-import { GroupDetailPage } from "@/features/groups/pages/GroupDetailPage";
-import { ExpensesPage } from "@/features/expenses/pages/ExpensesPage";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
@@ -18,11 +9,27 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <ProtectedRoute mode="public" />,
-        children: [{ path: "/login", element: <LoginPage /> }],
+        children: [
+          {
+            path: "/login",
+            lazy: async () => {
+              const { LoginPage } = await import("@/features/auth/pages/LoginPage");
+              return { Component: LoginPage };
+            },
+          },
+        ],
       },
       {
         element: <ProtectedRoute mode="onboarding" />,
-        children: [{ path: "/onboarding", element: <OnboardingPage /> }],
+        children: [
+          {
+            path: "/onboarding",
+            lazy: async () => {
+              const { OnboardingPage } = await import("@/features/auth/pages/OnboardingPage");
+              return { Component: OnboardingPage };
+            },
+          },
+        ],
       },
       {
         element: <ProtectedRoute />,
@@ -30,13 +37,65 @@ export const router = createBrowserRouter([
           {
             element: <AuthenticatedLayout />,
             children: [
-              { path: "/", element: <HomePage /> },
-              { path: "/groups", element: <GroupsPage /> },
-              { path: "/groups/:groupId", element: <GroupDetailPage /> },
-              { path: "/events/new", element: <CreateEventPage /> },
-              { path: "/events/:eventId", element: <EventDetailPage /> },
-              { path: "/events/:eventId/expenses", element: <ExpensesPage /> },
-              { path: "/events/:eventId/edit", element: <EditEventPage /> },
+              {
+                path: "/",
+                lazy: async () => {
+                  const { HomePage } = await import("@/features/home/pages/HomePage");
+                  return { Component: HomePage };
+                },
+              },
+              {
+                path: "/groups",
+                lazy: async () => {
+                  const { GroupsPage } = await import("@/features/groups/pages/GroupsPage");
+                  return { Component: GroupsPage };
+                },
+              },
+              {
+                path: "/groups/:groupId",
+                lazy: async () => {
+                  const { GroupDetailPage } = await import(
+                    "@/features/groups/pages/GroupDetailPage"
+                  );
+                  return { Component: GroupDetailPage };
+                },
+              },
+              {
+                path: "/events/new",
+                lazy: async () => {
+                  const { CreateEventPage } = await import(
+                    "@/features/events/pages/CreateEventPage"
+                  );
+                  return { Component: CreateEventPage };
+                },
+              },
+              {
+                path: "/events/:eventId",
+                lazy: async () => {
+                  const { EventDetailPage } = await import(
+                    "@/features/events/pages/EventDetailPage"
+                  );
+                  return { Component: EventDetailPage };
+                },
+              },
+              {
+                path: "/events/:eventId/expenses",
+                lazy: async () => {
+                  const { ExpensesPage } = await import(
+                    "@/features/expenses/pages/ExpensesPage"
+                  );
+                  return { Component: ExpensesPage };
+                },
+              },
+              {
+                path: "/events/:eventId/edit",
+                lazy: async () => {
+                  const { EditEventPage } = await import(
+                    "@/features/events/pages/EditEventPage"
+                  );
+                  return { Component: EditEventPage };
+                },
+              },
             ],
           },
         ],
